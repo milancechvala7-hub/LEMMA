@@ -1166,6 +1166,97 @@ body.course-editing .lesson-text>h3 .course-math:not(.course-math-block) *{
   user-select:none;
 }
 body.course-editing .course-math:not(.course-math-block){margin-inline:.06rem}
+
+/* ===== hamburger-menu-editing-styles ===== */
+.sidebar-nav-item{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  align-items:stretch;
+  gap:.38rem;
+  min-width:0;
+}
+.sidebar-nav-item>.sidebar-nav-main{min-width:0;height:100%}
+.sidebar-item-actions{
+  display:none;
+  align-items:center;
+  gap:.25rem;
+  flex:0 0 auto;
+}
+body.course-editing .sidebar-item-actions{display:flex}
+body.course-editing .lesson-nav button[data-lesson],
+body.course-editing .course-list-nav button[data-course],
+body.course-editing .sidebar-item-actions button{
+  pointer-events:auto;
+  opacity:1;
+}
+.lesson-nav .sidebar-item-actions button,
+.course-list-nav .sidebar-item-actions button{
+  display:grid;
+  place-items:center;
+  flex:0 0 34px;
+  width:34px;
+  min-width:34px;
+  height:34px;
+  min-height:34px;
+  margin:auto 0;
+  padding:0;
+  border:1px solid var(--color-border);
+  border-radius:var(--radius-md);
+  background:var(--color-surface);
+  color:var(--color-muted);
+  font:900 var(--text-base) var(--font-sans);
+  line-height:1;
+  cursor:pointer;
+}
+.lesson-nav .sidebar-item-actions button:hover,
+.lesson-nav .sidebar-item-actions button:focus-visible,
+.course-list-nav .sidebar-item-actions button:hover,
+.course-list-nav .sidebar-item-actions button:focus-visible{
+  border-color:var(--color-focus);
+  background:var(--color-primary-soft);
+  color:var(--color-primary-hover);
+  outline:2px solid var(--color-focus);
+  outline-offset:1px;
+}
+.lesson-nav .sidebar-item-actions .sidebar-item-drag,
+.course-list-nav .sidebar-item-actions .sidebar-item-drag{
+  touch-action:none;
+  cursor:grab;
+  font-size:1rem;
+  letter-spacing:-2px;
+}
+.lesson-nav .sidebar-item-actions .sidebar-item-delete,
+.course-list-nav .sidebar-item-actions .sidebar-item-delete{color:var(--color-danger)}
+.lesson-nav .sidebar-item-actions .sidebar-item-delete:hover,
+.lesson-nav .sidebar-item-actions .sidebar-item-delete:focus-visible,
+.course-list-nav .sidebar-item-actions .sidebar-item-delete:hover,
+.course-list-nav .sidebar-item-actions .sidebar-item-delete:focus-visible{
+  border-color:var(--color-danger-border);
+  background:var(--color-danger-soft);
+  color:var(--color-danger);
+}
+body.course-editing .sidebar-item-actions button:disabled{opacity:.35;pointer-events:none;cursor:not-allowed}
+body.sidebar-item-dragging{cursor:grabbing!important;user-select:none}
+body.sidebar-item-dragging .sidebar-item-drag{cursor:grabbing!important}
+.sidebar-nav-item.is-dragging{
+  position:relative;
+  z-index:3;
+  opacity:.68;
+  border-radius:var(--radius-md);
+  background:var(--color-primary-soft-strong);
+  box-shadow:var(--shadow-sm);
+}
+body.course-editing .sidebar-section-title::after{
+  content:" · potiahnutím zmeníte poradie";
+  color:var(--color-muted);
+  font-size:var(--text-2xs);
+  font-weight:600;
+}
+@media (max-width:420px){
+  .sidebar-nav-item{gap:.25rem}
+  .lesson-nav .sidebar-item-actions button,
+  .course-list-nav .sidebar-item-actions button{flex-basis:32px;width:32px;min-width:32px;height:32px;min-height:32px}
+}
 </style>
 <script defer="" src="https://www.geogebra.org/apps/deployggb.js"></script>
 <script>
@@ -2450,19 +2541,27 @@ function renderEmptyState(){
  document.getElementById("sidebarCourseDescription").textContent="Vytvorte nový kurz alebo načítajte zálohu.";
  const brandMark=document.querySelector(".brand-mark");if(brandMark)brandMark.textContent="∫";
 }
+function sidebarItemActions(kind,id,deleteDisabled=false){
+ const actions=document.createElement("span");actions.className="sidebar-item-actions course-edit-only course-editor-only";
+ const drag=document.createElement("button");drag.type="button";drag.className="sidebar-item-drag";drag.dataset.sidebarKind=kind;drag.dataset.sidebarId=id;drag.setAttribute("aria-label",kind==="course"?"Presunúť kurz potiahnutím":"Presunúť lekciu potiahnutím");drag.title=drag.getAttribute("aria-label");drag.textContent="⠿";
+ const remove=document.createElement("button");remove.type="button";remove.className="sidebar-item-delete";remove.dataset.sidebarKind=kind;remove.dataset.sidebarId=id;remove.setAttribute("aria-label",kind==="course"?"Odstrániť kurz":"Odstrániť lekciu");remove.title=deleteDisabled?"Poslednú lekciu odstránite spolu s kurzom":remove.getAttribute("aria-label");remove.textContent="×";remove.disabled=deleteDisabled;
+ actions.append(drag,remove);return actions;
+}
 function renderCourseNav(){
  courseNav.innerHTML="";
  courses.forEach(course=>{
-  const b=document.createElement("button");b.type="button";b.dataset.course=course.id;b.classList.toggle("active",course.id===activeCourseId);
+  const row=document.createElement("div");row.className="sidebar-nav-item course-nav-item";row.dataset.courseRow=course.id;
+  const b=document.createElement("button");b.type="button";b.className="sidebar-nav-main";b.dataset.course=course.id;b.classList.toggle("active",course.id===activeCourseId);
   const icon=document.createElement("span");icon.className="course-icon";icon.textContent=courseIconFor(course,courses.indexOf(course));
   const label=document.createElement("span");label.className="course-label";label.append(document.createTextNode(course.title));
-  const small=document.createElement("small");small.textContent=course.lessonIds.length+" "+lessonWord(course.lessonIds.length);label.append(small);b.append(icon,label);courseNav.append(b);
+  const small=document.createElement("small");small.textContent=course.lessonIds.length+" "+lessonWord(course.lessonIds.length);label.append(small);b.append(icon,label);
+  row.append(b,sidebarItemActions("course",course.id));courseNav.append(row);
  });
 }
 function activateLesson(id,scroll=false){
  const course=activeCourse(),article=document.getElementById(id)||document.getElementById(course?.lessonIds[0]);
  document.querySelectorAll("article.lesson").forEach(node=>node.classList.toggle("active",node===article));
- nav.querySelectorAll("button").forEach(button=>button.classList.toggle("active",button.dataset.lesson===article?.id));
+ nav.querySelectorAll("button[data-lesson]").forEach(button=>button.classList.toggle("active",button.dataset.lesson===article?.id));
  if(article){
   if(scroll)article.scrollIntoView({block:"start",behavior:"smooth"});
   document.dispatchEvent(new CustomEvent("lemma:lessonchange",{detail:{id:article.id,courseId:activeCourseId}}));
@@ -2479,7 +2578,10 @@ function renderLessonNav(preferredId=""){
   const article=document.getElementById(id);if(!article)return;
   article.dataset.courseId=course.id;
   const title=article.querySelector("h1")?.textContent.trim()||("Lekcia "+(index+1));
-  const button=document.createElement("button");button.type="button";button.dataset.lesson=id;button.innerHTML="<span>"+(index+1)+"</span> ";button.append(document.createTextNode(title));nav.append(button);
+  const row=document.createElement("div");row.className="sidebar-nav-item lesson-nav-item";row.dataset.lessonRow=id;
+  const button=document.createElement("button");button.type="button";button.className="sidebar-nav-main";button.dataset.lesson=id;
+  const number=document.createElement("span");number.className="lesson-number";number.textContent=index+1;button.append(number,document.createTextNode(" "+title));
+  row.append(button,sidebarItemActions("lesson",id,course.lessonIds.length<=1));nav.append(row);
  });
  const chosen=course.lessonIds.includes(preferredId)?preferredId:course.lessonIds[0];
  activateLesson(chosen,false);
@@ -2496,6 +2598,77 @@ function switchCourse(id,preferredId="",closeMenu=false){
  activeCourseId=id;clearSelection();renderLessonNav(preferredId);updateCounts();refreshEditing();
  document.dispatchEvent(new CustomEvent("lemma:coursechange",{detail:{courseId:id}}));
  if(closeMenu){document.body.classList.remove("sidebar-open");document.getElementById(preferredId||activeCourse()?.lessonIds[0])?.scrollIntoView({block:"start",behavior:"smooth"})}
+}
+function deleteLessonById(id){
+ const course=courses.find(item=>item.lessonIds.includes(id)),article=document.getElementById(id);if(!course||!article)return false;
+ if(course.lessonIds.length<=1){toast("Poslednú lekciu odstránite odstránením celého kurzu.",true);return false}
+ const title=article.querySelector("h1")?.textContent.trim()||"Bez názvu";
+ if(!confirm('Naozaj odstrániť lekciu „'+title+'“?'))return false;
+ const wasEditing=editing,preferredLesson=activeLesson()?.id||"",index=course.lessonIds.indexOf(id);
+ if(wasEditing)commitEditSession(false);
+ const fallback=course.lessonIds[index-1]||course.lessonIds[index+1]||"";
+ course.lessonIds=course.lessonIds.filter(lessonId=>lessonId!==id);article.remove();
+ if(activeCourseId===course.id)renderLessonNav(preferredLesson===id?fallback:preferredLesson);else renderCourseNav();
+ updateCounts();persist(true);if(wasEditing&&activeLesson())setEditing(true);
+ toast("Lekcia bola odstránená.");return true;
+}
+function deleteCourseById(id){
+ const index=courses.findIndex(course=>course.id===id),course=courses[index];if(!course)return false;
+ if(!confirm('Naozaj odstrániť kurz „'+course.title+'“ aj so všetkými jeho lekciami?'))return false;
+ const wasEditing=editing,preferredLesson=activeLesson()?.id||"",deletingActive=activeCourseId===id;
+ if(wasEditing)commitEditSession(false);
+ course.lessonIds.forEach(lessonId=>document.getElementById(lessonId)?.remove());
+ courses.splice(index,1);
+ if(deletingActive)activeCourseId=courses[index]?.id||courses[index-1]?.id||courses[0]?.id||"";
+ if(courses.length)renderLessonNav(deletingActive?"":preferredLesson);else renderEmptyState();
+ updateCounts();persist(true);if(wasEditing&&activeLesson())setEditing(true);
+ toast("Kurz bol odstránený.");return true;
+}
+let pointerSidebarDrag=null;
+function sidebarOrder(kind){
+ const selector=kind==="course"?".course-nav-item":".lesson-nav-item";
+ const key=kind==="course"?"courseRow":"lessonRow";
+ const container=kind==="course"?courseNav:nav;
+ return [...container.querySelectorAll(selector)].map(row=>row.dataset[key]);
+}
+function beginSidebarDrag(event,handle){
+ if(!editing||(event.button!==undefined&&event.button!==0))return;
+ const kind=handle.dataset.sidebarKind,row=handle.closest(".sidebar-nav-item"),container=kind==="course"?courseNav:nav;
+ if(!row||!container.contains(row))return;
+ pointerSidebarDrag={pointerId:event.pointerId,handle,row,kind,container,startX:event.clientX,startY:event.clientY,active:false,original:sidebarOrder(kind)};
+ try{handle.setPointerCapture(event.pointerId)}catch(error){}
+}
+function moveSidebarDrag(event){
+ const drag=pointerSidebarDrag;if(!drag||drag.pointerId!==event.pointerId)return;
+ if(!drag.active&&Math.hypot(event.clientX-drag.startX,event.clientY-drag.startY)<4)return;
+ if(!drag.active){drag.active=true;drag.row.classList.add("is-dragging");document.body.classList.add("sidebar-item-dragging")}
+ event.preventDefault();
+ const sidebar=document.querySelector(".sidebar"),sidebarRect=sidebar?.getBoundingClientRect();
+ if(sidebar&&sidebarRect){if(event.clientY<sidebarRect.top+72)sidebar.scrollTop-=14;else if(event.clientY>sidebarRect.bottom-72)sidebar.scrollTop+=14}
+ const target=document.elementFromPoint(event.clientX,event.clientY)?.closest?.(".sidebar-nav-item");
+ if(!target||target===drag.row||target.parentElement!==drag.container||!target.classList.contains(drag.kind==="course"?"course-nav-item":"lesson-nav-item"))return;
+ const rect=target.getBoundingClientRect();
+ if(event.clientY<rect.top+rect.height/2)target.before(drag.row);else target.after(drag.row);
+ if(drag.kind==="lesson")[...drag.container.querySelectorAll("button[data-lesson] .lesson-number")].forEach((number,index)=>number.textContent=index+1);
+}
+function endSidebarDrag(event){
+ const drag=pointerSidebarDrag;if(!drag||drag.pointerId!==event.pointerId)return;
+ try{drag.handle.releasePointerCapture(event.pointerId)}catch(error){}
+ pointerSidebarDrag=null;drag.row.classList.remove("is-dragging");document.body.classList.remove("sidebar-item-dragging");
+ if(!drag.active)return;
+ event.preventDefault();
+ const order=sidebarOrder(drag.kind);
+ if(order.length===drag.original.length&&order.every((id,index)=>id===drag.original[index]))return;
+ const wasEditing=editing,preferredLesson=activeLesson()?.id||"";
+ if(drag.kind==="course"){
+  const byId=new Map(courses.map(course=>[course.id,course]));courses=order.map(id=>byId.get(id)).filter(Boolean);
+ }else{
+  const course=activeCourse();if(!course)return;course.lessonIds=order.filter(id=>document.getElementById(id));
+ }
+ if(wasEditing)commitEditSession(false);else persist(true);
+ if(drag.kind==="course")renderCourseNav();else renderLessonNav(preferredLesson);
+ updateCounts();if(wasEditing&&activeLesson())setEditing(true);
+ toast(drag.kind==="course"?"Poradie kurzov bolo zmenené.":"Poradie lekcií bolo zmenené.");
 }
 function restore(){
  let state=null,source="";
@@ -2541,14 +2714,16 @@ function updateCounts(){
  courses.forEach(course=>{const ids=course.lessonIds.filter(id=>!!document.getElementById(id)),total=ids.length;course.lessonIds=ids;ids.forEach((id,i)=>{const article=document.getElementById(id);let eye=article?.querySelector(".eyebrow");if(article&&!eye){eye=document.createElement("p");eye.className="eyebrow";article.querySelector(".lesson-header")?.prepend(eye)}if(eye)eye.textContent="Lekcia "+(i+1)+" z "+total;const count=article?.querySelectorAll(".gg-card").length||0;let badge=article?.querySelector(".gg-lesson-count");if(count){if(!badge){badge=document.createElement("span");badge.className="gg-lesson-count";article.querySelector(".lesson-header")?.append(badge)}badge.textContent=count+" "+(count===1?"GeoGebra experiment":count<5?"GeoGebra experimenty":"GeoGebra experimentov")}else badge?.remove()})});
  const totalLessons=courses.reduce((sum,c)=>sum+c.lessonIds.length,0),totalCourses=courses.length;
  window.LemmaScore?.render();
- [...nav.querySelectorAll("button")].forEach((b,i)=>{let n=b.querySelector("span");if(!n){n=document.createElement("span");b.prepend(n)}n.textContent=i+1});
+ [...nav.querySelectorAll("button[data-lesson]")].forEach((b,i)=>{let n=b.querySelector(".lesson-number");if(!n){n=document.createElement("span");n.className="lesson-number";b.prepend(n)}n.textContent=i+1});
  courseNav.querySelectorAll("button[data-course]").forEach(b=>{const c=courses.find(x=>x.id===b.dataset.course),small=b.querySelector("small");if(c&&small)small.textContent=c.lessonIds.length+" "+lessonWord(c.lessonIds.length)});
  const hasLesson=!!activeLesson();
  document.getElementById("courseExportLesson").disabled=!hasLesson;
  ["ttsToggle","ttsStop","ttsRate","ttsLanguage","ttsNext","ttsPrev"].forEach(id=>{const control=document.getElementById(id);if(control)control.disabled=!hasLesson});
 }
 function updateNavTitle(article){
- if(!article)return;const b=[...nav.querySelectorAll("button")].find(x=>x.dataset.lesson===article.id),title=article.querySelector("h1")?.textContent.trim()||"Bez názvu";if(!b)return;const number=b.querySelector("span")?.outerHTML||"<span></span>";b.innerHTML=number+" ";b.append(document.createTextNode(title));
+ if(!article)return;const b=[...nav.querySelectorAll("button[data-lesson]")].find(button=>button.dataset.lesson===article.id),title=article.querySelector("h1")?.textContent.trim()||"Bez názvu";if(!b)return;
+ let number=b.querySelector(".lesson-number");if(!number){number=document.createElement("span");number.className="lesson-number"}
+ b.replaceChildren(number,document.createTextNode(" "+title));
 }
 function addGraphTools(){
  window.CourseGeoGebra?.enhanceCodeButtons(document);
@@ -2634,7 +2809,7 @@ function editableTargets(article){return article?[
 ].filter(Boolean):[]}
 function refreshEditing(){
  document.querySelectorAll("[contenteditable]").forEach(x=>x.removeAttribute("contenteditable"));addGraphTools();clearSelection();
- nav.querySelectorAll("button").forEach(b=>b.disabled=editing);courseNav.querySelectorAll("button").forEach(b=>b.disabled=editing);
+ nav.querySelectorAll("button[data-lesson]").forEach(b=>b.disabled=false);courseNav.querySelectorAll("button[data-course]").forEach(b=>b.disabled=false);
  const article=activeLesson(),course=activeCourse();
  if(article)ensureBlockControls(article);
  if(editing&&article){editableTargets(article).forEach(x=>{x.setAttribute("contenteditable","true");syncEmptyEditableBlock(x)});ensureInlineMathCarets(article)}
@@ -3230,14 +3405,8 @@ document.getElementById("courseAddChapter").addEventListener("click",openCreateL
 document.getElementById("courseAddCourseEditor").addEventListener("click",openCreateCourseDialog);
 document.getElementById("courseAddChapterEditor").addEventListener("click",openCreateLessonDialog);
 document.getElementById("courseChangeIcon").addEventListener("click",openCourseIconDialog);
-document.getElementById("courseDeleteChapter").addEventListener("click",()=>{
- const article=activeLesson(),course=activeCourse();if(!article||!course)return;if(course.lessonIds.length<=1)return toast("Poslednú lekciu odstránite odstránením celého kurzu.",true);
- if(!confirm("Naozaj odstrániť celú vlastnú lekciu?"))return;const index=course.lessonIds.indexOf(article.id),fallback=course.lessonIds[index-1]||course.lessonIds[index+1];course.lessonIds=course.lessonIds.filter(id=>id!==article.id);article.remove();renderLessonNav(fallback);updateCounts();refreshEditing();persist(true);toast("Lekcia bola odstránená.");
-});
-document.getElementById("courseDeleteCourse").addEventListener("click",()=>{
- const course=activeCourse();if(!course)return;if(!confirm('Naozaj odstrániť kurz „'+course.title+'“ aj so všetkými jeho lekciami?'))return;
- course.lessonIds.forEach(id=>document.getElementById(id)?.remove());courses=courses.filter(c=>c!==course);activeCourseId=courses[0]?.id||"";renderLessonNav();updateCounts();refreshEditing();persist(true);toast("Kurz bol odstránený.");
-});
+document.getElementById("courseDeleteChapter").addEventListener("click",()=>deleteLessonById(activeLesson()?.id||""));
+document.getElementById("courseDeleteCourse").addEventListener("click",()=>deleteCourseById(activeCourse()?.id||""));
 document.getElementById("courseCreateForm").addEventListener("submit",e=>{e.preventDefault();const title=document.getElementById("newCourseTitle").value.trim();if(!title)return toast("Zadajte názov kurzu.",true);if(editing)commitEditSession(false);closeDialog(document.getElementById("courseCreateDialog"));createCourse(title,document.getElementById("newCourseDescription").value.trim(),document.getElementById("newCourseFirstLesson").value.trim()||"Úvod",document.getElementById("newCourseIcon").value)});
 document.getElementById("courseIconForm").addEventListener("submit",e=>{
  e.preventDefault();const course=activeCourse();if(!course)return closeDialog(document.getElementById("courseIconDialog"));
@@ -3248,10 +3417,14 @@ document.getElementById("courseChapterForm").addEventListener("submit",e=>{e.pre
 document.getElementById("courseGraphForm").addEventListener("submit",e=>{e.preventDefault();try{const data=graphFormData();if(graphBeingEdited){applyGraphData(graphBeingEdited,data);const el=graphBeingEdited.querySelector(".gg-live");window.CourseGeoGebra?.reinit(el);selectBlock(graphBeingEdited)}else{const card=graphCard(data);insertBlock(card);addGraphTools();window.CourseGeoGebra?.prepare(card.querySelector(".gg-live"))}closeDialog(document.getElementById("courseGraphDialog"));graphBeingEdited=null;updateCounts();scheduleSave();toast("GeoGebra graf bol uložený.")}catch(err){toast(err.message||"Graf sa nepodarilo vložiť.",true)}});
 document.getElementById("courseGraphDialog").addEventListener("close",()=>{graphBeingEdited=null});
 
-document.addEventListener("pointerdown",e=>{if(!editing)return;const handle=e.target.closest(".course-block-drag");if(handle)beginBlockDrag(e,handle)});
-document.addEventListener("pointermove",moveBlockDrag,{passive:false});
-document.addEventListener("pointerup",endBlockDrag);
-document.addEventListener("pointercancel",endBlockDrag);
+document.addEventListener("pointerdown",e=>{
+ if(!editing)return;
+ const sidebarHandle=e.target.closest(".sidebar-item-drag");if(sidebarHandle){beginSidebarDrag(e,sidebarHandle);return}
+ const handle=e.target.closest(".course-block-drag");if(handle)beginBlockDrag(e,handle);
+});
+document.addEventListener("pointermove",e=>{moveSidebarDrag(e);moveBlockDrag(e)},{passive:false});
+document.addEventListener("pointerup",e=>{endSidebarDrag(e);endBlockDrag(e)});
+document.addEventListener("pointercancel",e=>{endSidebarDrag(e);endBlockDrag(e)});
 document.addEventListener("change",e=>{
  if(!editing||!e.target.matches(".course-block-tts input"))return;
  const block=e.target.closest(".lesson-text>*");if(!block)return;
@@ -3267,7 +3440,8 @@ document.addEventListener("click",e=>{
 document.addEventListener("dblclick",e=>{const formula=e.target.closest(".course-math");if(editing&&formula){e.preventDefault();openMathDialog(formula)}});
 document.addEventListener("click",e=>{
  const blockDelete=e.target.closest(".course-block-delete");if(blockDelete){e.preventDefault();e.stopPropagation();removeBlock(blockDelete.closest(".lesson-text>*"),true);return}
- const courseButton=e.target.closest(".course-list-nav button[data-course]");if(courseButton){if(editing){persist(true);setEditing(false)}switchCourse(courseButton.dataset.course,"",true);return}
+ const sidebarDelete=e.target.closest(".sidebar-item-delete");if(sidebarDelete){e.preventDefault();e.stopPropagation();if(!editing)return;sidebarDelete.dataset.sidebarKind==="course"?deleteCourseById(sidebarDelete.dataset.sidebarId):deleteLessonById(sidebarDelete.dataset.sidebarId);return}
+ const courseButton=e.target.closest(".course-list-nav button[data-course]");if(courseButton){const wasEditing=editing;if(wasEditing)commitEditSession(false);switchCourse(courseButton.dataset.course,"",!wasEditing);if(wasEditing&&activeLesson())setTimeout(()=>setEditing(true),80);return}
  const testEdit=e.target.closest(".course-test-edit");if(testEdit){e.preventDefault();openTestDialog(testEdit.closest(".course-test"));return}
  const testAction=e.target.closest(".course-test-action");if(testAction){e.preventDefault();const block=testAction.closest(".course-test");if(testAction.dataset.mode==="repeat")renderTestBlock(block);else evaluateTest(block);return}
  const graphEdit=e.target.closest(".course-graph-edit");if(graphEdit){e.preventDefault();return openGraphDialog(graphEdit.closest(".gg-card"))}
