@@ -1965,13 +1965,14 @@ window.MathJax={tex:{packages:{"[+]":["ams"]}},startup:{typeset:false,ready:func
 </script>
 <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 </head><body><header class="topbar"><button aria-label="Otvoriť zoznam kurzov a lekcií" class="sidebar-toggle" title="Kurzy a lekcie" type="button">☰</button><div class="brand"><span class="brand-mark">∫</span><div><strong>LEMMA V20</strong><small>Learn. Explore. Model. Master. Apply.</small></div></div><button aria-hidden="true" hidden="" id="courseEditToggle" tabindex="-1" type="button">Editovanie je vo verejnej verzii vypnuté</button><details class="topbar-data">
-<summary aria-label="Import a export JSON">JSON</summary>
+<summary aria-label="Správa dát">Dáta</summary>
 <div class="course-author-menu">
 <button aria-hidden="true" hidden="" id="courseBackup" tabindex="-1" type="button">Zálohovať</button>
 <button aria-hidden="true" hidden="" id="courseLoadBackup" tabindex="-1" type="button">Načítať zálohu</button>
 <button id="courseExport" type="button">Export JSON</button>
 <button aria-hidden="true" hidden="" id="courseExportLesson" tabindex="-1" type="button">Exportovať aktuálny kurz</button>
 <button id="courseImport" type="button">Import JSON</button>
+<button id="courseUseOfficialData" type="button">Použiť oficiálne dáta</button>
 </div>
 </details><div aria-label="Čítanie lekcie" class="tts-top" id="ttsPlayer" role="toolbar">
 <button aria-label="Predchádzajúci odsek" class="tts-control tts-session tts-nav" id="ttsPrev" title="Predchádzajúci odsek" type="button">‹</button>
@@ -2064,7 +2065,7 @@ window.MathJax={tex:{packages:{"[+]":["ams"]}},startup:{typeset:false,ready:func
 <nav aria-label="Obsah vybraného kurzu" class="lesson-nav"></nav>
 </section>
 <div class="sidebar-note"><strong id="sidebarCourseName">Žiadny kurz</strong><p id="sidebarCourseDescription">Načítajte súbor lemma-obsah.js alebo importujte JSON.</p></div>
-</aside><main class="content"><section aria-live="polite" class="course-empty-state"><div><h1>Zatiaľ tu nie sú žiadne kurzy</h1><p>Obsah sa automaticky načíta zo súboru „lemma-obsah.js“. Môžete tiež použiť ponuku „JSON“ na import obsahu.</p></div></section></main></div>
+</aside><main class="content"><section aria-live="polite" class="course-empty-state"><div><h1>Zatiaľ tu nie sú žiadne kurzy</h1><p>Obsah sa automaticky načíta zo súboru „lemma-obsah.js“. Môžete tiež použiť ponuku „Dáta“ na import vlastného obsahu.</p></div></section></main></div>
 <dialog class="course-dialog" id="ggCodeDialog">
 <form id="ggCodeForm" method="dialog">
 <header><h2>Vyskúšať úpravu GeoGebra kódu</h2><button aria-label="Zavrieť" data-dialog-close="" type="button">✕</button></header>
@@ -2880,6 +2881,7 @@ const LEGACY_STORAGE_KEY="lemma-v4-courses-v1";
 const BACKUP_GLOBAL="LEMMA_CONTENT_BACKUP";
 const PUBLIC_READ_ONLY=true;
 const PUBLIC_IMPORT_SESSION_KEY="lemma-public-json-session";
+const PUBLIC_DATA_SOURCE_KEY="lemma-public-data-source";
 const IMPORT_LIMITS={lessons:5000,courses:500,lessonHtml:5_000_000,fileBytes:100*1024*1024};
 let lastImportValidationError="";
 const COURSE_ICONS=[
@@ -3757,13 +3759,16 @@ function endSidebarDrag(event){
 }
 function restore(){
  let payload=null,state=null,source="";
- let preferImportedSession=false;
- try{preferImportedSession=sessionStorage.getItem(PUBLIC_IMPORT_SESSION_KEY)==="1"}catch(e){}
- if(!preferImportedSession){
-  const backup=window[BACKUP_GLOBAL];
-  if(validImportState(backup)){payload=backup;source="backup"}
- }
- if(!payload){
+ let preferredSource="official";
+ try{
+  const savedSource=localStorage.getItem(PUBLIC_DATA_SOURCE_KEY);
+  const legacyImportedSession=sessionStorage.getItem(PUBLIC_IMPORT_SESSION_KEY)==="1";
+  if(savedSource==="imported"||legacyImportedSession){
+   preferredSource="imported";
+   if(legacyImportedSession&&savedSource!=="imported")localStorage.setItem(PUBLIC_DATA_SOURCE_KEY,"imported");
+  }
+ }catch(e){}
+ if(preferredSource==="imported"){
   try{
    const currentRaw=localStorage.getItem(STORAGE_KEY);
    const legacyRaw=currentRaw===null?localStorage.getItem(LEGACY_STORAGE_KEY):null;
@@ -3773,9 +3778,13 @@ function restore(){
     if(validImportState(parsed)){payload=parsed;source=legacyRaw!==null?"legacy-browser":"browser"}
     else localStorage.removeItem(currentRaw!==null?STORAGE_KEY:LEGACY_STORAGE_KEY);
    }
-  }catch(e){console.warn("Obnova údajov z prehliadača zlyhala",e)}
+  }catch(e){console.warn("Obnova vlastných údajov z prehliadača zlyhala",e)}
  }
- if(!payload&&preferImportedSession){
+ if(preferredSource==="imported"&&!payload){
+  try{localStorage.removeItem(PUBLIC_DATA_SOURCE_KEY);sessionStorage.removeItem(PUBLIC_IMPORT_SESSION_KEY)}catch(e){}
+  preferredSource="official";
+ }
+ if(!payload){
   const backup=window[BACKUP_GLOBAL];
   if(validImportState(backup)){payload=backup;source="backup"}
  }
@@ -3791,14 +3800,17 @@ function restore(){
    const preferredCourse=courses.some(course=>course.id===readingRestore?.courseId)?readingRestore.courseId:state.activeCourseId;
    activeCourseId=courses.some(course=>course.id===preferredCourse)?preferredCourse:(courses.find(course=>course.lessonIds.includes(readingRestore?.lessonId||state.activeId))?.id||courses[0].id);
    const preferredLesson=activeCourse()?.lessonIds.includes(readingRestore?.lessonId)?readingRestore.lessonId:(state.activeId||"");
-   repairTangentCommands(main);renderLessonNav(preferredLesson);renderMath(main);window.CourseGeoGebra?.enhanceCodeButtons(main);setStatus("Uložené");
+   repairTangentCommands(main);renderLessonNav(preferredLesson);renderMath(main);window.CourseGeoGebra?.enhanceCodeButtons(main);
+   setStatus(source==="backup"?"Oficiálne dáta":"Vlastné dáta");
   }
-  if(source==="backup"||source==="legacy-browser"||payload.version!==5){
-   try{localStorage.setItem(STORAGE_KEY,JSON.stringify(buildState()));if(source==="legacy-browser")localStorage.removeItem(LEGACY_STORAGE_KEY);setStatus(source==="backup"?"Záloha načítaná":"Uložené")}catch(e){}
+  if(source==="legacy-browser"||(payload.version!==5&&source!=="backup")){
+   try{localStorage.setItem(STORAGE_KEY,JSON.stringify(buildState()));if(source==="legacy-browser")localStorage.removeItem(LEGACY_STORAGE_KEY)}catch(e){}
   }
  }catch(e){
   console.warn("Obnova obsahu zlyhala",e);
-  try{localStorage.removeItem(STORAGE_KEY)}catch(ignore){}
+  if(preferredSource==="imported"){
+   try{localStorage.removeItem(STORAGE_KEY);localStorage.removeItem(PUBLIC_DATA_SOURCE_KEY)}catch(ignore){}
+  }
   main.innerHTML="";courses=[];renderEmptyState();setStatus("Bez obsahu");toast("Obsah sa nepodarilo načítať.",true);
  }
 }
@@ -5260,6 +5272,20 @@ function importSingleLesson(payload){
  article.querySelectorAll(".gg-live").forEach(el=>{el.id=nextGraphId();el.innerHTML='<div class="gg-start-wrap"><button class="gg-start" type="button">Spustiť graf</button></div>'});
  course.lessonIds.push(article.id);initTests(article);renderMath(article);activeCourseId=course.id;renderLessonNav(article.id);updateCounts();persist(true);setEditing(true);toast("Lekcia bola importovaná do aktuálneho kurzu.");
 }
+document.getElementById("courseUseOfficialData").addEventListener("click",()=>{
+ if(!confirm("Použiť oficiálne dáta zo súboru lemma-obsah.js? Importované vlastné dáta uložené v tomto prehliadači sa odstránia."))return;
+ try{
+  localStorage.removeItem(STORAGE_KEY);
+  localStorage.removeItem(LEGACY_STORAGE_KEY);
+  localStorage.removeItem(PUBLIC_DATA_SOURCE_KEY);
+  sessionStorage.removeItem(PUBLIC_IMPORT_SESSION_KEY);
+  toast("Prepínam na oficiálne dáta…");
+  setTimeout(()=>location.reload(),250);
+ }catch(err){
+  console.error("Prepnutie na oficiálne dáta zlyhalo",err);
+  toast("Na oficiálne dáta sa nepodarilo prepnúť.",true);
+ }
+});
 document.getElementById("courseImportFile").addEventListener("change",async e=>{
  const input=e.currentTarget,file=input.files[0];if(!file)return;
  try{
@@ -5270,8 +5296,9 @@ document.getElementById("courseImportFile").addEventListener("change",async e=>{
   if(validImportState(data)){
    if(!confirm("Import celej zálohy nahradí aktuálny obsah. Pokračovať?"))return;
    localStorage.setItem(STORAGE_KEY,JSON.stringify(data));
-   try{sessionStorage.setItem(PUBLIC_IMPORT_SESSION_KEY,"1")}catch(ignore){}
-   toast("JSON bol prijatý. Obnovujem obsah…");
+   localStorage.setItem(PUBLIC_DATA_SOURCE_KEY,"imported");
+   try{sessionStorage.removeItem(PUBLIC_IMPORT_SESSION_KEY)}catch(ignore){}
+   toast("Vlastné dáta boli prijaté. Obnovujem obsah…");
    setTimeout(()=>location.reload(),250);
    return;
   }
