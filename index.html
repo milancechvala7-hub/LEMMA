@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="sk"><head><!-- LEMMA V20: kompaktná dátová schéma v5 a spätná kompatibilita so schémami v1–v4. --><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/><meta content="LEMMA V20 – interaktívne matematické kurzy s vlastnými lekciami, GeoGebra grafmi, rýchlymi poznámkami a lokálnym ukladaním obsahu." name="description"/><meta content="LEMMA V20.0" name="application-name"/><meta content="LEMMA V20 compact block schema v5" name="generator"/><meta content="#14213d" name="theme-color"/><title>LEMMA V20.0 | Interaktívne matematické kurzy</title><style id="lemma-v20-styles">/* LEMMA V20 – zjednotený dizajnový systém */
+<html lang="sk"><head><!-- LEMMA V20 Public: blok Tréning, kompaktná dátová schéma v5 a vzorce v testoch. --><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/><meta content="LEMMA V20 – verejná verzia na prezeranie publikovaných interaktívnych matematických kurzov. Obsah sa automaticky načíta zo súboru lemma-obsah.js." name="description"/><meta content="LEMMA V20 Public" name="application-name"/><meta content="LEMMA V20 public viewer · training blocks · formulas in tests · compact block schema v5" name="generator"/><meta content="#14213d" name="theme-color"/><title>LEMMA V20 | Verejné interaktívne kurzy</title><style id="lemma-v20-public-styles">/* LEMMA V20 – zjednotený dizajnový systém */
 :root{
   color-scheme:light;
   --font-sans:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
@@ -1938,20 +1938,40 @@ body.course-editing .course-review::before{display:none}
  bottom:calc(100% + .3rem);
  z-index:400;
 }
+
+
+/* ===== LEMMA V20 Public · verejná verzia bez editovacieho režimu ===== */
+.course-authorbar,
+#courseEditToggle,
+#courseBackup,
+#courseLoadBackup,
+#courseExportLesson,
+.course-editor-only,
+.course-edit-only{
+  display:none!important;
+}
+body.course-editing [contenteditable="true"],
+[contenteditable="true"]{
+  outline:none!important;
+  cursor:inherit!important;
+}
+.topbar-data .course-author-menu{min-width:170px}
+.topbar-data .course-author-menu button{font-weight:800}
+
 </style>
 <script defer="" src="https://www.geogebra.org/apps/deployggb.js"></script>
 <script>
 window.MathJax={tex:{packages:{"[+]":["ams"]}},startup:{typeset:false,ready:function(){MathJax.startup.defaultReady();MathJax.startup.promise.then(function(){window.dispatchEvent(new Event("course-math-ready"))})}}};
 </script>
 <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
-</head><body><header class="topbar"><button aria-label="Otvoriť zoznam kurzov a lekcií" class="sidebar-toggle" title="Kurzy a lekcie" type="button">☰</button><div class="brand"><span class="brand-mark">∫</span><div><strong>LEMMA V20</strong><small>Learn. Explore. Model. Master. Apply.</small></div></div><button aria-label="Vytvoriť nový kurz" aria-pressed="false" class="topbar-edit" id="courseEditToggle" type="button">＋ Nový kurz</button><details class="topbar-data">
-<summary>Dáta</summary>
+</head><body><header class="topbar"><button aria-label="Otvoriť zoznam kurzov a lekcií" class="sidebar-toggle" title="Kurzy a lekcie" type="button">☰</button><div class="brand"><span class="brand-mark">∫</span><div><strong>LEMMA V20</strong><small>Learn. Explore. Model. Master. Apply.</small></div></div><button aria-hidden="true" hidden="" id="courseEditToggle" tabindex="-1" type="button">Editovanie je vo verejnej verzii vypnuté</button><details class="topbar-data">
+<summary aria-label="Import a export JSON">JSON</summary>
 <div class="course-author-menu">
-<button id="courseBackup" type="button">Zálohovať</button>
-<button id="courseLoadBackup" type="button">Načítať zálohu</button>
-<button id="courseExport" type="button">Exportovať</button>
-<button id="courseExportLesson" type="button">Exportovať aktuálny kurz</button>
-<button id="courseImport" type="button">Importovať</button>
+<button aria-hidden="true" hidden="" id="courseBackup" tabindex="-1" type="button">Zálohovať</button>
+<button aria-hidden="true" hidden="" id="courseLoadBackup" tabindex="-1" type="button">Načítať zálohu</button>
+<button id="courseExport" type="button">Export JSON</button>
+<button aria-hidden="true" hidden="" id="courseExportLesson" tabindex="-1" type="button">Exportovať aktuálny kurz</button>
+<button id="courseImport" type="button">Import JSON</button>
 </div>
 </details><div aria-label="Čítanie lekcie" class="tts-top" id="ttsPlayer" role="toolbar">
 <button aria-label="Predchádzajúci odsek" class="tts-control tts-session tts-nav" id="ttsPrev" title="Predchádzajúci odsek" type="button">‹</button>
@@ -1976,7 +1996,7 @@ window.MathJax={tex:{packages:{"[+]":["ams"]}},startup:{typeset:false,ready:func
 </details>
 <span class="sr-only" id="ttsStatus" role="status"></span>
 </div><div class="score-chip" title="Jednoduché skóre"><span>Skóre</span><strong>⭐ 0 bodov</strong></div></header>
-<div aria-label="Nástroje na úpravu kurzov" class="course-authorbar" role="toolbar">
+<div aria-hidden="true" class="course-authorbar" hidden="" inert="" role="presentation">
 <div class="course-author-view">
 <details class="course-author-more course-create-menu">
 <summary>＋ Nový</summary>
@@ -2043,8 +2063,8 @@ window.MathJax={tex:{packages:{"[+]":["ams"]}},startup:{typeset:false,ready:func
 <div class="sidebar-section-title" id="currentCourseTitle">Obsah kurzu</div>
 <nav aria-label="Obsah vybraného kurzu" class="lesson-nav"></nav>
 </section>
-<div class="sidebar-note"><strong id="sidebarCourseName">Žiadny kurz</strong><p id="sidebarCourseDescription">Vytvorte nový kurz alebo načítajte zálohu.</p></div>
-</aside><main class="content"><section aria-live="polite" class="course-empty-state"><div><h1>Zatiaľ tu nie sú žiadne kurzy</h1><p>Vytvorte nový kurz tlačidlom „Nový kurz“ alebo načítajte zálohu cez ponuku „Dáta“.</p></div></section></main></div>
+<div class="sidebar-note"><strong id="sidebarCourseName">Žiadny kurz</strong><p id="sidebarCourseDescription">Načítajte súbor lemma-obsah.js alebo importujte JSON.</p></div>
+</aside><main class="content"><section aria-live="polite" class="course-empty-state"><div><h1>Zatiaľ tu nie sú žiadne kurzy</h1><p>Obsah sa automaticky načíta zo súboru „lemma-obsah.js“. Môžete tiež použiť ponuku „JSON“ na import obsahu.</p></div></section></main></div>
 <dialog class="course-dialog" id="ggCodeDialog">
 <form id="ggCodeForm" method="dialog">
 <header><h2>Vyskúšať úpravu GeoGebra kódu</h2><button aria-label="Zavrieť" data-dialog-close="" type="button">✕</button></header>
@@ -2282,13 +2302,13 @@ Koľko je 6 × 7?
 </form>
 </dialog>
 <div class="course-toast" id="courseToast" role="status"></div>
-<button aria-controls="quickNotesPanel" aria-expanded="false" aria-label="Otvoriť rýchle poznámky" class="quick-notes-toggle" id="quickNotesToggle" title="Rýchle poznámky" type="button">📝</button>
-<section aria-label="Rýchle poznámky k lekcii" class="quick-notes-panel" hidden="" id="quickNotesPanel">
-<div class="quick-notes-head"><strong id="quickNotesTitle">Rýchle poznámky</strong><button aria-label="Minimalizovať poznámky" id="quickNotesMinimize" title="Minimalizovať" type="button">−</button><button aria-label="Zavrieť poznámky" id="quickNotesClose" title="Zavrieť" type="button">×</button></div>
-<textarea aria-label="Poznámky k aktuálnej lekcii" id="quickNotesText" placeholder="Zapíšte si krátku poznámku k tejto lekcii…"></textarea>
+<button aria-controls="quickNotesPanel" aria-expanded="false" aria-label="Otvoriť poznámky ku kurzu" class="quick-notes-toggle" id="quickNotesToggle" title="Poznámky ku kurzu" type="button">📝</button>
+<section aria-label="Poznámky ku kurzu" class="quick-notes-panel" hidden="" id="quickNotesPanel">
+<div class="quick-notes-head"><strong id="quickNotesTitle">Poznámky ku kurzu</strong><button aria-label="Minimalizovať poznámky" id="quickNotesMinimize" title="Minimalizovať" type="button">−</button><button aria-label="Zavrieť poznámky" id="quickNotesClose" title="Zavrieť" type="button">×</button></div>
+<textarea aria-label="Poznámky ku aktuálnemu kurzu" id="quickNotesText" placeholder="Zapíšte si poznámku ku celému kurzu…"></textarea>
 <div aria-live="polite" class="quick-notes-status" id="quickNotesStatus">Uložené</div>
 </section>
-<!-- Obsah kurzov nie je vložený do aplikácie. Načítava sa z externého lemma-obsah.js alebo cez JSON import. -->
+<!-- Verejný obsah sa pri otvorení automaticky načíta z externého súboru lemma-obsah.js v rovnakom priečinku. Voliteľne možno použiť JSON import. -->
 <script id="lemmaInitialBackupScript" src="./lemma-obsah.js"></script>
 <script id="course-navigation-script">
 (function(){
@@ -2596,20 +2616,94 @@ function updateRateLabel(){
 updateRateLabel();
 const menu=document.getElementById('ttsMenu');
 const ttsStatus=document.getElementById('ttsStatus');
+const menuTrigger=menu?.querySelector(':scope > summary');
+function syncTtsMenuState(){
+ if(!menu||!menuTrigger)return;
+ const expanded=menu.hasAttribute('open');
+ menuTrigger.setAttribute('aria-expanded',String(expanded));
+}
+if(menu&&menuTrigger){
+ menuTrigger.setAttribute('role','button');
+ menuTrigger.setAttribute('aria-haspopup','true');
+ syncTtsMenuState();
+ menuTrigger.addEventListener('click',event=>{
+  event.preventDefault();
+  event.stopPropagation();
+  const shouldOpen=!menu.hasAttribute('open');
+  document.querySelectorAll('.topbar details[open]').forEach(details=>{
+   if(details!==menu)details.removeAttribute('open');
+  });
+  menu.toggleAttribute('open',shouldOpen);
+  syncTtsMenuState();
+ });
+ menu.addEventListener('toggle',syncTtsMenuState);
+}
 let readingNodes=[],paragraphIndex=0,chunks=[],chunkIndex=0,on=false,paused=false,token=0,currentNode=null;
 let chunkOffset=0,boundaryOffset=0,currentUtterance=null,speechTimer=0;
 
 const lesson=()=>document.querySelector('article.lesson.active');
+function mathSpeechWords(){
+ const code=String(language?.value||"sk-SK").slice(0,2).toLowerCase();
+ const words={
+  sk:{divide:"delené",sqrt:"odmocnina z",root:"odmocnina stupňa",power:"na",sub:"dolný index",square:"na druhú",cube:"na tretiu",equals:"rovná sa",notEqual:"nerovná sa",less:"menšie ako",greater:"väčšie ako",lessEqual:"menšie alebo rovné",greaterEqual:"väčšie alebo rovné",times:"krát",plus:"plus",minus:"mínus",approx:"približne sa rovná",to:"smeruje k",infinity:"nekonečno",integral:"integrál",sum:"suma",limit:"limita",sin:"sínus",cos:"kosínus",tan:"tangens",log:"logaritmus",ln:"prirodzený logaritmus",exp:"exponenciála",absolute:"absolútna hodnota",percent:"percent",pi:"pí"},
+  cs:{divide:"děleno",sqrt:"odmocnina z",root:"odmocnina stupně",power:"na",sub:"dolní index",square:"na druhou",cube:"na třetí",equals:"rovná se",notEqual:"nerovná se",less:"menší než",greater:"větší než",lessEqual:"menší nebo rovno",greaterEqual:"větší nebo rovno",times:"krát",plus:"plus",minus:"mínus",approx:"přibližně se rovná",to:"směřuje k",infinity:"nekonečno",integral:"integrál",sum:"suma",limit:"limita",sin:"sinus",cos:"kosinus",tan:"tangens",log:"logaritmus",ln:"přirozený logaritmus",exp:"exponenciála",absolute:"absolutní hodnota",percent:"procent",pi:"pí"},
+  en:{divide:"divided by",sqrt:"square root of",root:"root of degree",power:"to the power of",sub:"subscript",square:"squared",cube:"cubed",equals:"equals",notEqual:"is not equal to",less:"is less than",greater:"is greater than",lessEqual:"is less than or equal to",greaterEqual:"is greater than or equal to",times:"times",plus:"plus",minus:"minus",approx:"is approximately equal to",to:"tends to",infinity:"infinity",integral:"integral",sum:"sum",limit:"limit",sin:"sine",cos:"cosine",tan:"tangent",log:"logarithm",ln:"natural logarithm",exp:"exponential",absolute:"absolute value of",percent:"percent",pi:"pi"},
+  de:{divide:"geteilt durch",sqrt:"Quadratwurzel aus",root:"Wurzel vom Grad",power:"hoch",sub:"Index",square:"zum Quadrat",cube:"hoch drei",equals:"ist gleich",notEqual:"ist nicht gleich",less:"ist kleiner als",greater:"ist größer als",lessEqual:"ist kleiner oder gleich",greaterEqual:"ist größer oder gleich",times:"mal",plus:"plus",minus:"minus",approx:"ist ungefähr gleich",to:"strebt gegen",infinity:"unendlich",integral:"Integral",sum:"Summe",limit:"Grenzwert",sin:"Sinus",cos:"Kosinus",tan:"Tangens",log:"Logarithmus",ln:"natürlicher Logarithmus",exp:"Exponentialfunktion",absolute:"Betrag von",percent:"Prozent",pi:"Pi"},
+  pl:{divide:"podzielone przez",sqrt:"pierwiastek z",root:"pierwiastek stopnia",power:"do potęgi",sub:"indeks dolny",square:"do kwadratu",cube:"do sześcianu",equals:"równa się",notEqual:"nie równa się",less:"mniejsze niż",greater:"większe niż",lessEqual:"mniejsze lub równe",greaterEqual:"większe lub równe",times:"razy",plus:"plus",minus:"minus",approx:"w przybliżeniu równa się",to:"dąży do",infinity:"nieskończoność",integral:"całka",sum:"suma",limit:"granica",sin:"sinus",cos:"cosinus",tan:"tangens",log:"logarytm",ln:"logarytm naturalny",exp:"funkcja wykładnicza",absolute:"wartość bezwzględna z",percent:"procent",pi:"pi"},
+  hu:{divide:"osztva",sqrt:"négyzetgyök",root:"gyök, amelynek foka",power:"hatványon",sub:"alsó index",square:"négyzeten",cube:"köbön",equals:"egyenlő",notEqual:"nem egyenlő",less:"kisebb mint",greater:"nagyobb mint",lessEqual:"kisebb vagy egyenlő",greaterEqual:"nagyobb vagy egyenlő",times:"szorozva",plus:"plusz",minus:"mínusz",approx:"megközelítőleg egyenlő",to:"tart",infinity:"végtelen",integral:"integrál",sum:"összeg",limit:"határérték",sin:"szinusz",cos:"koszinusz",tan:"tangens",log:"logaritmus",ln:"természetes logaritmus",exp:"exponenciális függvény",absolute:"abszolút értéke",percent:"százalék",pi:"pí"}
+ };
+ return words[code]||words.sk;
+}
+function mathFormulaSpeech(tex){
+ const w=mathSpeechWords();
+ let value=String(tex||"").replace(/\u200B/g," ").replace(/\\(?:left|right)\b/g," ");
+ let previous="";
+ while(previous!==value){
+  previous=value;
+  value=value.replace(/\\(?:dfrac|tfrac|frac)\s*\{([^{}]*)\}\s*\{([^{}]*)\}/g,(_,top,bottom)=>" "+top+" "+w.divide+" "+bottom+" ");
+ }
+ previous="";
+ while(previous!==value){
+  previous=value;
+  value=value.replace(/\\sqrt\s*(?:\[([^\]]+)\])?\s*\{([^{}]*)\}/g,(_,degree,body)=>degree?" "+w.root+" "+degree+", "+body+" ":" "+w.sqrt+" "+body+" ");
+ }
+ value=value
+  .replace(/\^\s*\{\s*2\s*\}/g," "+w.square+" ").replace(/\^\s*2\b/g," "+w.square+" ")
+  .replace(/\^\s*\{\s*3\s*\}/g," "+w.cube+" ").replace(/\^\s*3\b/g," "+w.cube+" ")
+  .replace(/\^\s*\{([^{}]+)\}/g,(_,part)=>" "+w.power+" "+part+" ").replace(/\^\s*([A-Za-z0-9]+)/g,(_,part)=>" "+w.power+" "+part+" ")
+  .replace(/_\s*\{([^{}]+)\}/g,(_,part)=>" "+w.sub+" "+part+" ").replace(/_\s*([A-Za-z0-9]+)/g,(_,part)=>" "+w.sub+" "+part+" ")
+  .replace(/\\(?:operatorname|mathrm|mathbf|mathit|text)\s*\{([^{}]*)\}/g," $1 ")
+  .replace(/\\begin\s*\{[^{}]*\}|\\end\s*\{[^{}]*\}/g," ")
+  .replace(/\\(?:cdot|times)\b/g," "+w.times+" ").replace(/\\div\b/g," "+w.divide+" ")
+  .replace(/\\(?:neq|ne)\b|≠/g," "+w.notEqual+" ").replace(/\\leq?\b|≤/g," "+w.lessEqual+" ").replace(/\\geq?\b|≥/g," "+w.greaterEqual+" ")
+  .replace(/\\approx\b|≈/g," "+w.approx+" ").replace(/\\to\b|→/g," "+w.to+" ")
+  .replace(/\\infty\b|∞/g," "+w.infinity+" ").replace(/\\int\b/g," "+w.integral+" ").replace(/\\sum\b/g," "+w.sum+" ").replace(/\\lim\b/g," "+w.limit+" ")
+  .replace(/\\sin\b/g," "+w.sin+" ").replace(/\\cos\b/g," "+w.cos+" ").replace(/\\tan\b/g," "+w.tan+" ")
+  .replace(/\\log\b/g," "+w.log+" ").replace(/\\ln\b/g," "+w.ln+" ").replace(/\\exp\b/g," "+w.exp+" ")
+  .replace(/\\pi\b/g," "+w.pi+" ").replace(/\\alpha\b/g," alfa ").replace(/\\beta\b/g," beta ").replace(/\\gamma\b/g," gama ").replace(/\\delta\b/g," delta ")
+  .replace(/\\epsilon\b/g," epsilon ").replace(/\\theta\b/g," théta ").replace(/\\lambda\b/g," lambda ").replace(/\\mu\b/g," mí ").replace(/\\sigma\b/g," sigma ").replace(/\\omega\b/g," omega ")
+  .replace(/\\%/g," "+w.percent+" ").replace(/\\,/g," ").replace(/\\;/g," ").replace(/\\!/g," ")
+  .replace(/\\([A-Za-z]+)/g," $1 ").replace(/[{}\[\]]/g," ")
+  .replace(/=/g," "+w.equals+" ").replace(/</g," "+w.less+" ").replace(/>/g," "+w.greater+" ")
+  .replace(/\+/g," "+w.plus+" ").replace(/[−–—-]/g," "+w.minus+" ").replace(/[×*]/g," "+w.times+" ").replace(/\//g," "+w.divide+" ")
+  .replace(/\|([^|]+)\|/g,(_,part)=>" "+w.absolute+" "+part+" ")
+  .replace(/\s+([,.;:!?])/g,"$1").replace(/\s+/g," ").trim();
+ return value;
+}
 function speechText(node){
  if(!node)return"";
- const clone=node.cloneNode(true);clone.querySelectorAll?.(".course-math,.course-editor-only").forEach(item=>item.remove());
+ const clone=node.cloneNode(true);
+ clone.querySelectorAll?.(".course-editor-only").forEach(item=>item.remove());
+ clone.querySelectorAll?.(".course-math").forEach(item=>{
+  const standalone=item.classList.contains("course-math-block")||item.dataset.display==="true";
+  const tex=item.dataset.tex||item.getAttribute("aria-label")?.replace(/^Matematický vzorec:\s*/,"")||item.textContent||"";
+  item.replaceWith(document.createTextNode(standalone?" ":" "+mathFormulaSpeech(tex)+" "));
+ });
  return String(clone.textContent||"")
-  .replace(/\$\$[\s\S]+?\$\$/g," ").replace(/\$[^$\n]+?\$/g," ").replace(/\\\[[\s\S]+?\\\]/g," ").replace(/\\\([\s\S]+?\\\)/g," ")
-  .replace(/\b(?:lim\s+)?[A-Za-z]\s*→\s*[A-Za-z0-9∞+\-]+(?:\s+[A-Za-z]\([^)]*\)\s*=\s*[^\s,.;:!?]+)?/g," ")
-  .replace(/\b[A-Za-z][A-Za-z0-9′]*\([^)]*\)(?:\s*[=<>≤≥≠]\s*[^\s,.;:!?]+)?/g," ")
-  .replace(/(?:\|[^|]+\||\b[A-Za-zεδΔ][A-Za-z0-9₀-₉′]*)\s*(?:=|<|>|≤|≥|≠)\s*[^\s,.;:!?]+/g," ")
-  .replace(/\b\d+\s*\/\s*\d+\b/g," ").replace(/\b[A-Za-z][²³⁴⁵⁶⁷⁸⁹₀-₉ˣⁿ]+\b/g," ")
-  .replace(/\s+([,.;:!?])/g,"$1").replace(/([,;:])\s*([.!?])/g,"$2").replace(/\s+/g," ").trim();
+  .replace(/\$\$[\s\S]+?\$\$/g," ").replace(/\\\[[\s\S]+?\\\]/g," ")
+  .replace(/\$([^$\n]+?)\$/g,(_,tex)=>" "+mathFormulaSpeech(tex)+" ")
+  .replace(/\\\(([\s\S]+?)\\\)/g,(_,tex)=>" "+mathFormulaSpeech(tex)+" ")
+  .replace(/\u200B/g," ").replace(/\s+([,.;:!?])/g,"$1").replace(/([,;:])\s*([.!?])/g,"$2").replace(/\s+/g," ").trim();
 }
 function availableNodes(){
  return [...document.querySelectorAll('article.lesson.course-visible h1,article.lesson.course-visible .lesson-text>h2:not([data-tts="false"]),article.lesson.course-visible .lesson-text>h3:not([data-tts="false"]),article.lesson.course-visible .lesson-text>p:not([data-tts="false"])')]
@@ -2784,6 +2878,8 @@ window.addEventListener('pagehide',halt);
 const STORAGE_KEY="lemma-v5-courses-v1";
 const LEGACY_STORAGE_KEY="lemma-v4-courses-v1";
 const BACKUP_GLOBAL="LEMMA_CONTENT_BACKUP";
+const PUBLIC_READ_ONLY=true;
+const PUBLIC_IMPORT_SESSION_KEY="lemma-public-json-session";
 const IMPORT_LIMITS={lessons:5000,courses:500,lessonHtml:5_000_000,fileBytes:100*1024*1024};
 let lastImportValidationError="";
 const COURSE_ICONS=[
@@ -3524,10 +3620,10 @@ function normalizeCourses(rawCourses,allIds){
 function renderEmptyState(){
  editing=false;editSession=null;document.body.classList.remove("course-editing");activeCourseId="";
  nav.innerHTML="";courseNav.innerHTML="";
- if(!main.querySelector(".course-empty-state"))main.innerHTML='<section class="course-empty-state" aria-live="polite"><div><h1>Zatiaľ tu nie sú žiadne kurzy</h1><p>Vytvorte nový kurz tlačidlom „Nový kurz“ alebo načítajte zálohu cez ponuku „Dáta“.</p></div></section>';
+ if(!main.querySelector(".course-empty-state"))main.innerHTML='<section class="course-empty-state" aria-live="polite"><div><h1>Zatiaľ tu nie sú žiadne kurzy</h1><p>Obsah sa automaticky načíta zo súboru „lemma-obsah.js“. Môžete tiež použiť ponuku „JSON“ na import obsahu.</p></div></section>';
  document.getElementById("currentCourseTitle").textContent="Obsah kurzu";
  document.getElementById("sidebarCourseName").textContent="Žiadny kurz";
- document.getElementById("sidebarCourseDescription").textContent="Vytvorte nový kurz alebo načítajte zálohu.";
+ document.getElementById("sidebarCourseDescription").textContent="Načítajte súbor lemma-obsah.js alebo importujte JSON.";
  const brandMark=document.querySelector(".brand-mark");if(brandMark)brandMark.textContent="∫";
 }
 function sidebarItemActions(kind,id,deleteDisabled=false){
@@ -3661,17 +3757,25 @@ function endSidebarDrag(event){
 }
 function restore(){
  let payload=null,state=null,source="";
- try{
-  const currentRaw=localStorage.getItem(STORAGE_KEY);
-  const legacyRaw=currentRaw===null?localStorage.getItem(LEGACY_STORAGE_KEY):null;
-  const raw=currentRaw??legacyRaw;
-  if(raw!==null){
-   const parsed=JSON.parse(raw);
-   if(validImportState(parsed)){payload=parsed;source=legacyRaw!==null?"legacy-browser":"browser"}
-   else localStorage.removeItem(currentRaw!==null?STORAGE_KEY:LEGACY_STORAGE_KEY);
-  }
- }catch(e){console.warn("Obnova údajov z prehliadača zlyhala",e)}
+ let preferImportedSession=false;
+ try{preferImportedSession=sessionStorage.getItem(PUBLIC_IMPORT_SESSION_KEY)==="1"}catch(e){}
+ if(!preferImportedSession){
+  const backup=window[BACKUP_GLOBAL];
+  if(validImportState(backup)){payload=backup;source="backup"}
+ }
  if(!payload){
+  try{
+   const currentRaw=localStorage.getItem(STORAGE_KEY);
+   const legacyRaw=currentRaw===null?localStorage.getItem(LEGACY_STORAGE_KEY):null;
+   const raw=currentRaw??legacyRaw;
+   if(raw!==null){
+    const parsed=JSON.parse(raw);
+    if(validImportState(parsed)){payload=parsed;source=legacyRaw!==null?"legacy-browser":"browser"}
+    else localStorage.removeItem(currentRaw!==null?STORAGE_KEY:LEGACY_STORAGE_KEY);
+   }
+  }catch(e){console.warn("Obnova údajov z prehliadača zlyhala",e)}
+ }
+ if(!payload&&preferImportedSession){
   const backup=window[BACKUP_GLOBAL];
   if(validImportState(backup)){payload=backup;source="backup"}
  }
@@ -3817,23 +3921,16 @@ function refreshEditing(){
  updateHistoryButtons();
 }
 function setEditing(value){
- // Prepnutie režimu mení ovládacie prvky a môže vyvolať automatické
- // presunutie viewportu. Vždy preto obnovíme presnú pozíciu čítania.
- const scrollX=window.scrollX,scrollY=window.scrollY;
- const restoreScroll=()=>{
-  const root=document.documentElement,previous=root.style.scrollBehavior;
-  root.style.scrollBehavior="auto";
-  window.scrollTo(scrollX,scrollY);
-  root.style.scrollBehavior=previous;
- };
- const next=!!value&&!!activeLesson();
- if(next&&!editing)beginEditSession();
- editing=next;document.body.classList.toggle("course-editing",editing);renderMath(activeLesson()||document);refreshEditing();
- restoreScroll();
- requestAnimationFrame(()=>{restoreScroll();requestAnimationFrame(restoreScroll)});
- if(!editing)updateHistoryButtons();
+ editing=false;
+ selectedBlock=null;
+ document.body.classList.remove("course-editing");
+ document.querySelectorAll("[contenteditable]").forEach(node=>node.removeAttribute("contenteditable"));
+ document.querySelectorAll(".course-block-controls,.course-empty-caret").forEach(node=>node.remove());
+ renderMath(activeLesson()||document);
+ refreshEditing();
+ updateHistoryButtons();
 }
-function ensureEditing(){if(!editing)setEditing(true)}
+function ensureEditing(){return false}
 
 function insertionPoint(){
  const lesson=activeLesson(),lessonText=lesson?.querySelector(".lesson-text");if(!lessonText)return null;
@@ -5011,7 +5108,7 @@ async function backupJavaScript(){
  flushHistorySnapshot();
  const state=buildState();
  const json=JSON.stringify(state).replace(/\u2028/g,"\\u2028").replace(/\u2029/g,"\\u2029");
- const source="/* Záloha obsahu aplikácie LEMMA V20 vo formáte lemma-blocks v5. */\nwindow."+BACKUP_GLOBAL+" = "+json+";\n";
+ const source="/* Záloha obsahu aplikácie LEMMA V20 Public vo formáte lemma-blocks v5. */\nwindow."+BACKUP_GLOBAL+" = "+json+";\n";
  const filename="lemma-obsah.js";
  if(typeof window.showSaveFilePicker==="function"){
   try{
@@ -5073,6 +5170,7 @@ function normalizedCoursePayload(payload){
 }
 function normalizedCourseTitle(value){return String(value||"").trim().replace(/\s+/g," ").toLocaleLowerCase("sk")}
 function importCoursePayload(payload){
+ try{sessionStorage.setItem(PUBLIC_IMPORT_SESSION_KEY,"1")}catch(ignore){}
  if(editing)commitEditSession(false);
  const normalized=normalizedCoursePayload(payload),sourceCourse=normalized.course,title=sourceCourse.title||"Importovaný kurz",existing=courses.find(course=>normalizedCourseTitle(course.title)===normalizedCourseTitle(title));
  let targetIndex=existing?courses.indexOf(existing):courses.length,newCourseId;
@@ -5087,7 +5185,7 @@ function importCoursePayload(payload){
 document.getElementById("courseBackup").addEventListener("click",backupJavaScript);
 document.getElementById("courseLoadBackup").addEventListener("click",loadJavaScriptBackup);
 document.getElementById("courseExport").addEventListener("click",()=>{
- flushHistorySnapshot();const state=buildState();downloadJSON(state,"kurzy_a_lekcie_zaloha.json");toast("Celý obsah bol exportovaný.");
+ flushHistorySnapshot();const state=buildState();downloadJSON(state,"lemma_obsah_export.json");toast("Obsah bol exportovaný do JSON.");
 });
 document.getElementById("courseExportLesson").addEventListener("click",()=>{
  flushHistorySnapshot();const payload=lessonExportPayload();if(!payload)return toast("Nie je vybraný žiadny kurz.",true);
@@ -5150,6 +5248,7 @@ function validLessonImport(payload){
  return !!node?.matches("article.lesson");
 }
 function importSingleLesson(payload){
+ try{sessionStorage.setItem(PUBLIC_IMPORT_SESSION_KEY,"1")}catch(ignore){}
  const course=activeCourse();if(!course)throw new Error("course");
  if(editing)commitEditSession(false);
  const article=new DOMParser().parseFromString(payload.lesson.html,"text/html").body.firstElementChild;
@@ -5171,7 +5270,8 @@ document.getElementById("courseImportFile").addEventListener("change",async e=>{
   if(validImportState(data)){
    if(!confirm("Import celej zálohy nahradí aktuálny obsah. Pokračovať?"))return;
    localStorage.setItem(STORAGE_KEY,JSON.stringify(data));
-   toast("Záloha bola prijatá. Obnovujem obsah…");
+   try{sessionStorage.setItem(PUBLIC_IMPORT_SESSION_KEY,"1")}catch(ignore){}
+   toast("JSON bol prijatý. Obnovujem obsah…");
    setTimeout(()=>location.reload(),250);
    return;
   }
@@ -5525,20 +5625,21 @@ addGraphTools();initTests(document);updateCounts();refreshEditing();renderMath(d
  render();
 })();
 </script>
-<script id="lemma-v3-quick-notes">
+<script id="lemma-v4-course-notes">
 (function(){"use strict";
-const NOTES_KEY="lemma-v3-quick-notes",toggle=document.getElementById("quickNotesToggle"),panel=document.getElementById("quickNotesPanel"),area=document.getElementById("quickNotesText"),title=document.getElementById("quickNotesTitle"),status=document.getElementById("quickNotesStatus"),minimize=document.getElementById("quickNotesMinimize"),close=document.getElementById("quickNotesClose");
+const NOTES_KEY="lemma-v4-course-notes",toggle=document.getElementById("quickNotesToggle"),panel=document.getElementById("quickNotesPanel"),area=document.getElementById("quickNotesText"),title=document.getElementById("quickNotesTitle"),status=document.getElementById("quickNotesStatus"),minimize=document.getElementById("quickNotesMinimize"),close=document.getElementById("quickNotesClose");
 let notes={},currentId="",timer=null;
 try{const stored=JSON.parse(localStorage.getItem(NOTES_KEY)||"{}");if(stored&&typeof stored==="object"&&!Array.isArray(stored))notes=stored}catch(e){notes={}}
-function activeInfo(){const article=document.querySelector("article.lesson.active");return{id:article?.id||"vseobecne",title:article?.querySelector("h1")?.textContent.trim()||"Všeobecné poznámky"}}
+function activeInfo(detail){const article=document.querySelector("article.lesson.active"),courseId=String(detail?.courseId||article?.dataset.courseId||"vseobecne"),courseName=document.getElementById("sidebarCourseName")?.textContent.trim()||"Všeobecné poznámky";return{id:courseId,title:courseName}}
 function save(silent=true){clearTimeout(timer);if(!currentId)return;notes[currentId]=area.value;status.textContent="Ukladám…";try{localStorage.setItem(NOTES_KEY,JSON.stringify(notes));status.textContent="Uložené";return true}catch(e){status.textContent="Uloženie zlyhalo";if(!silent&&window.console)console.warn("Poznámky sa nepodarilo uložiť",e);return false}}
-function load(){save();const info=activeInfo();currentId=info.id;title.textContent="Poznámky · "+info.title;area.value=typeof notes[currentId]==="string"?notes[currentId]:"";status.textContent="Uložené"}
-function open(){panel.hidden=false;panel.classList.remove("minimized");toggle.setAttribute("aria-expanded","true");minimize.textContent="−";minimize.setAttribute("aria-label","Minimalizovať poznámky");setTimeout(()=>area.focus(),30)}
+function load(detail){save();const info=activeInfo(detail);currentId=info.id;title.textContent="Poznámky · "+info.title;area.value=typeof notes[currentId]==="string"?notes[currentId]:"";status.textContent="Uložené"}
+function open(){load();panel.hidden=false;panel.classList.remove("minimized");toggle.setAttribute("aria-expanded","true");minimize.textContent="−";minimize.setAttribute("aria-label","Minimalizovať poznámky");setTimeout(()=>area.focus(),30)}
 toggle.addEventListener("click",()=>panel.hidden?open():(save(),panel.hidden=true,toggle.setAttribute("aria-expanded","false")));
 close.addEventListener("click",()=>{save(false);panel.hidden=true;toggle.setAttribute("aria-expanded","false");toggle.focus()});
 minimize.addEventListener("click",()=>{const minimized=panel.classList.toggle("minimized");minimize.textContent=minimized?"□":"−";minimize.setAttribute("aria-label",minimized?"Obnoviť poznámky":"Minimalizovať poznámky")});
 area.addEventListener("input",()=>{clearTimeout(timer);status.textContent="Ukladám…";timer=setTimeout(()=>save(),500)});
-document.addEventListener("lemma:lessonchange",()=>setTimeout(load,0));
+document.addEventListener("lemma:coursechange",event=>setTimeout(()=>load(event.detail),0));
+document.addEventListener("lemma:course-rendered",event=>setTimeout(()=>load(event.detail),0));
 window.addEventListener("beforeunload",()=>save());
 load();
 })();
