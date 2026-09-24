@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="sk"><head><!-- LEMMA V16: kompaktná dátová schéma v5 a spätná kompatibilita so schémami v1–v4. --><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/><meta content="LEMMA V16 – verejná verzia na prezeranie publikovaných interaktívnych matematických kurzov. Obsah sa automaticky načíta zo súboru lemma-obsah.js." name="description"/><meta content="LEMMA V16 Public" name="application-name"/><meta content="LEMMA V16 public viewer · compact block schema v5" name="generator"/><meta content="#14213d" name="theme-color"/><title>LEMMA V16 | Verejné interaktívne kurzy</title><style id="lemma-v16-styles">/* LEMMA V16 – zjednotený dizajnový systém */
+<html lang="sk"><head><!-- LEMMA V20: kompaktná dátová schéma v5 a spätná kompatibilita so schémami v1–v4. --><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/><meta content="LEMMA V20 – interaktívne matematické kurzy s vlastnými lekciami, GeoGebra grafmi, rýchlymi poznámkami a lokálnym ukladaním obsahu." name="description"/><meta content="LEMMA V20.0" name="application-name"/><meta content="LEMMA V20 compact block schema v5" name="generator"/><meta content="#14213d" name="theme-color"/><title>LEMMA V20.0 | Interaktívne matematické kurzy</title><style id="lemma-v20-styles">/* LEMMA V20 – zjednotený dizajnový systém */
 :root{
   color-scheme:light;
   --font-sans:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
@@ -95,14 +95,6 @@ body{margin:0;background:var(--color-surface-soft);color:var(--gg-ink);font-fami
 .gg-mode{flex:0 0 auto;padding:.18rem .48rem;border-radius:var(--radius-pill);background:var(--color-primary-soft-strong);
   color:var(--color-primary-hover);font-size:var(--text-2xs);font-weight:700;letter-spacing:.03em}
 .gg-tip{margin:.78rem .9rem .5rem;color:var(--color-text-secondary);line-height:1.45}
-
-
-
-
-
-
-.gg-lesson-count{display:inline-flex;margin-top:.45rem;padding:.22rem .55rem;border-radius:var(--radius-pill);
-  background:var(--color-primary-soft);color:var(--color-primary-hover);font-size:var(--text-xs);font-weight:700}
 @media (max-width:640px){
   .gg-card{margin-left:0;margin-right:0}
 }
@@ -153,7 +145,6 @@ body.course-editing [contenteditable="true"]{outline:2px dashed var(--color-prim
 body.course-editing [contenteditable="true"]:focus{outline:3px solid var(--color-primary);background:var(--color-primary-soft)}
 body.course-editing .course-selected-block{outline:3px solid var(--color-accent)!important;outline-offset:5px;border-radius:var(--radius-md)}
 body.course-editing .gg-card{cursor:default}
-.course-custom-badge{display:inline-flex;margin-left:.45rem;padding:.14rem .42rem;border-radius:var(--radius-pill);background:#fef3c7;color:var(--color-warning);font-size:var(--text-2xs);font-weight:800;vertical-align:middle}
 .course-empty-hint{padding:1rem;border:2px dashed var(--color-focus-soft);border-radius:var(--radius-lg);background:var(--color-primary-soft);color:var(--color-brand)}
 .course-dialog{width:min(94vw,680px);max-height:88vh;padding:0;border:0;border-radius:var(--radius-lg);overflow:hidden;box-shadow:0 24px 70px rgba(15,23,42,.3);color:var(--color-text)}
 .course-dialog::backdrop{background:rgba(15,23,42,.55)}
@@ -326,6 +317,23 @@ body.course-editing .gg-card.course-selected-block{box-shadow:0 0 0 2px var(--co
 .course-test-action:hover{background:var(--color-primary-hover)}
 .course-test-action:focus-visible{outline:3px solid var(--color-focus);outline-offset:2px}
 .course-test-invalid{margin:0;padding:1rem;color:var(--color-danger);background:var(--color-danger-soft)}
+.course-test-prompt .course-math,
+.course-test-option .course-math,
+.course-test-feedback .course-math,
+.course-test-head .course-math{max-width:100%}
+.course-test-prompt .course-math-block,
+.course-test-option .course-math-block,
+.course-test-feedback .course-math-block{
+ display:block;
+ width:100%;
+ margin:.42rem 0;
+ padding:.28rem .4rem;
+ overflow-x:auto;
+ text-align:center;
+}
+.course-test .course-math mjx-container[jax="CHTML"]{max-width:100%;overflow-x:auto;overflow-y:hidden}
+body.course-editing .course-test .course-math,
+body.course-editing .course-test .course-math:hover{outline:0;background:transparent;cursor:default}
 #courseTestSource{min-height:330px;font-family:ui-monospace,SFMono-Regular,Consolas,monospace;line-height:1.45;tab-size:2}
 .course-test-syntax{margin:.65rem 0 0}
 .course-test-syntax summary{cursor:pointer;color:var(--color-primary-hover);font-weight:800}
@@ -1117,8 +1125,6 @@ body.course-block-dragging .lesson-text>*{transition:transform .08s ease}
  border:0;border-left:1px solid rgba(255,255,255,.14);border-radius:0 999px 999px 0;
  background:transparent;color:rgba(255,255,255,.82);cursor:pointer;list-style:none
 }
-.tts-top#ttsPlayer .tts-menu>summary{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
-.tts-top#ttsPlayer .tts-menu>summary output{pointer-events:none}
 .tts-top#ttsPlayer .tts-menu>summary::-webkit-details-marker{display:none}
 .tts-top#ttsPlayer .tts-menu>summary output{font:800 var(--text-2xs)/1 var(--font-sans);letter-spacing:-.02em}
 .tts-top#ttsPlayer .tts-menu[open]>summary,.tts-top#ttsPlayer .tts-menu>summary:hover{
@@ -1147,7 +1153,7 @@ body.course-block-dragging .lesson-text>*{transition:transform .08s ease}
  .tts-top#ttsPlayer .tts-menu-panel{position:fixed;right:.5rem;top:calc(var(--topbar-height) + .4rem)}
 }
 @media (max-width:430px){
- .tts-top#ttsPlayer.is-active .tts-menu{display:block}
+ .tts-top#ttsPlayer.is-active .tts-menu{display:none}
 }
 @media (prefers-reduced-motion:no-preference){
  .tts-top#ttsPlayer .tts-control,.tts-top#ttsPlayer .tts-menu>summary{transition:background-color .14s ease,color .14s ease}
@@ -1422,38 +1428,530 @@ body.course-editing .lesson-text>.course-math.course-math-block>mjx-container[ja
 }
 
 
-/* ===== LEMMA V16 · verejná verzia bez editovacieho režimu ===== */
-.course-authorbar,
-#courseEditToggle,
-#courseBackup,
-#courseLoadBackup,
-#courseExportLesson,
-.course-editor-only,
-.course-edit-only{
-  display:none!important;
+/* ===== LEMMA V20 – Tréning so 6 otázkami, pamäťou chýb a historickými oceneniami ===== */
+.course-review{
+ position:relative;
+ margin:.7rem 0;
+ border-color:#c4b5fd;
+ background:linear-gradient(180deg,#faf5ff 0,var(--color-surface) 28%);
+ box-shadow:0 12px 28px rgba(109,40,217,.11);
 }
-body.course-editing [contenteditable="true"],
-[contenteditable="true"]{
-  outline:none!important;
-  cursor:inherit!important;
+.course-review-progress{
+ position:relative;
+ padding:.7rem .8rem .82rem;
+ color:#fff;
+ background:
+  radial-gradient(circle at 88% 18%,rgba(253,224,71,.34),transparent 22%),
+  linear-gradient(125deg,#312e81 0,#6d28d9 48%,#2563eb 100%);
+ overflow:hidden;
 }
-.topbar-data .course-author-menu{min-width:170px}
-.topbar-data .course-author-menu button{font-weight:800}
+.course-review-progress::after{
+ content:"";
+ position:absolute;
+ inset:-80% -25%;
+ pointer-events:none;
+ background:linear-gradient(110deg,transparent 38%,rgba(255,255,255,.2) 50%,transparent 62%);
+ transform:translateX(-62%) rotate(8deg);
+ animation:review-progress-shine 4.8s ease-in-out infinite;
+}
+.course-review-progress-copy{
+ position:relative;
+ z-index:2;
+ display:grid;
+ grid-template-columns:auto 1fr auto;
+ align-items:center;
+ gap:.65rem;
+ margin-bottom:.48rem;
+}
+.course-review-progress-copy h3{
+ margin:0;
+ color:#fff;
+ font-size:clamp(1rem,2.4vw,1.28rem);
+ font-weight:900;
+ line-height:1;
+}
+.course-review-progress-copy strong{
+ color:#fff;
+ font-size:clamp(1.02rem,2.5vw,1.38rem);
+ line-height:1;
+ white-space:nowrap;
+}
+.course-review-progress-copy strong span{display:inline;color:inherit;font:inherit}
+.course-review-awards{
+ display:flex;
+ align-items:center;
+ justify-content:flex-end;
+ gap:.32rem;
+ min-width:0;
+}
+.course-review-award{
+ width:27px;
+ height:27px;
+ display:grid;
+ place-items:center;
+ border:1px solid rgba(255,255,255,.25);
+ border-radius:50%;
+ color:rgba(255,255,255,.4);
+ background:rgba(15,23,42,.28);
+ box-shadow:inset 0 1px 1px rgba(255,255,255,.08);
+ transition:color .2s ease,background .2s ease,border-color .2s ease,filter .2s ease,opacity .2s ease;
+ opacity:.68;
+}
+.course-review-award svg,.course-review-milestone svg{
+ width:64%;
+ height:64%;
+ display:block;
+ fill:currentColor;
+ stroke:currentColor;
+ stroke-width:1.5;
+ stroke-linejoin:round;
+}
+.course-review-award.is-earned{
+ color:#fff7c2;
+ border-color:rgba(253,224,71,.8);
+ background:linear-gradient(145deg,rgba(245,158,11,.92),rgba(234,88,12,.9));
+ filter:drop-shadow(0 0 6px rgba(253,224,71,.62));
+ opacity:1;
+}
+.course-review-track{
+ position:relative;
+ z-index:2;
+ height:16px;
+ border:1px solid rgba(255,255,255,.3);
+ border-radius:var(--radius-pill);
+ background:rgba(15,23,42,.42);
+ box-shadow:inset 0 2px 5px rgba(15,23,42,.32);
+ overflow:visible;
+}
+.course-review-fill{
+ position:relative;
+ z-index:1;
+ width:0;
+ height:100%;
+ border-radius:inherit;
+ background:linear-gradient(90deg,#22c55e 0,#fde047 52%,#fb923c 76%,#f472b6 100%);
+ box-shadow:0 0 18px rgba(253,224,71,.62);
+ transition:width .75s cubic-bezier(.2,.85,.2,1);
+ overflow:hidden;
+}
+.course-review-fill::before{
+ content:"";
+ position:absolute;
+ inset:0;
+ background:repeating-linear-gradient(115deg,transparent 0 16px,rgba(255,255,255,.2) 16px 24px);
+ animation:review-stripes 1.25s linear infinite;
+}
+.course-review-fill::after{
+ content:"";
+ position:absolute;
+ right:0;
+ top:50%;
+ width:9px;
+ height:9px;
+ border-radius:50%;
+ background:#fffbd8;
+ transform:translate(25%,-50%);
+ box-shadow:0 0 8px rgba(255,255,255,.9);
+}
+.course-review-safe-marker{
+ position:absolute;
+ z-index:2;
+ left:50%;
+ top:-5px;
+ bottom:-5px;
+ width:2px;
+ border-radius:2px;
+ background:rgba(255,255,255,.95);
+ box-shadow:0 0 0 2px rgba(49,46,129,.4),0 0 10px rgba(255,255,255,.55);
+}
+.course-review-milestone{
+ position:absolute;
+ z-index:4;
+ top:50%;
+ width:26px;
+ height:26px;
+ display:grid;
+ place-items:center;
+ border:2px solid rgba(255,255,255,.38);
+ border-radius:50%;
+ color:rgba(255,255,255,.52);
+ background:#312e81;
+ box-shadow:0 2px 7px rgba(15,23,42,.4);
+ transform:translate(-50%,-50%);
+ transition:color .2s ease,background .2s ease,border-color .2s ease,filter .2s ease;
+}
+.course-review-milestone[data-review-threshold="200"]{left:50%}
+.course-review-milestone[data-review-threshold="300"]{left:75%}
+.course-review-milestone[data-review-threshold="400"]{left:auto;right:-1px;transform:translateY(-50%)}
+.course-review-milestone.is-earned{
+ color:#fff7c2;
+ border-color:#fde047;
+ background:linear-gradient(145deg,#f59e0b,#ea580c);
+ filter:drop-shadow(0 0 7px rgba(253,224,71,.8));
+}
+.course-review-award.just-earned svg,.course-review-milestone.just-earned svg{
+ animation:review-award-unlock .58s cubic-bezier(.18,.9,.25,1);
+}
+.course-review .course-test-body{
+ grid-template-columns:repeat(2,minmax(0,1fr));
+ gap:.42rem;
+ padding:.5rem;
+}
+.course-review .course-test-question{
+ min-width:0;
+ padding:.46rem .52rem;
+ border-radius:var(--radius-md);
+}
+.course-review-origin{
+ overflow:hidden;
+ margin:0 0 .2rem;
+ color:#c4cad4;
+ font-size:.7rem;
+ font-weight:700;
+ letter-spacing:.025em;
+ line-height:1.15;
+ text-overflow:ellipsis;
+ text-transform:uppercase;
+ white-space:nowrap;
+}
+.course-review .course-test-prompt{
+ margin:0 0 .38rem;
+ font-size:.94rem;
+ font-weight:750;
+ line-height:1.34;
+}
+.course-review .course-test-number{margin-right:.2rem}
+.course-review .course-test-options{
+ grid-template-columns:repeat(2,minmax(0,1fr));
+ gap:.24rem;
+}
+.course-review .course-test-option{
+ min-width:0;
+ gap:.32rem;
+ padding:.34rem .4rem;
+ border-radius:.42rem;
+ font-size:.84rem;
+ line-height:1.25;
+}
+.course-review .course-test-option input{
+ flex:0 0 auto;
+ margin:.08rem 0 0;
+ transform:scale(.88);
+ transform-origin:top left;
+}
+.course-review .course-test-option-letter{
+ min-width:.92rem;
+ font-size:.78rem;
+}
+.course-review .course-test-option span:last-child{min-width:0;overflow-wrap:anywhere}
+.course-review .course-test-select{
+ max-width:min(100%,15rem);
+ margin:0 .16rem;
+ padding:.3rem .4rem;
+ border-radius:.42rem;
+ font-size:.86rem;
+}
+.course-review .course-test-answer{
+ width:100%;
+ padding:.36rem .45rem;
+ border-radius:.42rem;
+ font-size:.88rem;
+}
+.course-review .course-test-feedback{
+ min-height:0;
+ margin:.26rem 0 0;
+ font-size:.78rem;
+ line-height:1.24;
+}
+.course-review .course-test-feedback:empty{display:none}
+.course-review .course-test-footer{
+ gap:.55rem;
+ padding:.5rem .65rem;
+}
+.course-review .course-test-result{font-size:.78rem;line-height:1.25}
+.course-review .course-test-action{
+ padding:.44rem .72rem;
+ font-size:.78rem;
+ background:linear-gradient(135deg,#6d28d9,#2563eb);
+ box-shadow:0 6px 14px rgba(109,40,217,.18);
+}
+.course-review .course-test-action:hover{background:linear-gradient(135deg,#5b21b6,#1d4ed8)}
+.course-review.is-maxed .course-review-progress{
+ background:
+  radial-gradient(circle at 88% 18%,rgba(255,255,255,.28),transparent 24%),
+  linear-gradient(125deg,#92400e,#ea580c 50%,#db2777);
+}
+.course-review.is-maxed .course-review-fill{box-shadow:0 0 24px rgba(253,224,71,.9)}
+body.course-editing .course-review::before{display:none}
+.course-review>.course-block-controls .course-block-edit{display:none}
+@keyframes review-progress-shine{
+ 0%,55%{transform:translateX(-62%) rotate(8deg)}
+ 82%,100%{transform:translateX(62%) rotate(8deg)}
+}
+@keyframes review-stripes{to{transform:translateX(24px)}}
+@keyframes review-award-unlock{
+ 0%{transform:scale(.55) rotate(-18deg);opacity:.25}
+ 48%{transform:scale(1.28) rotate(8deg);opacity:1}
+ 72%{transform:scale(.92) rotate(-3deg)}
+ 100%{transform:scale(1) rotate(0);opacity:1}
+}
+@media (min-width:900px){
+ .course-review .course-test-body{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:620px){
+ .course-review-progress-copy{grid-template-columns:auto 1fr auto;gap:.42rem}
+ .course-review-awards{gap:.2rem}
+ .course-review-award{width:24px;height:24px}
+ .course-review .course-test-body{grid-template-columns:1fr}
+ .course-review .course-test-options{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:410px){
+ .course-review-progress{padding-inline:.65rem}
+ .course-review-progress-copy{grid-template-columns:auto 1fr;gap:.35rem}
+ .course-review-progress-copy strong{grid-column:2;grid-row:1;text-align:right}
+ .course-review-awards{grid-column:1/-1;grid-row:2;justify-content:flex-start}
+ .course-review .course-test-options{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){
+ .course-review-progress::after,.course-review-fill::before,.course-review-award.just-earned svg,.course-review-milestone.just-earned svg{animation:none}
+ .course-review-fill{transition:none}
+}
 
+
+/* Matematický zápis v odpovediach testov a tréningov */
+.course-test-answer-wrap{
+ display:flex;
+ flex-wrap:wrap;
+ align-items:stretch;
+ gap:.4rem;
+ width:min(100%,34rem);
+}
+.course-test-answer-wrap .course-test-answer{
+ flex:1 1 12rem;
+ width:auto;
+ min-width:0;
+}
+.answer-math-tool{display:contents}
+.answer-math-toggle{
+ display:inline-flex;
+ flex:0 0 2.75rem;
+ width:2.75rem;
+ min-width:2.75rem;
+ min-height:2.75rem;
+ align-items:center;
+ justify-content:center;
+ padding:.35rem;
+ border:1px solid var(--color-border-strong);
+ border-radius:var(--radius-md);
+ background:var(--color-surface);
+ color:var(--color-primary);
+ font:800 .82rem/1 var(--font-math);
+ cursor:pointer;
+ touch-action:manipulation;
+}
+.answer-math-toggle[aria-expanded="true"]{border-color:var(--color-primary);box-shadow:0 0 0 3px var(--color-focus-soft)}
+.answer-math-palette{
+ display:grid;
+ flex:1 0 100%;
+ grid-template-columns:repeat(7,minmax(2.65rem,1fr));
+ gap:.38rem;
+ margin-top:.05rem;
+ padding:.5rem;
+ border:1px solid var(--color-border);
+ border-radius:var(--radius-md);
+ background:var(--color-surface-alt);
+}
+.answer-math-palette[hidden]{display:none}
+.answer-math-key{
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ min-height:2.7rem;
+ padding:.32rem .22rem;
+ border:1px solid var(--color-border-strong);
+ border-radius:.48rem;
+ background:var(--color-surface);
+ color:var(--color-text);
+ font:700 1rem/1 var(--font-math);
+ touch-action:manipulation;
+}
+.answer-math-key:active{transform:translateY(1px);background:var(--color-primary-soft)}
+.answer-math-key:focus-visible,.answer-math-toggle:focus-visible{outline:3px solid var(--color-focus-soft);outline-offset:2px}
+.answer-math-hint{grid-column:1/-1;margin:.08rem .15rem .02rem;color:var(--color-muted);font-size:var(--text-xs);line-height:1.35}
+.course-review .course-test-answer-wrap{width:100%;gap:.3rem}
+.course-review .answer-math-toggle{
+ flex-basis:2.35rem;
+ width:2.35rem;
+ min-width:2.35rem;
+ min-height:2.35rem;
+ padding:.25rem;
+ border-radius:.42rem;
+ font-size:.72rem;
+}
+.course-review .answer-math-palette{grid-template-columns:repeat(7,minmax(2.25rem,1fr));gap:.28rem;padding:.38rem}
+.course-review .answer-math-key{min-height:2.25rem;font-size:.88rem}
+
+/* Vlastný dropdown umožňuje vykresliť LaTeX cez MathJax. */
+.course-math-select{
+ position:relative;
+ display:inline-flex;
+ max-width:100%;
+ margin:0 .3rem;
+ vertical-align:middle;
+}
+.course-math-select .course-test-select{
+ display:inline-flex;
+ align-items:center;
+ justify-content:space-between;
+ gap:.55rem;
+ max-width:min(100%,20rem);
+ min-height:2.35rem;
+ margin:0;
+ padding:.38rem .52rem;
+ text-align:left;
+ cursor:pointer;
+}
+.course-math-select .course-test-select::after{
+ content:"";
+ flex:0 0 auto;
+ width:.48rem;
+ height:.48rem;
+ margin:-.2rem .08rem 0 .15rem;
+ border-right:2px solid currentColor;
+ border-bottom:2px solid currentColor;
+ transform:rotate(45deg);
+}
+.course-math-select .course-test-select[aria-expanded="true"]::after{
+ margin:.2rem .08rem 0 .15rem;
+ transform:rotate(225deg);
+}
+.course-math-select-value{
+ display:inline-flex;
+ align-items:center;
+ min-width:0;
+ overflow:hidden;
+}
+.course-math-select-native{
+ position:absolute!important;
+ width:1px!important;
+ height:1px!important;
+ margin:0!important;
+ padding:0!important;
+ overflow:hidden!important;
+ clip:rect(0 0 0 0)!important;
+ clip-path:inset(50%)!important;
+ border:0!important;
+ opacity:0!important;
+ pointer-events:none!important;
+}
+.course-math-select-menu{
+ position:absolute;
+ z-index:120;
+ top:calc(100% + .3rem);
+ left:0;
+ display:grid;
+ gap:.2rem;
+ width:max-content;
+ min-width:100%;
+ max-width:min(24rem,calc(100vw - 2rem));
+ max-height:18rem;
+ overflow:auto;
+ padding:.32rem;
+ border:1px solid var(--color-border-strong);
+ border-radius:var(--radius-md);
+ background:var(--color-surface);
+ box-shadow:0 12px 30px rgba(15,23,42,.2);
+}
+.course-math-select-menu[hidden]{display:none}
+.course-math-select-option{
+ display:flex;
+ width:100%;
+ min-height:2.45rem;
+ align-items:center;
+ padding:.48rem .58rem;
+ border:0;
+ border-radius:.42rem;
+ background:transparent;
+ color:var(--color-text);
+ font:inherit;
+ text-align:left;
+ cursor:pointer;
+ touch-action:manipulation;
+}
+.course-math-select-option:hover,
+.course-math-select-option:focus-visible,
+.course-math-select-option[aria-selected="true"]{
+ outline:none;
+ background:var(--color-primary-soft);
+ color:var(--color-text);
+}
+.course-math-select-option[aria-selected="true"]{font-weight:800}
+.course-math-select .course-math{white-space:nowrap}
+.course-review .course-math-select{margin:0 .16rem}
+.course-review .course-math-select .course-test-select{
+ max-width:min(100%,15rem);
+ min-height:2rem;
+ padding:.28rem .4rem;
+ border-radius:.42rem;
+ font-size:.86rem;
+}
+.course-review .course-math-select-option{min-height:2.2rem;padding:.38rem .48rem;font-size:.86rem}
+
+@media (max-width:560px){
+ .course-test-answer-wrap{width:100%;gap:.35rem}
+ .course-test-answer-wrap .course-test-answer{font-size:1rem}
+ .answer-math-toggle{
+  flex-basis:2.75rem;
+  width:2.75rem;
+  min-width:2.75rem;
+  min-height:2.75rem;
+ }
+ .answer-math-palette{grid-template-columns:repeat(5,minmax(0,1fr));gap:.42rem;padding:.55rem}
+ .answer-math-key{min-height:2.8rem;font-size:1.06rem}
+ .course-review .answer-math-palette{grid-template-columns:repeat(5,minmax(0,1fr))}
+ .course-review .answer-math-key{min-height:2.45rem}
+ .course-math-select-menu{
+  position:fixed;
+  top:auto;
+  right:.75rem;
+  bottom:calc(.75rem + env(safe-area-inset-bottom));
+  left:.75rem;
+  width:auto;
+  min-width:0;
+  max-width:none;
+  max-height:48vh;
+  padding:.45rem;
+ }
+ .course-math-select-option{min-height:2.8rem;padding:.58rem .65rem}
+}
+
+
+/* ===== opravy stability editora a výberu odpovedí ===== */
+/* Lišta editora nesmie pri prepnutí zmeniť aktuálne miesto čítania.
+   Samotné obnovenie scrollu je v setEditing(). */
+
+/* Menu výberu odpovede sa otvára nad ovládačom. Test nesmie jeho obsah
+   orezať na svojom spodnom okraji. */
+.course-test{overflow:visible}
+.course-math-select-menu{
+ top:auto;
+ bottom:calc(100% + .3rem);
+ z-index:400;
+}
 </style>
 <script defer="" src="https://www.geogebra.org/apps/deployggb.js"></script>
 <script>
 window.MathJax={tex:{packages:{"[+]":["ams"]}},startup:{typeset:false,ready:function(){MathJax.startup.defaultReady();MathJax.startup.promise.then(function(){window.dispatchEvent(new Event("course-math-ready"))})}}};
 </script>
 <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
-</head><body><header class="topbar"><button aria-label="Otvoriť zoznam kurzov a lekcií" class="sidebar-toggle" title="Kurzy a lekcie" type="button">☰</button><div class="brand"><span class="brand-mark">∫</span><div><strong>LEMMA V16</strong><small>Learn. Explore. Model. Master. Apply.</small></div></div><button aria-hidden="true" hidden="" id="courseEditToggle" tabindex="-1" type="button">Editovanie je vo verejnej verzii vypnuté</button><details class="topbar-data">
-<summary aria-label="Import a export JSON">JSON</summary>
+</head><body><header class="topbar"><button aria-label="Otvoriť zoznam kurzov a lekcií" class="sidebar-toggle" title="Kurzy a lekcie" type="button">☰</button><div class="brand"><span class="brand-mark">∫</span><div><strong>LEMMA V20</strong><small>Learn. Explore. Model. Master. Apply.</small></div></div><button aria-label="Vytvoriť nový kurz" aria-pressed="false" class="topbar-edit" id="courseEditToggle" type="button">＋ Nový kurz</button><details class="topbar-data">
+<summary>Dáta</summary>
 <div class="course-author-menu">
-<button aria-hidden="true" hidden="" id="courseBackup" tabindex="-1" type="button">Zálohovať</button>
-<button aria-hidden="true" hidden="" id="courseLoadBackup" tabindex="-1" type="button">Načítať zálohu</button>
-<button id="courseExport" type="button">Export JSON</button>
-<button aria-hidden="true" hidden="" id="courseExportLesson" tabindex="-1" type="button">Exportovať aktuálny kurz</button>
-<button id="courseImport" type="button">Import JSON</button>
+<button id="courseBackup" type="button">Zálohovať</button>
+<button id="courseLoadBackup" type="button">Načítať zálohu</button>
+<button id="courseExport" type="button">Exportovať</button>
+<button id="courseExportLesson" type="button">Exportovať aktuálny kurz</button>
+<button id="courseImport" type="button">Importovať</button>
 </div>
 </details><div aria-label="Čítanie lekcie" class="tts-top" id="ttsPlayer" role="toolbar">
 <button aria-label="Predchádzajúci odsek" class="tts-control tts-session tts-nav" id="ttsPrev" title="Predchádzajúci odsek" type="button">‹</button>
@@ -1478,7 +1976,7 @@ window.MathJax={tex:{packages:{"[+]":["ams"]}},startup:{typeset:false,ready:func
 </details>
 <span class="sr-only" id="ttsStatus" role="status"></span>
 </div><div class="score-chip" title="Jednoduché skóre"><span>Skóre</span><strong>⭐ 0 bodov</strong></div></header>
-<div aria-hidden="true" class="course-authorbar" hidden="" inert="" role="presentation">
+<div aria-label="Nástroje na úpravu kurzov" class="course-authorbar" role="toolbar">
 <div class="course-author-view">
 <details class="course-author-more course-create-menu">
 <summary>＋ Nový</summary>
@@ -1512,6 +2010,7 @@ window.MathJax={tex:{packages:{"[+]":["ams"]}},startup:{typeset:false,ready:func
 <button id="courseFormula" type="button">Matematický vzorec</button>
 <button id="courseAddGraph" type="button">GeoGebra graf</button>
 <button id="courseAddTest" type="button">Test</button>
+<button id="courseAddReview" type="button">Tréning</button>
 </div>
 </details>
 <div aria-label="Formátovanie textu a vzorce" class="editor-format">
@@ -1544,8 +2043,8 @@ window.MathJax={tex:{packages:{"[+]":["ams"]}},startup:{typeset:false,ready:func
 <div class="sidebar-section-title" id="currentCourseTitle">Obsah kurzu</div>
 <nav aria-label="Obsah vybraného kurzu" class="lesson-nav"></nav>
 </section>
-<div class="sidebar-note"><strong id="sidebarCourseName">Žiadny kurz</strong><p id="sidebarCourseDescription">Načítajte súbor lemma-obsah.js alebo importujte JSON.</p></div>
-</aside><main class="content"><section aria-live="polite" class="course-empty-state"><div><h1>Zatiaľ tu nie sú žiadne kurzy</h1><p>Obsah sa automaticky načíta zo súboru „lemma-obsah.js“. Môžete tiež použiť ponuku „JSON“ na import obsahu.</p></div></section></main></div>
+<div class="sidebar-note"><strong id="sidebarCourseName">Žiadny kurz</strong><p id="sidebarCourseDescription">Vytvorte nový kurz alebo načítajte zálohu.</p></div>
+</aside><main class="content"><section aria-live="polite" class="course-empty-state"><div><h1>Zatiaľ tu nie sú žiadne kurzy</h1><p>Vytvorte nový kurz tlačidlom „Nový kurz“ alebo načítajte zálohu cez ponuku „Dáta“.</p></div></section></main></div>
 <dialog class="course-dialog" id="ggCodeDialog">
 <form id="ggCodeForm" method="dialog">
 <header><h2>Vyskúšať úpravu GeoGebra kódu</h2><button aria-label="Zavrieť" data-dialog-close="" type="button">✕</button></header>
@@ -1720,16 +2219,17 @@ A=(1,f(1))"></textarea>
 <button data-test-template="0" type="button">ABCD</button>
 <button data-test-template="1" type="button">Výber</button>
 <button data-test-template="2" type="button">Odpoveď</button>
+<button id="courseTestFormula" type="button">∑ Vzorec</button>
 </div>
 <textarea aria-label="Obsah testu" id="courseTestSource" required="" spellcheck="true"></textarea>
 </div>
-<p class="dialog-note">Otázky zapisujte po blokoch. Riadok so <strong>*</strong> označuje správnu možnosť, riadky so <strong>-</strong> nesprávne možnosti a riadok so <strong>=</strong> správnu textovú alebo číselnú odpoveď. Viac uznávaných odpovedí oddeľte znakom <strong>|</strong>.</p>
+<p class="dialog-note">Otázky zapisujte po blokoch. Riadok so <strong>*</strong> označuje správnu možnosť, riadky so <strong>-</strong> nesprávne možnosti a riadok so <strong>=</strong> správnu textovú alebo číselnú odpoveď. Viac uznávaných odpovedí oddeľte znakom <strong>|</strong>. Matematický zápis vložte tlačidlom <strong>∑ Vzorec</strong>; vzorec v riadku sa uloží medzi znaky <strong>$</strong> a samostatný vzorec medzi <strong>$$</strong>.</p>
 <details class="course-test-syntax">
 <summary>Zobraziť syntax a príklad</summary>
 <pre># Krátky test
 
 [ABCD]
-Ktoré číslo je párne?
+Ktoré číslo je výsledkom $2^2$?
 * 4
 - 3
 - 5
@@ -1782,13 +2282,13 @@ Koľko je 6 × 7?
 </form>
 </dialog>
 <div class="course-toast" id="courseToast" role="status"></div>
-<button aria-controls="quickNotesPanel" aria-expanded="false" aria-label="Otvoriť poznámky ku kurzu" class="quick-notes-toggle" id="quickNotesToggle" title="Poznámky ku kurzu" type="button">📝</button>
-<section aria-label="Poznámky ku kurzu" class="quick-notes-panel" hidden="" id="quickNotesPanel">
-<div class="quick-notes-head"><strong id="quickNotesTitle">Poznámky ku kurzu</strong><button aria-label="Minimalizovať poznámky" id="quickNotesMinimize" title="Minimalizovať" type="button">−</button><button aria-label="Zavrieť poznámky" id="quickNotesClose" title="Zavrieť" type="button">×</button></div>
-<textarea aria-label="Poznámky ku aktuálnemu kurzu" id="quickNotesText" placeholder="Zapíšte si poznámku ku celému kurzu…"></textarea>
+<button aria-controls="quickNotesPanel" aria-expanded="false" aria-label="Otvoriť rýchle poznámky" class="quick-notes-toggle" id="quickNotesToggle" title="Rýchle poznámky" type="button">📝</button>
+<section aria-label="Rýchle poznámky k lekcii" class="quick-notes-panel" hidden="" id="quickNotesPanel">
+<div class="quick-notes-head"><strong id="quickNotesTitle">Rýchle poznámky</strong><button aria-label="Minimalizovať poznámky" id="quickNotesMinimize" title="Minimalizovať" type="button">−</button><button aria-label="Zavrieť poznámky" id="quickNotesClose" title="Zavrieť" type="button">×</button></div>
+<textarea aria-label="Poznámky k aktuálnej lekcii" id="quickNotesText" placeholder="Zapíšte si krátku poznámku k tejto lekcii…"></textarea>
 <div aria-live="polite" class="quick-notes-status" id="quickNotesStatus">Uložené</div>
 </section>
-<!-- Verejný obsah sa pri otvorení automaticky načíta z externého súboru lemma-obsah.js v rovnakom priečinku. Voliteľne možno použiť JSON import. -->
+<!-- Obsah kurzov nie je vložený do aplikácie. Načítava sa z externého lemma-obsah.js alebo cez JSON import. -->
 <script id="lemmaInitialBackupScript" src="./lemma-obsah.js"></script>
 <script id="course-navigation-script">
 (function(){
@@ -2096,94 +2596,20 @@ function updateRateLabel(){
 updateRateLabel();
 const menu=document.getElementById('ttsMenu');
 const ttsStatus=document.getElementById('ttsStatus');
-const menuTrigger=menu?.querySelector(':scope > summary');
-function syncTtsMenuState(){
- if(!menu||!menuTrigger)return;
- const expanded=menu.hasAttribute('open');
- menuTrigger.setAttribute('aria-expanded',String(expanded));
-}
-if(menu&&menuTrigger){
- menuTrigger.setAttribute('role','button');
- menuTrigger.setAttribute('aria-haspopup','true');
- syncTtsMenuState();
- menuTrigger.addEventListener('click',event=>{
-  event.preventDefault();
-  event.stopPropagation();
-  const shouldOpen=!menu.hasAttribute('open');
-  document.querySelectorAll('.topbar details[open]').forEach(details=>{
-   if(details!==menu)details.removeAttribute('open');
-  });
-  menu.toggleAttribute('open',shouldOpen);
-  syncTtsMenuState();
- });
- menu.addEventListener('toggle',syncTtsMenuState);
-}
 let readingNodes=[],paragraphIndex=0,chunks=[],chunkIndex=0,on=false,paused=false,token=0,currentNode=null;
 let chunkOffset=0,boundaryOffset=0,currentUtterance=null,speechTimer=0;
 
 const lesson=()=>document.querySelector('article.lesson.active');
-function mathSpeechWords(){
- const code=String(language?.value||"sk-SK").slice(0,2).toLowerCase();
- const words={
-  sk:{divide:"delené",sqrt:"odmocnina z",root:"odmocnina stupňa",power:"na",sub:"dolný index",square:"na druhú",cube:"na tretiu",equals:"rovná sa",notEqual:"nerovná sa",less:"menšie ako",greater:"väčšie ako",lessEqual:"menšie alebo rovné",greaterEqual:"väčšie alebo rovné",times:"krát",plus:"plus",minus:"mínus",approx:"približne sa rovná",to:"smeruje k",infinity:"nekonečno",integral:"integrál",sum:"suma",limit:"limita",sin:"sínus",cos:"kosínus",tan:"tangens",log:"logaritmus",ln:"prirodzený logaritmus",exp:"exponenciála",absolute:"absolútna hodnota",percent:"percent",pi:"pí"},
-  cs:{divide:"děleno",sqrt:"odmocnina z",root:"odmocnina stupně",power:"na",sub:"dolní index",square:"na druhou",cube:"na třetí",equals:"rovná se",notEqual:"nerovná se",less:"menší než",greater:"větší než",lessEqual:"menší nebo rovno",greaterEqual:"větší nebo rovno",times:"krát",plus:"plus",minus:"mínus",approx:"přibližně se rovná",to:"směřuje k",infinity:"nekonečno",integral:"integrál",sum:"suma",limit:"limita",sin:"sinus",cos:"kosinus",tan:"tangens",log:"logaritmus",ln:"přirozený logaritmus",exp:"exponenciála",absolute:"absolutní hodnota",percent:"procent",pi:"pí"},
-  en:{divide:"divided by",sqrt:"square root of",root:"root of degree",power:"to the power of",sub:"subscript",square:"squared",cube:"cubed",equals:"equals",notEqual:"is not equal to",less:"is less than",greater:"is greater than",lessEqual:"is less than or equal to",greaterEqual:"is greater than or equal to",times:"times",plus:"plus",minus:"minus",approx:"is approximately equal to",to:"tends to",infinity:"infinity",integral:"integral",sum:"sum",limit:"limit",sin:"sine",cos:"cosine",tan:"tangent",log:"logarithm",ln:"natural logarithm",exp:"exponential",absolute:"absolute value of",percent:"percent",pi:"pi"},
-  de:{divide:"geteilt durch",sqrt:"Quadratwurzel aus",root:"Wurzel vom Grad",power:"hoch",sub:"Index",square:"zum Quadrat",cube:"hoch drei",equals:"ist gleich",notEqual:"ist nicht gleich",less:"ist kleiner als",greater:"ist größer als",lessEqual:"ist kleiner oder gleich",greaterEqual:"ist größer oder gleich",times:"mal",plus:"plus",minus:"minus",approx:"ist ungefähr gleich",to:"strebt gegen",infinity:"unendlich",integral:"Integral",sum:"Summe",limit:"Grenzwert",sin:"Sinus",cos:"Kosinus",tan:"Tangens",log:"Logarithmus",ln:"natürlicher Logarithmus",exp:"Exponentialfunktion",absolute:"Betrag von",percent:"Prozent",pi:"Pi"},
-  pl:{divide:"podzielone przez",sqrt:"pierwiastek z",root:"pierwiastek stopnia",power:"do potęgi",sub:"indeks dolny",square:"do kwadratu",cube:"do sześcianu",equals:"równa się",notEqual:"nie równa się",less:"mniejsze niż",greater:"większe niż",lessEqual:"mniejsze lub równe",greaterEqual:"większe lub równe",times:"razy",plus:"plus",minus:"minus",approx:"w przybliżeniu równa się",to:"dąży do",infinity:"nieskończoność",integral:"całka",sum:"suma",limit:"granica",sin:"sinus",cos:"cosinus",tan:"tangens",log:"logarytm",ln:"logarytm naturalny",exp:"funkcja wykładnicza",absolute:"wartość bezwzględna z",percent:"procent",pi:"pi"},
-  hu:{divide:"osztva",sqrt:"négyzetgyök",root:"gyök, amelynek foka",power:"hatványon",sub:"alsó index",square:"négyzeten",cube:"köbön",equals:"egyenlő",notEqual:"nem egyenlő",less:"kisebb mint",greater:"nagyobb mint",lessEqual:"kisebb vagy egyenlő",greaterEqual:"nagyobb vagy egyenlő",times:"szorozva",plus:"plusz",minus:"mínusz",approx:"megközelítőleg egyenlő",to:"tart",infinity:"végtelen",integral:"integrál",sum:"összeg",limit:"határérték",sin:"szinusz",cos:"koszinusz",tan:"tangens",log:"logaritmus",ln:"természetes logaritmus",exp:"exponenciális függvény",absolute:"abszolút értéke",percent:"százalék",pi:"pí"}
- };
- return words[code]||words.sk;
-}
-function mathFormulaSpeech(tex){
- const w=mathSpeechWords();
- let value=String(tex||"").replace(/\u200B/g," ").replace(/\\(?:left|right)\b/g," ");
- let previous="";
- while(previous!==value){
-  previous=value;
-  value=value.replace(/\\(?:dfrac|tfrac|frac)\s*\{([^{}]*)\}\s*\{([^{}]*)\}/g,(_,top,bottom)=>" "+top+" "+w.divide+" "+bottom+" ");
- }
- previous="";
- while(previous!==value){
-  previous=value;
-  value=value.replace(/\\sqrt\s*(?:\[([^\]]+)\])?\s*\{([^{}]*)\}/g,(_,degree,body)=>degree?" "+w.root+" "+degree+", "+body+" ":" "+w.sqrt+" "+body+" ");
- }
- value=value
-  .replace(/\^\s*\{\s*2\s*\}/g," "+w.square+" ").replace(/\^\s*2\b/g," "+w.square+" ")
-  .replace(/\^\s*\{\s*3\s*\}/g," "+w.cube+" ").replace(/\^\s*3\b/g," "+w.cube+" ")
-  .replace(/\^\s*\{([^{}]+)\}/g,(_,part)=>" "+w.power+" "+part+" ").replace(/\^\s*([A-Za-z0-9]+)/g,(_,part)=>" "+w.power+" "+part+" ")
-  .replace(/_\s*\{([^{}]+)\}/g,(_,part)=>" "+w.sub+" "+part+" ").replace(/_\s*([A-Za-z0-9]+)/g,(_,part)=>" "+w.sub+" "+part+" ")
-  .replace(/\\(?:operatorname|mathrm|mathbf|mathit|text)\s*\{([^{}]*)\}/g," $1 ")
-  .replace(/\\begin\s*\{[^{}]*\}|\\end\s*\{[^{}]*\}/g," ")
-  .replace(/\\(?:cdot|times)\b/g," "+w.times+" ").replace(/\\div\b/g," "+w.divide+" ")
-  .replace(/\\(?:neq|ne)\b|≠/g," "+w.notEqual+" ").replace(/\\leq?\b|≤/g," "+w.lessEqual+" ").replace(/\\geq?\b|≥/g," "+w.greaterEqual+" ")
-  .replace(/\\approx\b|≈/g," "+w.approx+" ").replace(/\\to\b|→/g," "+w.to+" ")
-  .replace(/\\infty\b|∞/g," "+w.infinity+" ").replace(/\\int\b/g," "+w.integral+" ").replace(/\\sum\b/g," "+w.sum+" ").replace(/\\lim\b/g," "+w.limit+" ")
-  .replace(/\\sin\b/g," "+w.sin+" ").replace(/\\cos\b/g," "+w.cos+" ").replace(/\\tan\b/g," "+w.tan+" ")
-  .replace(/\\log\b/g," "+w.log+" ").replace(/\\ln\b/g," "+w.ln+" ").replace(/\\exp\b/g," "+w.exp+" ")
-  .replace(/\\pi\b/g," "+w.pi+" ").replace(/\\alpha\b/g," alfa ").replace(/\\beta\b/g," beta ").replace(/\\gamma\b/g," gama ").replace(/\\delta\b/g," delta ")
-  .replace(/\\epsilon\b/g," epsilon ").replace(/\\theta\b/g," théta ").replace(/\\lambda\b/g," lambda ").replace(/\\mu\b/g," mí ").replace(/\\sigma\b/g," sigma ").replace(/\\omega\b/g," omega ")
-  .replace(/\\%/g," "+w.percent+" ").replace(/\\,/g," ").replace(/\\;/g," ").replace(/\\!/g," ")
-  .replace(/\\([A-Za-z]+)/g," $1 ").replace(/[{}\[\]]/g," ")
-  .replace(/=/g," "+w.equals+" ").replace(/</g," "+w.less+" ").replace(/>/g," "+w.greater+" ")
-  .replace(/\+/g," "+w.plus+" ").replace(/[−–—-]/g," "+w.minus+" ").replace(/[×*]/g," "+w.times+" ").replace(/\//g," "+w.divide+" ")
-  .replace(/\|([^|]+)\|/g,(_,part)=>" "+w.absolute+" "+part+" ")
-  .replace(/\s+([,.;:!?])/g,"$1").replace(/\s+/g," ").trim();
- return value;
-}
 function speechText(node){
  if(!node)return"";
- const clone=node.cloneNode(true);
- clone.querySelectorAll?.(".course-editor-only").forEach(item=>item.remove());
- clone.querySelectorAll?.(".course-math").forEach(item=>{
-  const standalone=item.classList.contains("course-math-block")||item.dataset.display==="true";
-  const tex=item.dataset.tex||item.getAttribute("aria-label")?.replace(/^Matematický vzorec:\s*/,"")||item.textContent||"";
-  item.replaceWith(document.createTextNode(standalone?" ":" "+mathFormulaSpeech(tex)+" "));
- });
+ const clone=node.cloneNode(true);clone.querySelectorAll?.(".course-math,.course-editor-only").forEach(item=>item.remove());
  return String(clone.textContent||"")
-  .replace(/\$\$[\s\S]+?\$\$/g," ").replace(/\\\[[\s\S]+?\\\]/g," ")
-  .replace(/\$([^$\n]+?)\$/g,(_,tex)=>" "+mathFormulaSpeech(tex)+" ")
-  .replace(/\\\(([\s\S]+?)\\\)/g,(_,tex)=>" "+mathFormulaSpeech(tex)+" ")
-  .replace(/\u200B/g," ").replace(/\s+([,.;:!?])/g,"$1").replace(/([,;:])\s*([.!?])/g,"$2").replace(/\s+/g," ").trim();
+  .replace(/\$\$[\s\S]+?\$\$/g," ").replace(/\$[^$\n]+?\$/g," ").replace(/\\\[[\s\S]+?\\\]/g," ").replace(/\\\([\s\S]+?\\\)/g," ")
+  .replace(/\b(?:lim\s+)?[A-Za-z]\s*→\s*[A-Za-z0-9∞+\-]+(?:\s+[A-Za-z]\([^)]*\)\s*=\s*[^\s,.;:!?]+)?/g," ")
+  .replace(/\b[A-Za-z][A-Za-z0-9′]*\([^)]*\)(?:\s*[=<>≤≥≠]\s*[^\s,.;:!?]+)?/g," ")
+  .replace(/(?:\|[^|]+\||\b[A-Za-zεδΔ][A-Za-z0-9₀-₉′]*)\s*(?:=|<|>|≤|≥|≠)\s*[^\s,.;:!?]+/g," ")
+  .replace(/\b\d+\s*\/\s*\d+\b/g," ").replace(/\b[A-Za-z][²³⁴⁵⁶⁷⁸⁹₀-₉ˣⁿ]+\b/g," ")
+  .replace(/\s+([,.;:!?])/g,"$1").replace(/([,;:])\s*([.!?])/g,"$2").replace(/\s+/g," ").trim();
 }
 function availableNodes(){
  return [...document.querySelectorAll('article.lesson.course-visible h1,article.lesson.course-visible .lesson-text>h2:not([data-tts="false"]),article.lesson.course-visible .lesson-text>h3:not([data-tts="false"]),article.lesson.course-visible .lesson-text>p:not([data-tts="false"])')]
@@ -2358,8 +2784,6 @@ window.addEventListener('pagehide',halt);
 const STORAGE_KEY="lemma-v5-courses-v1";
 const LEGACY_STORAGE_KEY="lemma-v4-courses-v1";
 const BACKUP_GLOBAL="LEMMA_CONTENT_BACKUP";
-const PUBLIC_READ_ONLY=true;
-const PUBLIC_IMPORT_SESSION_KEY="lemma-public-json-session";
 const IMPORT_LIMITS={lessons:5000,courses:500,lessonHtml:5_000_000,fileBytes:100*1024*1024};
 let lastImportValidationError="";
 const COURSE_ICONS=[
@@ -2371,14 +2795,20 @@ const COURSE_ICONS=[
 ];
 const COURSE_ICON_VALUES=new Set(COURSE_ICONS.map(item=>item[0]));
 const nav=document.querySelector(".lesson-nav"),courseNav=document.querySelector(".course-list-nav"),main=document.querySelector("main.content"),status=document.getElementById("courseAuthorStatus"),toastEl=document.getElementById("courseToast");
-let editing=false,selectedBlock=null,graphBeingEdited=null,testBeingEdited=null,mathBeingEdited=null,textBlockBeingEdited=null,savedRange=null,saveTimer=null,toastTimer=null;
+let editing=false,selectedBlock=null,graphBeingEdited=null,testBeingEdited=null,mathBeingEdited=null,mathTextareaTarget=null,mathTextareaSelection=null,textBlockBeingEdited=null,savedRange=null,saveTimer=null,toastTimer=null;
 let courses=[],activeCourseId="",storageWarningShown=false;
+const REVIEW_SCORE_KEY="lemma-review-score-v1",REVIEW_POINTS=10,REVIEW_MAX=400,REVIEW_FLOOR=200,REVIEW_FRIDAY_LOSS=50,REVIEW_QUESTION_COUNT=6,REVIEW_WRONG_LIMIT=10;
+let reviewScoreData={};
+try{
+ const storedReview=JSON.parse(localStorage.getItem(REVIEW_SCORE_KEY)||"{}");
+ if(storedReview&&typeof storedReview==="object"&&!Array.isArray(storedReview))reviewScoreData=storedReview;
+}catch(error){reviewScoreData={}}
 
 function toast(message,error=false){toastEl.textContent=message;toastEl.classList.toggle("error",error);toastEl.classList.add("show");clearTimeout(toastTimer);toastTimer=setTimeout(()=>toastEl.classList.remove("show"),2600)}
 function setStatus(message){status.textContent=message}
 function safeJSON(value,fallback){try{return JSON.parse(value)}catch(e){return fallback}}
 
-const BLOCK_TYPES=new Set(["paragraph","heading","formula","geogebra","test"]);
+const BLOCK_TYPES=new Set(["paragraph","heading","formula","geogebra","test","review"]);
 const INLINE_BLOCK_TYPES=new Set(["text","formula"]);
 const BLOCK_SELECTOR=":scope > .lesson-text > p,:scope > .lesson-text > h2,:scope > .lesson-text > h3,:scope > .lesson-text > .course-math,:scope > .lesson-text > .gg-card,:scope > .lesson-text > .course-test";
 const BLOCK_KEYS={
@@ -2386,7 +2816,8 @@ const BLOCK_KEYS={
  heading:new Set(["type","level","tts","content"]),
  formula:new Set(["type","tex"]),
  geogebra:new Set(["type","title","app","bounds","commands","controls","tasks","expected","colors","fill","open","preserveStyle","toolbar","materialId","ggbXml"]),
- test:new Set(["type","source"])
+ test:new Set(["type","source"]),
+ review:new Set(["type"])
 };
 const INLINE_KEYS={text:new Set(["type","text","marks"]),formula:new Set(["type","tex"])};
 function hasOnlyKeys(value,allowed){return Object.keys(value||{}).every(key=>allowed.has(key))}
@@ -2432,6 +2863,7 @@ function canonicalBlock(block){
  if(block.type==="test"){
   const source=normalizeTestSource(block.source||"").trim();return source?{type:"test",source}:null;
  }
+ if(block.type==="review")return {type:"review"};
  if(block.type==="geogebra"){
   const result={
    type:"geogebra",
@@ -2501,6 +2933,7 @@ function encodeBlockV5(sourceBlock){
  }
  if(block.type==="formula")return {math:block.tex};
  if(block.type==="test")return {test:block.source};
+ if(block.type==="review")return {review:true};
  if(block.type==="geogebra"){
   const graph={};
   if(block.title!=="Interaktívny graf")graph.title=block.title;
@@ -2533,6 +2966,7 @@ function decodeBlockV5(block){
  }
  if(Object.prototype.hasOwnProperty.call(block,"math"))return canonicalBlock({type:"formula",tex:block.math});
  if(Object.prototype.hasOwnProperty.call(block,"test"))return canonicalBlock({type:"test",source:block.test});
+ if(Object.prototype.hasOwnProperty.call(block,"review"))return block.review===true?canonicalBlock({type:"review"}):null;
  if(Object.prototype.hasOwnProperty.call(block,"graph"))return canonicalBlock({type:"geogebra",...(plainObject(block.graph)?block.graph:{})});
  return null;
 }
@@ -2600,7 +3034,7 @@ function validGraphV5(graph){
 }
 function validBlockV5(block){
  if(!plainObject(block))return false;
- const typeKeys=["p","h2","h3","math","graph","test"].filter(key=>Object.prototype.hasOwnProperty.call(block,key));
+ const typeKeys=["p","h2","h3","math","graph","test","review"].filter(key=>Object.prototype.hasOwnProperty.call(block,key));
  if(typeKeys.length!==1)return false;
  const type=typeKeys[0],allowed=new Set([type]);
  if(type==="p"){allowed.add("role");allowed.add("tts")}
@@ -2609,7 +3043,8 @@ function validBlockV5(block){
  if(type==="p")return validInlineContentV5(block.p)&&(block.role==null||["narrative","hook","instruction"].includes(block.role))&&(block.tts==null||typeof block.tts==="boolean");
  if(type==="h2"||type==="h3")return validInlineContentV5(block[type])&&(block.tts==null||typeof block.tts==="boolean");
  if(type==="math")return typeof block.math==="string"&&block.math.trim()!==""&&!/^\s*(?:\$|\\\(|\\\[)/.test(block.math);
- if(type==="test")return typeof block.test==="string"&&!hasFormulaDelimiter(block.test);
+ if(type==="test")return typeof block.test==="string";
+ if(type==="review")return block.review===true;
  return validGraphV5(block.graph);
 }
 function validCompactStateV5(state,fail){
@@ -2725,7 +3160,7 @@ function normalizeFormulaTextNodes(root=document){
 function plainFormulaText(tex){
  return String(tex||"").replace(/\\ne(?:q)?/g," ≠ ").replace(/\\le/g," ≤ ").replace(/\\ge/g," ≥ ").replace(/\\to/g," → ").replace(/\\infty/g,"∞").replace(/_0/g,"₀").replace(/_1/g,"₁").replace(/_2/g,"₂").replace(/[{}]/g,"").replace(/\\/g,"").replace(/\s+/g," ").trim();
 }
-function normalizeTestSource(source){return String(source||"").replace(FORMULA_DELIMITER_RE,(match,a,b,c,d)=>plainFormulaText(a??b??c??d??""))}
+function normalizeTestSource(source){return String(source||"").replace(/\r\n?/g,"\n")}
 function graphBlockFromCard(card){
  const el=card.querySelector(".gg-live"),read=(name,fallback)=>safeJSON(el?.dataset?.[name],fallback);
  const title=(card.querySelector(".gg-head strong")?.textContent||"Interaktívny graf").replace(/^\s*GeoGebra\s*[·\-:]\s*/i,"").trim();
@@ -2771,6 +3206,7 @@ function blockFromElement(element){
  if(element.matches("h2,h3"))return {type:"heading",level:Number(element.tagName.slice(1)),tts:element.dataset.tts!=="false",content:inlineItemsFromElement(element)};
  if(element.matches(".course-math"))return {type:"formula",tex:String(element.dataset.tex||element.textContent||"").trim()};
  if(element.matches("aside.gg-card"))return graphBlockFromCard(element);
+ if(element.matches("section.course-review"))return {type:"review"};
  if(element.matches("section.course-test"))return {type:"test",source:normalizeTestSource(element.dataset.testSource||"")};
  return null;
 }
@@ -2805,6 +3241,7 @@ function elementFromBlock(sourceBlock){
  if(block.type==="formula")return createMathElement(block.tex,true);
  if(block.type==="geogebra")return graphCardFromBlock(block);
  if(block.type==="test")return createTestBlock(block.source);
+ if(block.type==="review")return createReviewBlock();
  return null;
 }
 function articleFromLessonData(sourceLesson){
@@ -2838,7 +3275,8 @@ function contentBlockValid(block,strict=false){
   if(strict&&!hasRequiredKeys(block,["type","title","app","bounds","commands","controls","tasks","expected","colors","fill","open","preserveStyle","toolbar"]))return false;
   return typeof block.title==="string"&&["graphing","3d"].includes(block.app||"graphing")&&Array.isArray(bounds)&&bounds.length===4&&bounds.every(value=>Number.isFinite(Number(value)))&&Array.isArray(block.commands)&&block.commands.every(value=>typeof value==="string")&&Array.isArray(block.controls??[])&&Array.isArray(block.tasks)&&block.tasks.every(task=>plainObject(task)&&typeof task.text==="string"&&typeof task.condition==="string")&&Array.isArray(block.expected??[])&&(block.expected??[]).every(value=>typeof value==="string")&&plainObject(colors)&&Object.values(colors).every(color=>Array.isArray(color)&&color.length===3&&color.every(value=>Number.isFinite(Number(value))&&Number(value)>=0&&Number(value)<=255))&&plainObject(fill)&&Object.values(fill).every(value=>Number.isFinite(Number(value))&&Number(value)>=0&&Number(value)<=1)&&Array.isArray(block.open??[])&&(block.open??[]).every(value=>typeof value==="string")&&(block.materialId==null||typeof block.materialId==="string")&&(block.ggbXml==null||typeof block.ggbXml==="string");
  }
- if(block.type==="test")return typeof block.source==="string"&&!hasFormulaDelimiter(block.source);
+ if(block.type==="test")return typeof block.source==="string";
+ if(block.type==="review")return true;
  return false;
 }
 
@@ -2943,7 +3381,7 @@ function normalizeImportedLessonBlocks(root=document){
    if(child.matches("table")){child.querySelectorAll("tr").forEach(row=>appendText([...row.children].map(cell=>cell.textContent.trim()).filter(Boolean).join(" — ")));child.remove();return}
    const p=document.createElement("p");p.textContent=child.textContent||"";child.replaceWith(p);
   });
-  article.querySelectorAll("section.course-test").forEach(node=>{node.dataset.testSource=normalizeTestSource(node.dataset.testSource||"");renderTestBlock(node)});
+  article.querySelectorAll("section.course-test:not(.course-review)").forEach(node=>{node.dataset.testSource=normalizeTestSource(node.dataset.testSource||"");renderTestBlock(node)});article.querySelectorAll("section.course-review").forEach(node=>renderReviewBlock(node));
   article.querySelectorAll(".lesson-prediction:not([data-tts]),.lesson-return:not([data-tts])").forEach(node=>node.dataset.tts="false");
   article.querySelectorAll(".lesson-text>p:not([data-tts]),.lesson-text>h2:not([data-tts]),.lesson-text>h3:not([data-tts])").forEach(node=>node.dataset.tts="true");
   normalizeFormulaTextNodes(article);
@@ -2974,7 +3412,8 @@ function cleanTestsForStorage(root){
   test.querySelectorAll("input,select").forEach(control=>{control.disabled=false;control.removeAttribute("checked");if(control.tagName==="SELECT")control.selectedIndex=0;else if(control.type==="radio"||control.type==="checkbox")control.checked=false;else control.value=""});
   test.querySelectorAll("option").forEach(option=>option.removeAttribute("selected"));
   test.querySelectorAll(".course-test-feedback,.course-test-result").forEach(node=>node.textContent="");
-  const action=test.querySelector(".course-test-action");if(action){action.textContent="Vyhodnotiť";action.dataset.mode="evaluate"}
+  delete test.dataset.reviewAttempt;
+  const action=test.querySelector(".course-test-action");if(action){action.textContent=test.classList.contains("course-review")?"Nových 6 otázok":"Vyhodnotiť";action.dataset.mode=test.classList.contains("course-review")?"review-repeat":"evaluate"}
  });
 }
 function cleanArticle(article){
@@ -3085,10 +3524,10 @@ function normalizeCourses(rawCourses,allIds){
 function renderEmptyState(){
  editing=false;editSession=null;document.body.classList.remove("course-editing");activeCourseId="";
  nav.innerHTML="";courseNav.innerHTML="";
- if(!main.querySelector(".course-empty-state"))main.innerHTML='<section class="course-empty-state" aria-live="polite"><div><h1>Zatiaľ tu nie sú žiadne kurzy</h1><p>Obsah sa automaticky načíta zo súboru „lemma-obsah.js“. Môžete tiež použiť ponuku „JSON“ na import obsahu.</p></div></section>';
+ if(!main.querySelector(".course-empty-state"))main.innerHTML='<section class="course-empty-state" aria-live="polite"><div><h1>Zatiaľ tu nie sú žiadne kurzy</h1><p>Vytvorte nový kurz tlačidlom „Nový kurz“ alebo načítajte zálohu cez ponuku „Dáta“.</p></div></section>';
  document.getElementById("currentCourseTitle").textContent="Obsah kurzu";
  document.getElementById("sidebarCourseName").textContent="Žiadny kurz";
- document.getElementById("sidebarCourseDescription").textContent="Načítajte súbor lemma-obsah.js alebo importujte JSON.";
+ document.getElementById("sidebarCourseDescription").textContent="Vytvorte nový kurz alebo načítajte zálohu.";
  const brandMark=document.querySelector(".brand-mark");if(brandMark)brandMark.textContent="∫";
 }
 function sidebarItemActions(kind,id,deleteDisabled=false){
@@ -3168,7 +3607,7 @@ function deleteCourseById(id){
  const wasEditing=editing,preferredLesson=activeLesson()?.id||"",deletingActive=activeCourseId===id;
  if(wasEditing)commitEditSession(false);
  course.lessonIds.forEach(lessonId=>document.getElementById(lessonId)?.remove());
- courses.splice(index,1);
+ courses.splice(index,1);delete reviewScoreData[id];saveReviewScores();
  if(deletingActive)activeCourseId=courses[index]?.id||courses[index-1]?.id||courses[0]?.id||"";
  if(courses.length)renderLessonNav(deletingActive?"":preferredLesson);else renderEmptyState();
  updateCounts();persist(true);if(wasEditing&&activeLesson())setEditing(true);
@@ -3222,25 +3661,17 @@ function endSidebarDrag(event){
 }
 function restore(){
  let payload=null,state=null,source="";
- let preferImportedSession=false;
- try{preferImportedSession=sessionStorage.getItem(PUBLIC_IMPORT_SESSION_KEY)==="1"}catch(e){}
- if(!preferImportedSession){
-  const backup=window[BACKUP_GLOBAL];
-  if(validImportState(backup)){payload=backup;source="backup"}
- }
+ try{
+  const currentRaw=localStorage.getItem(STORAGE_KEY);
+  const legacyRaw=currentRaw===null?localStorage.getItem(LEGACY_STORAGE_KEY):null;
+  const raw=currentRaw??legacyRaw;
+  if(raw!==null){
+   const parsed=JSON.parse(raw);
+   if(validImportState(parsed)){payload=parsed;source=legacyRaw!==null?"legacy-browser":"browser"}
+   else localStorage.removeItem(currentRaw!==null?STORAGE_KEY:LEGACY_STORAGE_KEY);
+  }
+ }catch(e){console.warn("Obnova údajov z prehliadača zlyhala",e)}
  if(!payload){
-  try{
-   const currentRaw=localStorage.getItem(STORAGE_KEY);
-   const legacyRaw=currentRaw===null?localStorage.getItem(LEGACY_STORAGE_KEY):null;
-   const raw=currentRaw??legacyRaw;
-   if(raw!==null){
-    const parsed=JSON.parse(raw);
-    if(validImportState(parsed)){payload=parsed;source=legacyRaw!==null?"legacy-browser":"browser"}
-    else localStorage.removeItem(currentRaw!==null?STORAGE_KEY:LEGACY_STORAGE_KEY);
-   }
-  }catch(e){console.warn("Obnova údajov z prehliadača zlyhala",e)}
- }
- if(!payload&&preferImportedSession){
   const backup=window[BACKUP_GLOBAL];
   if(validImportState(backup)){payload=backup;source="backup"}
  }
@@ -3270,7 +3701,7 @@ function restore(){
 restore();
 
 function updateCounts(){
- courses.forEach(course=>{const ids=course.lessonIds.filter(id=>!!document.getElementById(id)),total=ids.length;course.lessonIds=ids;ids.forEach((id,i)=>{const article=document.getElementById(id);let eye=article?.querySelector(".eyebrow");if(article&&!eye){eye=document.createElement("p");eye.className="eyebrow";article.querySelector(".lesson-header")?.prepend(eye)}if(eye)eye.textContent="Lekcia "+(i+1)+" z "+total;const count=article?.querySelectorAll(".gg-card").length||0;let badge=article?.querySelector(".gg-lesson-count");if(count){if(!badge){badge=document.createElement("span");badge.className="gg-lesson-count";article.querySelector(".lesson-header")?.append(badge)}badge.textContent=count+" "+(count===1?"GeoGebra experiment":count<5?"GeoGebra experimenty":"GeoGebra experimentov")}else badge?.remove()})});
+ courses.forEach(course=>{const ids=course.lessonIds.filter(id=>!!document.getElementById(id)),total=ids.length;course.lessonIds=ids;ids.forEach((id,i)=>{const article=document.getElementById(id);let eye=article?.querySelector(".eyebrow");if(article&&!eye){eye=document.createElement("p");eye.className="eyebrow";article.querySelector(".lesson-header")?.prepend(eye)}if(eye)eye.textContent="Lekcia "+(i+1)+" z "+total;article?.querySelectorAll(".gg-lesson-count,.course-custom-badge").forEach(badge=>badge.remove())})});
  const totalLessons=courses.reduce((sum,c)=>sum+c.lessonIds.length,0),totalCourses=courses.length;
  window.LemmaScore?.render();
  [...nav.querySelectorAll("button[data-lesson]")].forEach((b,i)=>{let n=b.querySelector(".lesson-number");if(!n){n=document.createElement("span");n.className="lesson-number";b.prepend(n)}n.textContent=i+1});
@@ -3307,7 +3738,7 @@ function ensureBlockControls(article){
  });
 }
 function blockName(block){
- if(block?.matches(".gg-card"))return"graf";if(block?.matches(".course-test"))return"test";if(block?.matches(".course-math"))return"vzorec";if(block?.matches("h2,h3"))return"nadpis";return"odsek";
+ if(block?.matches(".gg-card"))return"graf";if(block?.matches(".course-review"))return"tréning";if(block?.matches(".course-test"))return"test";if(block?.matches(".course-math"))return"vzorec";if(block?.matches("h2,h3"))return"nadpis";return"odsek";
 }
 function removeBlock(block,confirmFirst=true){
  if(!block)return false;
@@ -3386,16 +3817,23 @@ function refreshEditing(){
  updateHistoryButtons();
 }
 function setEditing(value){
- editing=false;
- selectedBlock=null;
- document.body.classList.remove("course-editing");
- document.querySelectorAll("[contenteditable]").forEach(node=>node.removeAttribute("contenteditable"));
- document.querySelectorAll(".course-block-controls,.course-empty-caret").forEach(node=>node.remove());
- renderMath(activeLesson()||document);
- refreshEditing();
- updateHistoryButtons();
+ // Prepnutie režimu mení ovládacie prvky a môže vyvolať automatické
+ // presunutie viewportu. Vždy preto obnovíme presnú pozíciu čítania.
+ const scrollX=window.scrollX,scrollY=window.scrollY;
+ const restoreScroll=()=>{
+  const root=document.documentElement,previous=root.style.scrollBehavior;
+  root.style.scrollBehavior="auto";
+  window.scrollTo(scrollX,scrollY);
+  root.style.scrollBehavior=previous;
+ };
+ const next=!!value&&!!activeLesson();
+ if(next&&!editing)beginEditSession();
+ editing=next;document.body.classList.toggle("course-editing",editing);renderMath(activeLesson()||document);refreshEditing();
+ restoreScroll();
+ requestAnimationFrame(()=>{restoreScroll();requestAnimationFrame(restoreScroll)});
+ if(!editing)updateHistoryButtons();
 }
-function ensureEditing(){return false}
+function ensureEditing(){if(!editing)setEditing(true)}
 
 function insertionPoint(){
  const lesson=activeLesson(),lessonText=lesson?.querySelector(".lesson-text");if(!lessonText)return null;
@@ -3403,7 +3841,7 @@ function insertionPoint(){
  const summary=lessonText.querySelector(".lesson-summary");return {text:lessonText,before:summary};
 }
 function insertBlock(el){const point=insertionPoint();if(!point)return;if(point.after)point.after.after(el);else if(point.before)point.text.insertBefore(el,point.before);else point.text.append(el);refreshEditing();selectBlock(el);el.focus?.();updateCounts();scheduleSave()}
-function moveSelected(direction){if(!selectedBlock||!selectedBlock.parentElement?.classList.contains("lesson-text"))return toast("Najprv vyberte odsek, nadpis, graf alebo test.",true);const sibling=direction<0?selectedBlock.previousElementSibling:selectedBlock.nextElementSibling;if(!sibling||sibling.classList.contains("lesson-summary"))return;if(direction<0)sibling.before(selectedBlock);else sibling.after(selectedBlock);scheduleSave()}
+function moveSelected(direction){if(!selectedBlock||!selectedBlock.parentElement?.classList.contains("lesson-text"))return toast("Najprv vyberte odsek, nadpis, graf, test alebo tréning.",true);const sibling=direction<0?selectedBlock.previousElementSibling:selectedBlock.nextElementSibling;if(!sibling||sibling.classList.contains("lesson-summary"))return;if(direction<0)sibling.before(selectedBlock);else sibling.after(selectedBlock);scheduleSave()}
 
 let graphIdSequence=0;function nextGraphId(){if(window.LemmaGraphIds?.next)return window.LemmaGraphIds.next();let id;do{id="gg-live-"+(++graphIdSequence)}while(document.getElementById(id));return id}
 function extractMaterial(value){value=(value||"").trim();if(!value)return"";const m=value.match(/\/m\/([^/?#]+)/);return m?m[1]:value.replace(/^.*\//,"").split(/[?#]/)[0]}
@@ -3525,18 +3963,19 @@ function graphFormData(){
 document.getElementById("graphAddSlider").addEventListener("click",()=>{addGraphSliderRow();document.querySelector("#graphSliderRows .graph-slider-row:last-of-type input")?.focus()});
 document.getElementById("graphSliderRows").addEventListener("click",e=>{const remove=e.target.closest(".graph-slider-remove");if(!remove)return;remove.closest(".graph-slider-row")?.remove();updateGraphSliderEmpty()});
 window.bindGeoGebraCommandPicker?.(document.getElementById("graphCommandTemplate"),document.getElementById("graphCommands"));
-document.querySelector(".test-template-buttons").addEventListener("mousedown",e=>{if(e.target.closest("[data-test-template]"))e.preventDefault()});
+document.querySelector(".test-template-buttons").addEventListener("mousedown",e=>{if(e.target.closest("[data-test-template],#courseTestFormula"))e.preventDefault()});
 document.querySelector(".test-template-buttons").addEventListener("click",e=>{const button=e.target.closest("[data-test-template]");if(!button)return;const item=TEST_QUESTION_TEMPLATES[Number(button.dataset.testTemplate)];if(item)insertTextareaTemplate(document.getElementById("courseTestSource"),item[0],item[1])});
+document.getElementById("courseTestFormula").addEventListener("click",()=>openMathDialogForTest());
 
 
 const DEFAULT_TEST_SOURCE=`# Krátky test
 
 [ABCD]
-Ktoré tvrdenie je správne?
-* Toto je správna odpoveď.
-- Toto je nesprávna odpoveď.
-- Ani táto odpoveď nie je správna.
-- Táto možnosť je tiež nesprávna.
+Ktoré číslo je výsledkom $2^2$?
+* 4
+- 3
+- 5
+- 7
 
 [DROPDOWN]
 Doplňte správnu možnosť: {{výber}} patrí do zadania.
@@ -3603,59 +4042,377 @@ function shuffled(values){
  for(let i=copy.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[copy[i],copy[j]]=[copy[j],copy[i]]}
  return copy;
 }
+function appendTestRichText(container,value){
+ const items=[];appendTextWithFormulas(items,String(value||""),[]);
+ items.forEach(item=>{
+  if(item.type==="formula")container.append(createMathElement(item.tex,item.display==="block"));
+  else container.append(document.createTextNode(item.text));
+ });
+}
 function appendTestPrompt(container,prompt,select=null){
  const marker=prompt.includes("{{výber}}")?"{{výber}}":prompt.includes("{{vyber}}")?"{{vyber}}":null;
- if(!marker||!select){container.append(document.createTextNode(prompt));return}
+ if(!marker||!select){appendTestRichText(container,prompt);return}
  const parts=prompt.split(marker);
- parts.forEach((part,index)=>{container.append(document.createTextNode(part));if(index<parts.length-1)container.append(select)});
+ parts.forEach((part,index)=>{appendTestRichText(container,part);if(index<parts.length-1)container.append(select)});
 }
-function renderTestBlock(block){
- let test;
- try{test=parseTestSource(block.dataset.testSource||"")}catch(error){
-  block.replaceChildren();const message=document.createElement("p");message.className="course-test-invalid";message.textContent="Test sa nedá zobraziť: "+error.message;block.append(message);if(editing)ensureBlockControls(block.closest("article.lesson"));return;
+function localDateKey(date){
+ const year=date.getFullYear(),month=String(date.getMonth()+1).padStart(2,"0"),day=String(date.getDate()).padStart(2,"0");
+ return year+"-"+month+"-"+day;
+}
+function latestFridayKey(now=new Date()){
+ const date=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+ date.setDate(date.getDate()-((date.getDay()-5+7)%7));
+ return localDateKey(date);
+}
+function reviewWeekDistance(fromKey,toKey){
+ const parse=key=>{const parts=String(key||"").split("-").map(Number);return parts.length===3&&parts.every(Number.isFinite)?Date.UTC(parts[0],parts[1]-1,parts[2]):NaN};
+ const from=parse(fromKey),to=parse(toKey);return Number.isFinite(from)&&Number.isFinite(to)?Math.max(0,Math.floor((to-from)/(7*24*60*60*1000))):0;
+}
+function saveReviewScores(){try{localStorage.setItem(REVIEW_SCORE_KEY,JSON.stringify(reviewScoreData))}catch(error){}}
+function reviewRecord(courseId){
+ const id=String(courseId||"default"),latest=latestFridayKey(),stored=reviewScoreData[id];
+ const record=stored&&typeof stored==="object"&&!Array.isArray(stored)?stored:{points:Number(stored)||0,lastFriday:latest};
+ record.points=Math.max(0,Math.min(REVIEW_MAX,Math.round(Number(record.points)||0)));
+ record.maxPoints=Math.max(record.points,Math.max(0,Math.min(REVIEW_MAX,Math.round(Number(record.maxPoints)||0))));
+ record.wrongKeys=Array.isArray(record.wrongKeys)?[...new Set(record.wrongKeys.map(value=>String(value||"")).filter(Boolean))].slice(-REVIEW_WRONG_LIMIT):[];
+ if(!/^\d{4}-\d{2}-\d{2}$/.test(String(record.lastFriday||""))||String(record.lastFriday)>latest)record.lastFriday=latest;
+ const weeks=reviewWeekDistance(record.lastFriday,latest);
+ if(weeks>0){
+  if(record.points>REVIEW_FLOOR)record.points=Math.max(REVIEW_FLOOR,record.points-weeks*REVIEW_FRIDAY_LOSS);
+  record.lastFriday=latest;
  }
- block.className="course-test";
- const head=document.createElement("div");head.className="course-test-head";
- const heading=document.createElement("h3");heading.textContent=test.title;head.append(heading);
+ reviewScoreData[id]=record;saveReviewScores();return record;
+}
+function reviewCourseId(block){return block?.closest("article.lesson")?.dataset.courseId||activeCourseId||"default"}
+function reviewAwardIcon(type){
+ if(type==="shield")return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.4 20 5v5.8c0 5.2-3.2 9-8 11-4.8-2-8-5.8-8-11V5l8-2.6Z"/></svg>';
+ if(type==="star")return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2.4 2.9 5.9 6.5.9-4.7 4.6 1.1 6.5-5.8-3.1-5.8 3.1 1.1-6.5-4.7-4.6 6.5-.9L12 2.4Z"/></svg>';
+ return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 7 4.4 3.5L12 4l4.6 6.5L21 7l-1.8 10H4.8L3 7Zm2 12h14v2H5v-2Z"/></svg>';
+}
+function reviewProgressElement(){
+ const progress=document.createElement("div");progress.className="course-review-progress";progress.setAttribute("role","group");progress.setAttribute("aria-label","Body a ocenenia za tréning");
+ const definitions=[{points:200,type:"shield",name:"Štít"},{points:300,type:"star",name:"Hviezda"},{points:400,type:"crown",name:"Koruna"}];
+ const awards=definitions.map(item=>'<span class="course-review-award" data-review-threshold="'+item.points+'" data-review-award-name="'+item.name+'" title="'+item.name+' za '+item.points+' bodov" aria-label="'+item.name+' za '+item.points+' bodov – nezískané">'+reviewAwardIcon(item.type)+'</span>').join("");
+ const markers=definitions.map(item=>'<i class="course-review-milestone" data-review-threshold="'+item.points+'" aria-hidden="true">'+reviewAwardIcon(item.type)+'</i>').join("");
+ progress.innerHTML='<div class="course-review-progress-copy"><h3>Tréning</h3><div class="course-review-awards" aria-label="Ocenenia">'+awards+'</div><strong><span data-review-points>0</span>/ 400</strong></div><div class="course-review-track" role="progressbar" aria-label="Body za tréning" aria-valuemin="0" aria-valuemax="400" aria-valuenow="0"><div class="course-review-fill"></div><i class="course-review-safe-marker" aria-hidden="true"></i>'+markers+'</div>';
+ return progress;
+}
+function updateReviewProgress(block){
+ if(!block?.classList?.contains("course-review"))return;
+ const record=reviewRecord(reviewCourseId(block)),points=record.points,maxPoints=record.maxPoints,percent=Math.max(0,Math.min(100,points/REVIEW_MAX*100));
+ block.classList.toggle("is-maxed",points>=REVIEW_MAX);
+ const pointNode=block.querySelector("[data-review-points]"),track=block.querySelector(".course-review-track"),fill=block.querySelector(".course-review-fill");
+ if(pointNode)pointNode.textContent=points;
+ if(track){
+  track.setAttribute("aria-valuenow",String(points));
+  track.setAttribute("aria-valuetext",points+" zo 400 bodov; historické maximum "+maxPoints+" bodov");
+ }
+ if(fill)fill.style.width=percent+"%";
+ block.querySelectorAll("[data-review-threshold]").forEach(node=>{
+  const threshold=Number(node.dataset.reviewThreshold)||0,earned=maxPoints>=threshold;
+  node.classList.toggle("is-earned",earned);
+  if(node.classList.contains("course-review-award")){
+   const name=node.dataset.reviewAwardName||"Ocenenie";
+   node.setAttribute("aria-label",name+" za "+threshold+" bodov – "+(earned?"získané":"nezískané"));
+  }
+ });
+}
+function animateReviewAwards(courseId,thresholds){
+ if(!thresholds?.length||window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches)return;
+ document.querySelectorAll("article.lesson").forEach(article=>{
+  if(article.dataset.courseId!==String(courseId||""))return;
+  article.querySelectorAll(".course-review").forEach(block=>{
+   thresholds.forEach(threshold=>{
+    block.querySelectorAll('[data-review-threshold="'+threshold+'"]').forEach(node=>{
+     node.classList.remove("just-earned");void node.offsetWidth;node.classList.add("just-earned");
+     setTimeout(()=>node.classList.remove("just-earned"),700);
+    });
+   });
+  });
+ });
+}
+function refreshCourseReviewProgress(courseId){
+ document.querySelectorAll("article.lesson").forEach(article=>{if(article.dataset.courseId===String(courseId||""))article.querySelectorAll(".course-review").forEach(updateReviewProgress)});
+}
+function getTotalReviewPoints(){
+ return courses.reduce((sum,course)=>sum+reviewRecord(course.id).points,0);
+}
+function applyReviewDecayAll(){
+ courses.forEach(course=>reviewRecord(course.id));
+ document.querySelectorAll(".course-review").forEach(updateReviewProgress);
+ window.LemmaScore?.render?.();
+}
+function scheduleReviewFridayCheck(){
+ const now=new Date(),next=new Date(now.getFullYear(),now.getMonth(),now.getDate(),0,0,2);
+ let days=(5-now.getDay()+7)%7;if(days===0)days=7;next.setDate(next.getDate()+days);
+ setTimeout(()=>{applyReviewDecayAll();scheduleReviewFridayCheck()},Math.max(1000,next.getTime()-Date.now()));
+}
+function reviewQuestionFingerprint(question){
+ const normalizedOptions=(question.options||[]).map(option=>[normalizeTestAnswer(option.text),option.correct===true]).sort((a,b)=>a[0].localeCompare(b[0],"sk")||Number(a[1])-Number(b[1]));
+ const normalizedAnswers=(question.answers||[]).map(normalizeTestAnswer).sort((a,b)=>a.localeCompare(b,"sk"));
+ return JSON.stringify([String(question.type||""),normalizeTestAnswer(question.prompt),normalizedOptions,normalizedAnswers]);
+}
+function reviewQuestionKey(question){
+ const source=reviewQuestionFingerprint(question);let hash=2166136261;
+ for(let index=0;index<source.length;index++){hash^=source.charCodeAt(index);hash=Math.imul(hash,16777619)}
+ return "q-"+(hash>>>0).toString(36)+"-"+source.length.toString(36);
+}
+function courseQuestionBank(courseId){
+ const course=courses.find(item=>item.id===courseId),lessonIds=course?.lessonIds||[];
+ const bank=[],seen=new Set();
+ lessonIds.forEach(lessonId=>{
+  const article=document.getElementById(lessonId),lessonTitle=article?.querySelector(".lesson-header h1")?.textContent.trim()||"Lekcia";
+  article?.querySelectorAll(".course-test[data-test-source]:not(.course-review)").forEach(testBlock=>{
+   try{
+    const parsed=parseTestSource(testBlock.dataset.testSource||"");
+    parsed.questions.forEach(question=>{
+     const copy={
+      type:question.type,
+      prompt:question.prompt,
+      options:(question.options||[]).map(option=>({...option})),
+      answers:[...(question.answers||[])],
+      reviewLesson:lessonTitle
+     };
+     const fingerprint=reviewQuestionFingerprint(copy);
+     if(seen.has(fingerprint))return;
+     seen.add(fingerprint);copy.reviewKey=reviewQuestionKey(copy);bank.push(copy);
+    });
+   }catch(error){}
+  });
+ });
+ return bank;
+}
+function selectReviewQuestions(block,bank){
+ const courseId=reviewCourseId(block),record=reviewRecord(courseId),availableKeys=new Set(bank.map(question=>question.reviewKey));
+ const validWrongKeys=record.wrongKeys.filter(key=>availableKeys.has(key));
+ if(validWrongKeys.length!==record.wrongKeys.length){record.wrongKeys=validWrongKeys;reviewScoreData[courseId]=record;saveReviewScores()}
+ const previous=new Set(Array.isArray(block._reviewPreviousKeys)?block._reviewPreviousKeys:[]);
+ const wrongSet=new Set(validWrongKeys),wrongCandidates=bank.filter(question=>wrongSet.has(question.reviewKey));
+ const useWrong=wrongCandidates.length>0&&Math.random()<Math.min(1,validWrongKeys.length/REVIEW_WRONG_LIMIT);
+ const preferredSixth=useWrong?wrongCandidates:bank;
+ const sixth=shuffled(preferredSixth.filter(question=>!previous.has(question.reviewKey)))[0]||shuffled(preferredSixth)[0];
+ const chosenKeys=new Set(sixth?[sixth.reviewKey]:[]);
+ const generalPool=[
+  ...shuffled(bank.filter(question=>!chosenKeys.has(question.reviewKey)&&!previous.has(question.reviewKey))),
+  ...shuffled(bank.filter(question=>!chosenKeys.has(question.reviewKey)&&previous.has(question.reviewKey)))
+ ];
+ const chosen=[];
+ for(const question of generalPool){
+  if(chosen.length>=REVIEW_QUESTION_COUNT-1)break;
+  if(chosenKeys.has(question.reviewKey))continue;
+  chosen.push(question);chosenKeys.add(question.reviewKey);
+ }
+ if(sixth)chosen.push(sixth);
+ block._reviewPreviousKeys=chosen.map(question=>question.reviewKey);
+ return chosen;
+}
+function rememberReviewMistakes(block,questions){
+ const courseId=reviewCourseId(block),record=reviewRecord(courseId);
+ const newKeys=[...new Set((questions||[]).map(question=>question?.reviewKey).filter(Boolean))];
+ if(!newKeys.length)return;
+ record.wrongKeys=record.wrongKeys.filter(key=>!newKeys.includes(key));
+ record.wrongKeys.push(...newKeys);
+ record.wrongKeys=record.wrongKeys.slice(-REVIEW_WRONG_LIMIT);
+ reviewScoreData[courseId]=record;saveReviewScores();
+}
+function insertMathAnswer(input,text,caretOffset=0){
+ const start=input.selectionStart??input.value.length,end=input.selectionEnd??start;
+ input.setRangeText(text,start,end,"end");
+ const caret=Math.max(start,Math.min(start+text.length,start+text.length+caretOffset));
+ input.focus();input.setSelectionRange(caret,caret);input.dispatchEvent(new Event("input",{bubbles:true}));
+}
+function createMathAnswerTool(input,questionNumber){
+ const tool=document.createElement("div");tool.className="answer-math-tool";
+ const toggle=document.createElement("button");toggle.type="button";toggle.className="answer-math-toggle";
+ toggle.textContent="ƒx";toggle.title="Matematické znaky";toggle.setAttribute("aria-expanded","false");
+ toggle.setAttribute("aria-label","Otvoriť matematické znaky pre odpoveď na otázku "+questionNumber);
+ const palette=document.createElement("div");palette.className="answer-math-palette";palette.hidden=true;
+ const keys=[
+  ["+", "+"],["−","-","mínus"],["×","*","krát"],["÷","/","delené"],["=","="],["≠","!=","nerovná sa"],["≤","<=","menšie alebo rovné"],
+  ["≥",">=","väčšie alebo rovné"],["(", "("],[")", ")"],["x²","^2","mocnina dve"],["x³","^3","mocnina tri"],["xⁿ","^()", "mocnina"],["a/b","/","zlomok"],
+  ["√x","sqrt()","odmocnina",-1],["|x|","||","absolútna hodnota",-1],["eˣ","e^()","exponenciála",-1],["ln","ln()","prirodzený logaritmus",-1],["π","π"],["∞","∞"]
+ ];
+ keys.forEach(([label,text,title,offset])=>{
+  const key=document.createElement("button");key.type="button";key.className="answer-math-key";key.textContent=label;
+  key.title=title||label;key.setAttribute("aria-label",title||label);
+  key.addEventListener("pointerdown",event=>event.preventDefault());
+  key.addEventListener("click",()=>insertMathAnswer(input,text,offset||0));
+  palette.append(key);
+ });
+ const hint=document.createElement("p");hint.className="answer-math-hint";
+ hint.textContent="Zápis sa vloží do kurzora: ^ je mocnina, / je zlomok. Tlačidlá fungujú aj s otvorenou mobilnou klávesnicou.";
+ palette.append(hint);
+ toggle.addEventListener("click",()=>{
+  const open=palette.hidden;palette.hidden=!open;toggle.setAttribute("aria-expanded",String(open));
+  if(open)input.focus();
+ });
+ tool.append(toggle,palette);return tool;
+}
+function createMathAnswerField(input,questionNumber){
+ const wrap=document.createElement("div");wrap.className="course-test-answer-wrap";
+ wrap.append(input,createMathAnswerTool(input,questionNumber));
+ return wrap;
+}
+function createFormulaDropdown(question,questionNumber){
+ const wrapper=document.createElement("span");wrapper.className="course-math-select";
+ const select=document.createElement("select");select.className="course-math-select-native";
+ select.tabIndex=-1;select.setAttribute("aria-hidden","true");
+ const empty=document.createElement("option");empty.value="";empty.textContent="Vyberte…";select.append(empty);
+
+ const button=document.createElement("button");button.type="button";button.className="course-test-select";
+ button.setAttribute("aria-haspopup","listbox");button.setAttribute("aria-expanded","false");
+ button.setAttribute("aria-label","Vyberte odpoveď na otázku "+questionNumber);
+ const value=document.createElement("span");value.className="course-math-select-value";value.textContent="Vyberte…";button.append(value);
+
+ const menu=document.createElement("span");menu.className="course-math-select-menu";menu.hidden=true;menu.setAttribute("role","listbox");
+ const menuId="math-select-"+Date.now()+"-"+questionNumber+"-"+Math.random().toString(36).slice(2);
+ menu.id=menuId;button.setAttribute("aria-controls",menuId);
+ const optionButtons=[];
+ const options=shuffled(question.options.map((option,originalIndex)=>({...option,originalIndex})));
+ options.forEach(option=>{
+  const choice=document.createElement("option");choice.value=String(option.originalIndex);choice.textContent=option.text;select.append(choice);
+  const optionButton=document.createElement("button");optionButton.type="button";optionButton.className="course-math-select-option";
+  optionButton.dataset.value=String(option.originalIndex);optionButton.setAttribute("role","option");optionButton.setAttribute("aria-selected","false");optionButton.tabIndex=-1;
+  appendTestRichText(optionButton,option.text);menu.append(optionButton);optionButtons.push(optionButton);
+ });
+ const setOpen=(open,focusIndex=null)=>{
+  if(button.disabled)open=false;
+  menu.hidden=!open;button.setAttribute("aria-expanded",String(open));
+  if(open){
+   renderMath(menu);
+   if(focusIndex!==null&&optionButtons.length)optionButtons[Math.max(0,Math.min(optionButtons.length-1,focusIndex))].focus();
+  }
+ };
+ const choose=optionButton=>{
+  select.value=optionButton.dataset.value;
+  optionButtons.forEach(item=>item.setAttribute("aria-selected",String(item===optionButton)));
+  value.replaceChildren();appendTestRichText(value,question.options[Number(select.value)]?.text||"Vyberte…");
+  select.dispatchEvent(new Event("change",{bubbles:true}));
+  setOpen(false);renderMath(value);button.focus();
+ };
+ button.addEventListener("click",()=>setOpen(menu.hidden));
+ button.addEventListener("keydown",event=>{
+  if(event.key==="ArrowDown"||event.key==="ArrowUp"){
+   event.preventDefault();setOpen(true,event.key==="ArrowUp"?optionButtons.length-1:0);
+  }else if(event.key==="Escape"){
+   event.preventDefault();setOpen(false);
+  }
+ });
+ optionButtons.forEach((optionButton,index)=>{
+  optionButton.addEventListener("click",()=>choose(optionButton));
+  optionButton.addEventListener("keydown",event=>{
+   if(event.key==="ArrowDown"||event.key==="ArrowUp"){
+    event.preventDefault();
+    const step=event.key==="ArrowDown"?1:-1;
+    optionButtons[(index+step+optionButtons.length)%optionButtons.length].focus();
+   }else if(event.key==="Home"){
+    event.preventDefault();optionButtons[0]?.focus();
+   }else if(event.key==="End"){
+    event.preventDefault();optionButtons[optionButtons.length-1]?.focus();
+   }else if(event.key==="Escape"){
+    event.preventDefault();setOpen(false);button.focus();
+   }
+  });
+ });
+ wrapper.addEventListener("focusout",()=>setTimeout(()=>{if(!wrapper.contains(document.activeElement))setOpen(false)},0));
+ wrapper.append(select,button,menu);
+ return wrapper;
+}
+function renderQuestionSet(block,test,review=false){
+ const selected=block.classList.contains("course-selected-block");
+ block.className="course-test"+(review?" course-review":"")+(selected?" course-selected-block":"");
+ const nodes=[];
+ if(review)nodes.push(reviewProgressElement());
+ else{
+  const head=document.createElement("div");head.className="course-test-head";
+  const heading=document.createElement("h3");appendTestRichText(heading,test.title);head.append(heading);nodes.push(head);
+ }
  const body=document.createElement("div");body.className="course-test-body";
  test.questions.forEach((question,index)=>{
   const item=document.createElement("section");item.className="course-test-question";item.dataset.questionIndex=String(index);item.dataset.type=question.type;
+  if(review&&question.reviewLesson){const origin=document.createElement("p");origin.className="course-review-origin";origin.textContent=question.reviewLesson;item.append(origin)}
   const prompt=document.createElement("p");prompt.className="course-test-prompt";
   const number=document.createElement("span");number.className="course-test-number";number.textContent=(index+1)+".";
   prompt.append(number,document.createTextNode(" "));
   if(question.type==="abcd"){
-   prompt.append(document.createTextNode(question.prompt));item.append(prompt);
+   appendTestPrompt(prompt,question.prompt);item.append(prompt);
    const options=document.createElement("div");options.className="course-test-options";
    shuffled(question.options.map((option,originalIndex)=>({...option,originalIndex}))).forEach((option,shownIndex)=>{
     const label=document.createElement("label");label.className="course-test-option";
     const input=document.createElement("input");input.type="radio";input.name="test-"+Math.random().toString(36).slice(2);input.value=String(option.originalIndex);
     const letter=document.createElement("span");letter.className="course-test-option-letter";letter.textContent=String.fromCharCode(65+shownIndex)+".";
-    const answer=document.createElement("span");answer.textContent=option.text;label.append(input,letter,answer);options.append(label);
+    const answer=document.createElement("span");appendTestRichText(answer,option.text);label.append(input,letter,answer);options.append(label);
    });
    const radios=[...options.querySelectorAll('input[type="radio"]')],group="test-"+Date.now()+"-"+index+"-"+Math.random().toString(36).slice(2);radios.forEach(radio=>radio.name=group);
    item.append(options);
   }else if(question.type==="dropdown"){
-   const select=document.createElement("select");select.className="course-test-select";select.setAttribute("aria-label","Vyberte odpoveď");
-   const empty=document.createElement("option");empty.value="";empty.textContent="Vyberte…";select.append(empty);
-   shuffled(question.options.map((option,originalIndex)=>({...option,originalIndex}))).forEach(option=>{const choice=document.createElement("option");choice.value=String(option.originalIndex);choice.textContent=option.text;select.append(choice)});
-   appendTestPrompt(prompt,question.prompt,select);item.append(prompt);
+   const dropdown=createFormulaDropdown(question,index+1);
+   appendTestPrompt(prompt,question.prompt,dropdown);item.append(prompt);
   }else{
-   prompt.append(document.createTextNode(question.prompt));item.append(prompt);
-   const input=document.createElement("input");input.type="text";input.className="course-test-answer";input.autocomplete="off";input.placeholder="Napíšte odpoveď";input.setAttribute("aria-label","Odpoveď na otázku "+(index+1));item.append(input);
+   appendTestPrompt(prompt,question.prompt);item.append(prompt);
+   const input=document.createElement("input");input.type="text";input.className="course-test-answer";input.autocomplete="off";input.placeholder="Napíšte odpoveď";input.setAttribute("aria-label","Odpoveď na otázku "+(index+1));item.append(createMathAnswerField(input,index+1));
   }
   const feedback=document.createElement("p");feedback.className="course-test-feedback";feedback.setAttribute("aria-live","polite");item.append(feedback);body.append(item);
  });
  const footer=document.createElement("div");footer.className="course-test-footer";
  const result=document.createElement("p");result.className="course-test-result";result.setAttribute("aria-live","polite");
  const action=document.createElement("button");action.type="button";action.className="course-test-action";action.dataset.mode="evaluate";action.textContent="Vyhodnotiť";
- footer.append(result,action);block.replaceChildren(head,body,footer);if(editing)ensureBlockControls(block.closest("article.lesson"));
+ footer.append(result,action);nodes.push(body,footer);block.replaceChildren(...nodes);
+ renderMath(block);
+ if(review)updateReviewProgress(block);
+ if(editing)ensureBlockControls(block.closest("article.lesson"));
 }
-function initTests(root=document){root.querySelectorAll?.(".course-test[data-test-source]").forEach(renderTestBlock)}
+function renderTestBlock(block){
+ let test;
+ try{test=parseTestSource(block.dataset.testSource||"")}catch(error){
+  block.replaceChildren();const message=document.createElement("p");message.className="course-test-invalid";message.textContent="Test sa nedá zobraziť: "+error.message;block.append(message);if(editing)ensureBlockControls(block.closest("article.lesson"));return;
+ }
+ block._testData=test;renderQuestionSet(block,test,false);
+}
+function renderReviewBlock(block,forceNew=false){
+ const courseId=reviewCourseId(block),bank=courseQuestionBank(courseId);
+ if(forceNew||!block._testData){
+  if(bank.length>=REVIEW_QUESTION_COUNT)block._testData={title:"Tréning",questions:selectReviewQuestions(block,bank)};
+  else block._testData=null;
+ }
+ if(!block._testData||block._testData.questions.length<REVIEW_QUESTION_COUNT){
+  const selected=block.classList.contains("course-selected-block");
+  block.className="course-test course-review"+(selected?" course-selected-block":"");
+  const progress=reviewProgressElement(),message=document.createElement("p"),footer=document.createElement("div"),result=document.createElement("p"),action=document.createElement("button");
+  message.className="course-test-invalid";message.textContent="Na spustenie tréningu musí kurz obsahovať aspoň 6 rôznych platných otázok v bežných testoch. Aktuálne je dostupných "+bank.length+".";
+  footer.className="course-test-footer";result.className="course-test-result";result.textContent="Doplňte otázky do testov v tomto kurze.";
+  action.type="button";action.className="course-test-action";action.dataset.mode="review-repeat";action.textContent="Načítať otázky";
+  footer.append(result,action);block.replaceChildren(progress,message,footer);updateReviewProgress(block);if(editing)ensureBlockControls(block.closest("article.lesson"));return;
+ }
+ renderQuestionSet(block,block._testData,true);
+}
+function refreshCourseReviews(courseId,forceNew=false){
+ document.querySelectorAll("article.lesson").forEach(article=>{if(article.dataset.courseId===String(courseId||""))article.querySelectorAll(".course-review").forEach(block=>renderReviewBlock(block,forceNew))});
+}
+function initTests(root=document){
+ root.querySelectorAll?.(".course-test[data-test-source]:not(.course-review)").forEach(renderTestBlock);
+ root.querySelectorAll?.(".course-review").forEach(block=>renderReviewBlock(block));
+}
 function createTestBlock(source){
  const block=document.createElement("section");block.className="course-test";block.dataset.testSource=source;renderTestBlock(block);return block;
 }
+function createReviewBlock(){
+ const block=document.createElement("section");block.className="course-test course-review";block.dataset.review="true";return block;
+}
 function normalizeTestAnswer(value){
- return String(value??"").trim().toLocaleLowerCase("sk").normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/\s+/g," ");
+ let text=String(value??"").trim().toLocaleLowerCase("sk").normalize("NFD").replace(/[\u0300-\u036f]/g,"");
+ // Bežný text nechávame čitateľný; matematické zápisy zjednotíme aj medzi
+ // klávesnicovým, Unicode a LaTeX zápisom.
+ const isMath=/[$\\^{}\/]|[²³⁴⁵⁶⁷⁸⁹⁰¹⁻√π∞≤≥≠×÷]|^[+-]?\d+(?:[.,]\d+)?$/.test(text);
+ if(!isMath)return text.replace(/\s+/g," ");
+ const superscripts={"⁰":"0","¹":"1","²":"2","³":"3","⁴":"4","⁵":"5","⁶":"6","⁷":"7","⁸":"8","⁹":"9","⁻":"-"};
+ text=text.replace(/\\left|\\right/g,"").replace(/\\,/g,"").replace(/\\cdot|\\times/g,"*").replace(/\\div/g,"/");
+ text=text.replace(/\\ln\b/g,"ln").replace(/\\arctan\b/g,"arctan").replace(/\\sqrt\s*\{([^{}]*)\}/g,"sqrt($1)");
+ while(/\\frac\s*\{[^{}]*\}\s*\{[^{}]*\}/.test(text))text=text.replace(/\\frac\s*\{([^{}]*)\}\s*\{([^{}]*)\}/g,"$1/$2");
+ text=text.replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹⁻]/g,char=>char==="⁻"?"-":"^"+superscripts[char]);
+ text=text.replace(/[−–]/g,"-").replace(/÷/g,"/").replace(/×/g,"*").replace(/,/g,".");
+ text=text.replace(/[$\\{}()\s]/g,"");
+ return text;
 }
 function testAnswerMatches(value,accepted){
  const normalized=normalizeTestAnswer(value),numeric=normalized.replace(",",".");
@@ -3666,9 +4423,41 @@ function testAnswerMatches(value,accepted){
   return false;
  });
 }
+function awardReviewPoints(block,correctCount){
+ const courseId=reviewCourseId(block),record=reviewRecord(courseId),before=record.points,beforeMax=record.maxPoints;
+ record.points=Math.min(REVIEW_MAX,record.points+Math.max(0,correctCount)*REVIEW_POINTS);
+ record.maxPoints=Math.max(record.maxPoints,record.points);
+ const unlocked=[200,300,400].filter(threshold=>beforeMax<threshold&&record.maxPoints>=threshold);
+ reviewScoreData[courseId]=record;saveReviewScores();refreshCourseReviewProgress(courseId);
+ if(unlocked.length)requestAnimationFrame(()=>animateReviewAwards(courseId,unlocked));
+ const awarded=record.points-before;
+ if(awarded>0)window.LemmaScore?.awardBonus?.(awarded,correctCount);
+ else window.LemmaScore?.render?.();
+ return {awarded,points:record.points,maxPoints:record.maxPoints};
+}
+function testQuestionAnswered(item){
+ const type=item?.dataset?.type;
+ if(type==="abcd")return !!item.querySelector('input[type="radio"]:checked');
+ if(type==="dropdown")return (item.querySelector("select")?.value||"")!=="";
+ return !!item.querySelector(".course-test-answer")?.value.trim();
+}
+function confirmIncompleteTest(block){
+ const unanswered=[...block.querySelectorAll(".course-test-question")].filter(item=>!testQuestionAnswered(item));
+ if(!unanswered.length)return true;
+ const count=unanswered.length,review=block.classList.contains("course-review"),label=review?"tréning":"test";
+ const questionLabel=count===1?"1 otázku":count>=2&&count<=4?count+" otázky":count+" otázok";
+ if(confirm("Neodpovedali ste na "+questionLabel+". Naozaj chcete ukončiť "+label+" bez týchto odpovedí?"))return true;
+ const first=unanswered[0],control=first.dataset.type==="dropdown"?first.querySelector(".course-test-select"):first.querySelector("input,select");
+ first.scrollIntoView({behavior:"smooth",block:"center"});control?.focus({preventScroll:true});
+ return false;
+}
 function evaluateTest(block){
- let test;try{test=parseTestSource(block.dataset.testSource||"")}catch(error){return toast(error.message,true)}
- let correctCount=0;
+ const review=block.classList.contains("course-review");
+ let test;
+ try{test=review?block._testData:parseTestSource(block.dataset.testSource||"")}catch(error){return toast(error.message,true)}
+ if(!test?.questions?.length)return toast("Otázky sa nepodarilo načítať.",true);
+ if(!confirmIncompleteTest(block))return;
+ let correctCount=0,wrongReviewQuestions=[];
  block.querySelectorAll(".course-test-question").forEach(item=>{
   const index=Number(item.dataset.questionIndex),question=test.questions[index],feedback=item.querySelector(".course-test-feedback");let correct=false,answered=false,correctText="";
   if(question.type==="abcd"){
@@ -3679,13 +4468,30 @@ function evaluateTest(block){
    const input=item.querySelector(".course-test-answer"),value=input.value;answered=!!value.trim();correct=answered&&testAnswerMatches(value,question.answers);correctText=question.answers[0]||"";
   }
   if(correct)correctCount++;
+  else if(review&&answered&&question?.reviewKey)wrongReviewQuestions.push(question);
   item.classList.toggle("is-correct",correct);item.classList.toggle("is-wrong",!correct);
-  feedback.textContent=correct?"Správne.":answered?"Nesprávne. Správna odpoveď: "+correctText:"Bez odpovede. Správna odpoveď: "+correctText;
-  item.querySelectorAll("input,select").forEach(control=>control.disabled=true);
+  feedback.replaceChildren();
+  if(correct)feedback.textContent="Správne.";
+  else{
+   feedback.append(document.createTextNode(answered?"Nesprávne. Správna odpoveď: ":"Bez odpovede. Správna odpoveď: "));
+   appendTestRichText(feedback,correctText);
+  }
+  item.querySelectorAll("input,select,.course-test-select,.course-math-select-option,.answer-math-toggle,.answer-math-key").forEach(control=>control.disabled=true);
+  item.querySelectorAll(".course-math-select-menu").forEach(menu=>menu.hidden=true);
+  item.querySelectorAll(".course-test-select").forEach(control=>control.setAttribute("aria-expanded","false"));
  });
- window.LemmaScore?.add(block.querySelectorAll(".course-test-question.is-correct"));
  const total=test.questions.length,result=block.querySelector(".course-test-result"),action=block.querySelector(".course-test-action");
- result.textContent="Výsledok: "+correctCount+" / "+total;action.textContent="Zopakovať";action.dataset.mode="repeat";block.classList.add("is-evaluated");
+ if(review){
+  rememberReviewMistakes(block,wrongReviewQuestions);
+  const reward=awardReviewPoints(block,correctCount);
+  result.textContent="Výsledok: "+correctCount+" / "+total+" · +"+reward.awarded+" b · stav "+reward.points+" / "+REVIEW_MAX+" b";
+  action.textContent="Nových 6 otázok";action.dataset.mode="review-repeat";
+ }else{
+  window.LemmaScore?.add(block.querySelectorAll(".course-test-question.is-correct"));
+  result.textContent="Výsledok: "+correctCount+" / "+total;action.textContent="Zopakovať";action.dataset.mode="repeat";
+ }
+ block.classList.add("is-evaluated");
+ renderMath(block);
 }
 function openTestDialog(block=null){
  ensureEditing();testBeingEdited=block;
@@ -3699,7 +4505,7 @@ function openTestDialog(block=null){
 function createLessonArticle(title,intro,courseId){
  main.querySelector(".course-empty-state")?.remove();
  const id=uniqueId("lekcia-"+slugify(title)),article=document.createElement("article");article.className="lesson";article.id=id;article.dataset.custom="true";article.dataset.courseId=courseId;
- article.innerHTML='<header class="lesson-header"><p class="eyebrow"></p><h1></h1><span class="course-custom-badge">VLASTNÁ LEKCIA</span></header><section class="lesson-text"><p></p><div class="course-empty-hint course-edit-only course-editor-only">Obsah môžete upravovať a pomocou hornej lišty pridávať odseky, nadpisy, matematické vzorce, GeoGebra grafy a testy.</div></section>';
+ article.innerHTML='<header class="lesson-header"><p class="eyebrow"></p><h1></h1></header><section class="lesson-text"><p></p><div class="course-empty-hint course-edit-only course-editor-only">Obsah môžete upravovať a pomocou hornej lišty pridávať odseky, nadpisy, matematické vzorce, GeoGebra grafy, testy a blok Tréning.</div></section>';
  article.querySelector("h1").textContent=title;article.querySelector(".lesson-text>p").textContent=intro||"Sem napíšte obsah novej lekcie.";main.append(article);return article;
 }
 
@@ -3709,7 +4515,7 @@ function cloneOriginalLesson(article){
  clone.id=uniqueId(slugify(sourceTitle)+"-moje-poznamky");clone.dataset.custom="true";clone.dataset.courseId=course.id;clone.classList.remove("active","course-selected-block");
  clone.querySelectorAll(".course-editor-only,.course-empty-caret,.gg-diagnostic").forEach(x=>x.remove());clone.querySelectorAll(".course-empty-editable").forEach(x=>x.classList.remove("course-empty-editable"));clone.querySelectorAll("[contenteditable]").forEach(x=>x.removeAttribute("contenteditable"));clone.querySelectorAll(".course-math").forEach(node=>{delete node.dataset.rendered;mathFallback(node)});
  const heading=clone.querySelector("h1");if(heading)heading.textContent=title;
- let badge=clone.querySelector(".course-custom-badge");if(!badge){badge=document.createElement("span");badge.className="course-custom-badge";clone.querySelector(".lesson-header")?.append(badge)}badge.textContent="VLASTNÁ KÓPIA";
+ clone.querySelectorAll(".course-custom-badge,.gg-lesson-count").forEach(node=>node.remove());
  article.after(clone);clone.querySelectorAll(".gg-live").forEach(el=>{el.id=nextGraphId();el.innerHTML='<div class="gg-start-wrap"><button class="gg-start" type="button">Spustiť graf</button></div>'});initTests(clone);
  const index=course.lessonIds.indexOf(article.id);course.lessonIds.splice(index<0?course.lessonIds.length:index+1,0,clone.id);
  activeCourseId=course.id;renderLessonNav(clone.id);updateCounts();persist(true);setEditing(true);toast("Vytvorená kópia lekcie „"+title+"“.");return clone;
@@ -3930,7 +4736,41 @@ function convertMathPlacement(node,display){
  const replacements=[];if(textNodeHasMeaningfulContent(before))replacements.push(before);replacements.push(node);if(textNodeHasMeaningfulContent(after))replacements.push(after);
  parent.replaceWith(...replacements);return{node,caret:null};
 }
-function openMathDialog(node=null){ensureEditing();if(!node)rememberRange();mathBeingEdited=node;document.getElementById("courseMathDialogTitle").textContent=node?"Upraviť matematický vzorec":"Vložiť matematický vzorec";document.getElementById("courseMathSubmit").textContent=node?"Použiť zmeny":"Vložiť vzorec";document.getElementById("courseMathTex").value=node?.dataset.tex||"";document.getElementById("courseMathDisplay").value=node?.dataset.display==="true"?"block":"inline";document.getElementById("courseMathToolSearch").value="";document.getElementById("courseMathToolCategory").value="all";renderMathToolList({announce:false});showMathError("");showDialog(document.getElementById("courseMathDialog"));scheduleMathPreview();setTimeout(()=>document.getElementById("courseMathTex").focus(),50)}
+function prepareMathDialog(title,submitLabel,tex="",display="inline"){
+ document.getElementById("courseMathDialogTitle").textContent=title;
+ document.getElementById("courseMathSubmit").textContent=submitLabel;
+ document.getElementById("courseMathTex").value=tex;
+ document.getElementById("courseMathDisplay").value=display;
+ document.getElementById("courseMathToolSearch").value="";
+ document.getElementById("courseMathToolCategory").value="all";
+ renderMathToolList({announce:false});showMathError("");
+ showDialog(document.getElementById("courseMathDialog"));scheduleMathPreview();
+ setTimeout(()=>document.getElementById("courseMathTex").focus(),50);
+}
+function selectedTestFormula(value){
+ const source=String(value||"").trim();
+ let match=source.match(/^\$\$([\s\S]*)\$\$$/);
+ if(match)return{tex:match[1].trim(),display:"block"};
+ match=source.match(/^\$([^$\n]+)\$$/);
+ if(match)return{tex:match[1].trim(),display:"inline"};
+ match=source.match(/^\\\[([\s\S]*)\\\]$/);
+ if(match)return{tex:match[1].trim(),display:"block"};
+ match=source.match(/^\\\(([\s\S]*)\\\)$/);
+ if(match)return{tex:match[1].trim(),display:"inline"};
+ return{tex:source,display:"inline"};
+}
+function openMathDialogForTest(){
+ ensureEditing();
+ const field=document.getElementById("courseTestSource"),start=field.selectionStart??field.value.length,end=field.selectionEnd??start;
+ const selected=selectedTestFormula(field.value.slice(start,end));
+ mathBeingEdited=null;mathTextareaTarget=field;mathTextareaSelection={start,end};
+ prepareMathDialog("Vložiť vzorec do testu","Vložiť do otázky",selected.tex,selected.display);
+}
+function openMathDialog(node=null){
+ ensureEditing();if(!node)rememberRange();
+ mathTextareaTarget=null;mathTextareaSelection=null;mathBeingEdited=node;
+ prepareMathDialog(node?"Upraviť matematický vzorec":"Vložiť matematický vzorec",node?"Použiť zmeny":"Vložiť vzorec",node?.dataset.tex||"",node?.dataset.display==="true"?"block":"inline");
+}
 function insertMathAtRange(node){
  const range=savedRange;if(!range)return false;
  const container=range.commonAncestorContainer.nodeType===1?range.commonAncestorContainer:range.commonAncestorContainer.parentElement,editor=container?.closest?.("[contenteditable='true']");
@@ -3976,7 +4816,18 @@ document.getElementById("courseMathForm").addEventListener("submit",e=>{
  }
  const validation=validateMathTex(tex);
  if(validation||!mathEditor.previewValid||mathEditor.renderedVersion!==mathEditor.version){showMathError(validation||"Počkajte na aktuálny náhľad alebo opravte LaTeX.");updateMathSubmit();return}
- const display=document.getElementById("courseMathDisplay").value==="block";let caretFormula=null;
+ const display=document.getElementById("courseMathDisplay").value==="block";
+ if(mathTextareaTarget){
+  const target=mathTextareaTarget,selection=mathTextareaSelection||{start:target.value.length,end:target.value.length},delimiter=display?"$$":"$",insertion=delimiter+tex+delimiter;
+  mathTextareaTarget=null;mathTextareaSelection=null;
+  target.setRangeText(insertion,selection.start,selection.end,"end");
+  target.dispatchEvent(new Event("input",{bubbles:true}));
+  closeDialog(document.getElementById("courseMathDialog"));
+  requestAnimationFrame(()=>target.focus());
+  toast("Matematický vzorec bol vložený do testu.");
+  return;
+ }
+ let caretFormula=null;
  if(mathBeingEdited){
   mathBeingEdited.dataset.tex=tex;delete mathBeingEdited.dataset.rendered;mathFallback(mathBeingEdited);
   const placement=convertMathPlacement(mathBeingEdited,display);mathBeingEdited=placement.node;caretFormula=placement.caret;
@@ -3996,7 +4847,7 @@ document.getElementById("courseMathForm").addEventListener("submit",e=>{
  if(caretFormula)requestAnimationFrame(()=>placeCaretNextToInlineMath(caretFormula,true));
  scheduleSave();toast("Matematický vzorec bol uložený.");
 });
-document.getElementById("courseMathDialog").addEventListener("close",()=>{clearTimeout(mathEditor.timer);mathEditor.version++;mathEditor.previewValid=false;mathBeingEdited=null;showMathError("")});
+document.getElementById("courseMathDialog").addEventListener("close",()=>{clearTimeout(mathEditor.timer);mathEditor.version++;mathEditor.previewValid=false;mathBeingEdited=null;mathTextareaTarget=null;mathTextareaSelection=null;showMathError("")});
 document.addEventListener("click",async event=>{
  const formula=event.target.closest(".course-math");
  if(!formula||!(event.altKey||event.metaKey&&event.shiftKey)||editing)return;
@@ -4024,13 +4875,14 @@ document.getElementById("courseMoveDown").addEventListener("click",()=>moveSelec
 document.getElementById("courseDeleteBlock").addEventListener("click",()=>removeBlock(selectedBlock,true));
 document.getElementById("courseAddGraph").addEventListener("click",()=>openGraphDialog());
 document.getElementById("courseAddTest").addEventListener("click",()=>openTestDialog());
+document.getElementById("courseAddReview").addEventListener("click",()=>{const block=createReviewBlock();insertBlock(block);renderReviewBlock(block,true);selectBlock(block);scheduleSave();toast("Blok Tréning bol vložený.");});
 document.getElementById("courseTestForm").addEventListener("submit",e=>{
  e.preventDefault();const source=document.getElementById("courseTestSource").value.trim(),error=document.getElementById("courseTestError");
  try{
   parseTestSource(source);error.textContent="";
   if(testBeingEdited){testBeingEdited.dataset.testSource=source;renderTestBlock(testBeingEdited);selectBlock(testBeingEdited)}
   else insertBlock(createTestBlock(source));
-  closeDialog(document.getElementById("courseTestDialog"));testBeingEdited=null;scheduleSave();toast("Test bol uložený.");
+  closeDialog(document.getElementById("courseTestDialog"));testBeingEdited=null;refreshCourseReviews(activeCourseId,true);scheduleSave();toast("Test bol uložený.");
  }catch(err){error.textContent=err.message||"Skontrolujte syntax testu.";toast(error.textContent,true)}
 });
 document.getElementById("courseTestDialog").addEventListener("close",()=>{testBeingEdited=null;document.getElementById("courseTestError").textContent=""});
@@ -4084,20 +4936,31 @@ document.addEventListener("click",e=>{
  if(!formula||!formula.closest("[contenteditable='true']"))return;
  e.preventDefault();const rect=formula.getBoundingClientRect();placeCaretNextToInlineMath(formula,e.clientX>=rect.left+rect.width/2);
 });
-document.addEventListener("dblclick",e=>{const formula=e.target.closest(".course-math");if(editing&&formula){e.preventDefault();openMathDialog(formula)}});
+document.addEventListener("dblclick",e=>{
+ const formula=e.target.closest(".course-math");if(!editing||!formula)return;
+ e.preventDefault();
+ const testBlock=formula.closest(".course-test");
+ if(testBlock){
+  if(testBlock.classList.contains("course-review"))toast("Vzorec v Tréningu upravíte v zdrojovom teste.");
+  else openTestDialog(testBlock);
+  return;
+ }
+ openMathDialog(formula);
+});
 document.addEventListener("click",e=>{
  const blockEdit=e.target.closest(".course-block-edit");if(blockEdit){
   e.preventDefault();e.stopPropagation();const block=blockEdit.closest(".lesson-text>*");if(!block)return;
   if(block.matches("p,h2,h3"))openTextBlockDialog(block);
   else if(block.matches(".course-math"))openMathDialog(block);
   else if(block.matches(".gg-card"))openGraphDialog(block);
+  else if(block.matches(".course-review"))toast("Blok Tréning sa nastavuje automaticky z otázok celého kurzu.");
   else if(block.matches(".course-test"))openTestDialog(block);
   return;
  }
  const blockDelete=e.target.closest(".course-block-delete");if(blockDelete){e.preventDefault();e.stopPropagation();removeBlock(blockDelete.closest(".lesson-text>*"),true);return}
  const sidebarDelete=e.target.closest(".sidebar-item-delete");if(sidebarDelete){e.preventDefault();e.stopPropagation();if(!editing)return;sidebarDelete.dataset.sidebarKind==="course"?deleteCourseById(sidebarDelete.dataset.sidebarId):deleteLessonById(sidebarDelete.dataset.sidebarId);return}
  const courseButton=e.target.closest(".course-list-nav button[data-course]");if(courseButton){const wasEditing=editing;if(wasEditing)commitEditSession(false);switchCourse(courseButton.dataset.course,"",!wasEditing);if(wasEditing&&activeLesson())setTimeout(()=>setEditing(true),80);return}
- const testAction=e.target.closest(".course-test-action");if(testAction){e.preventDefault();const block=testAction.closest(".course-test");if(testAction.dataset.mode==="repeat")renderTestBlock(block);else evaluateTest(block);return}
+ const testAction=e.target.closest(".course-test-action");if(testAction){e.preventDefault();const block=testAction.closest(".course-test");if(testAction.dataset.mode==="review-repeat")renderReviewBlock(block,true);else if(testAction.dataset.mode==="repeat")renderTestBlock(block);else evaluateTest(block);return}
  const navButton=e.target.closest(".lesson-nav button[data-lesson]");if(navButton){const wasEditing=editing;if(wasEditing)commitEditSession(false);activateLesson(navButton.dataset.lesson,false);if(wasEditing)setTimeout(()=>setEditing(true),80);setTimeout(()=>{refreshEditing();updateCounts()},90);}
  const clickedArticle=e.target.closest("article.lesson.course-visible");if(clickedArticle&&!clickedArticle.classList.contains("active"))activateLesson(clickedArticle.id,false);
  if(!editing)return;const article=activeLesson();if(!article)return;const top=e.target.closest(".lesson-text>*");if(top&&article.contains(top))selectBlock(top);
@@ -4148,7 +5011,7 @@ async function backupJavaScript(){
  flushHistorySnapshot();
  const state=buildState();
  const json=JSON.stringify(state).replace(/\u2028/g,"\\u2028").replace(/\u2029/g,"\\u2029");
- const source="/* Záloha obsahu aplikácie LEMMA V16 vo formáte lemma-blocks v5. */\nwindow."+BACKUP_GLOBAL+" = "+json+";\n";
+ const source="/* Záloha obsahu aplikácie LEMMA V20 vo formáte lemma-blocks v5. */\nwindow."+BACKUP_GLOBAL+" = "+json+";\n";
  const filename="lemma-obsah.js";
  if(typeof window.showSaveFilePicker==="function"){
   try{
@@ -4210,7 +5073,6 @@ function normalizedCoursePayload(payload){
 }
 function normalizedCourseTitle(value){return String(value||"").trim().replace(/\s+/g," ").toLocaleLowerCase("sk")}
 function importCoursePayload(payload){
- try{sessionStorage.setItem(PUBLIC_IMPORT_SESSION_KEY,"1")}catch(ignore){}
  if(editing)commitEditSession(false);
  const normalized=normalizedCoursePayload(payload),sourceCourse=normalized.course,title=sourceCourse.title||"Importovaný kurz",existing=courses.find(course=>normalizedCourseTitle(course.title)===normalizedCourseTitle(title));
  let targetIndex=existing?courses.indexOf(existing):courses.length,newCourseId;
@@ -4225,7 +5087,7 @@ function importCoursePayload(payload){
 document.getElementById("courseBackup").addEventListener("click",backupJavaScript);
 document.getElementById("courseLoadBackup").addEventListener("click",loadJavaScriptBackup);
 document.getElementById("courseExport").addEventListener("click",()=>{
- flushHistorySnapshot();const state=buildState();downloadJSON(state,"lemma_obsah_export.json");toast("Obsah bol exportovaný do JSON.");
+ flushHistorySnapshot();const state=buildState();downloadJSON(state,"kurzy_a_lekcie_zaloha.json");toast("Celý obsah bol exportovaný.");
 });
 document.getElementById("courseExportLesson").addEventListener("click",()=>{
  flushHistorySnapshot();const payload=lessonExportPayload();if(!payload)return toast("Nie je vybraný žiadny kurz.",true);
@@ -4288,14 +5150,13 @@ function validLessonImport(payload){
  return !!node?.matches("article.lesson");
 }
 function importSingleLesson(payload){
- try{sessionStorage.setItem(PUBLIC_IMPORT_SESSION_KEY,"1")}catch(ignore){}
  const course=activeCourse();if(!course)throw new Error("course");
  if(editing)commitEditSession(false);
  const article=new DOMParser().parseFromString(payload.lesson.html,"text/html").body.firstElementChild;
  const base=slugify(article.querySelector("h1")?.textContent||payload.lesson.title||"importovana-lekcia");
  article.id=uniqueId(base);article.classList.remove("active","course-selected-block");article.dataset.custom="true";article.dataset.courseId=course.id;normalizeImportedLessonBlocks(article);
  article.querySelectorAll(".course-editor-only,.course-empty-caret,.gg-diagnostic").forEach(node=>node.remove());article.querySelectorAll(".course-empty-editable").forEach(node=>node.classList.remove("course-empty-editable"));article.querySelectorAll("[contenteditable]").forEach(node=>node.removeAttribute("contenteditable"));
- let badge=article.querySelector(".course-custom-badge");if(!badge){badge=document.createElement("span");badge.className="course-custom-badge";article.querySelector(".lesson-header")?.append(badge)}badge.textContent="IMPORTOVANÁ LEKCIA";
+ article.querySelectorAll(".course-custom-badge,.gg-lesson-count").forEach(node=>node.remove());
  main.append(article);
  article.querySelectorAll(".gg-live").forEach(el=>{el.id=nextGraphId();el.innerHTML='<div class="gg-start-wrap"><button class="gg-start" type="button">Spustiť graf</button></div>'});
  course.lessonIds.push(article.id);initTests(article);renderMath(article);activeCourseId=course.id;renderLessonNav(article.id);updateCounts();persist(true);setEditing(true);toast("Lekcia bola importovaná do aktuálneho kurzu.");
@@ -4310,8 +5171,7 @@ document.getElementById("courseImportFile").addEventListener("change",async e=>{
   if(validImportState(data)){
    if(!confirm("Import celej zálohy nahradí aktuálny obsah. Pokračovať?"))return;
    localStorage.setItem(STORAGE_KEY,JSON.stringify(data));
-   try{sessionStorage.setItem(PUBLIC_IMPORT_SESSION_KEY,"1")}catch(ignore){}
-   toast("JSON bol prijatý. Obnovujem obsah…");
+   toast("Záloha bola prijatá. Obnovujem obsah…");
    setTimeout(()=>location.reload(),250);
    return;
   }
@@ -4332,6 +5192,10 @@ document.getElementById("courseImportFile").addEventListener("change",async e=>{
 });
 
 
+window.LemmaReview={getTotalPoints:getTotalReviewPoints,refresh:applyReviewDecayAll};
+applyReviewDecayAll();scheduleReviewFridayCheck();
+document.addEventListener("visibilitychange",()=>{if(!document.hidden)applyReviewDecayAll()});
+window.addEventListener("pageshow",applyReviewDecayAll);
 addGraphTools();initTests(document);updateCounts();refreshEditing();renderMath(document);
 })();
 </script>
@@ -4398,7 +5262,7 @@ addGraphTools();initTests(document);updateCounts();refreshEditing();renderMath(d
    '<button type="button" data-score-sound></button>',
    '<button type="button" data-score-effects></button>',
   '</div>',
-  '<p class="score-panel-note">Každá nová správne splnená úloha alebo otázka pridá 10 bodov. Body sa za tú istú položku pridelia iba raz.</p>'
+  '<p class="score-panel-note">Bežná správne splnená položka pridá 10 bodov iba raz. V bloku Tréning môžete získavať ďalšie body pri každom pokuse, najviac 400 bodov na kurz. Z časti nad 200 bodov sa každý piatok odpočíta 50 bodov.</p>'
  ].join("");
  document.body.appendChild(panel);
 
@@ -4413,7 +5277,7 @@ addGraphTools();initTests(document);updateCounts();refreshEditing();renderMath(d
  const reducedMotion=()=>window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
  function items(lesson){
-  return [...lesson.querySelectorAll(".gg-task,.course-test-question")];
+  return [...lesson.querySelectorAll(".gg-task,.course-test:not(.course-review) .course-test-question")];
  }
  function syncLesson(lesson){
   if(!lesson)return;
@@ -4438,11 +5302,12 @@ addGraphTools();initTests(document);updateCounts();refreshEditing();renderMath(d
  }
  function stats(){
   const done=doneCount();
-  const points=done*POINTS;
+  const reviewPoints=Math.max(0,Number(window.LemmaReview?.getTotalPoints?.())||0);
+  const points=done*POINTS+reviewPoints;
   const level=Math.floor(points/LEVEL_SIZE)+1;
   const progress=points%LEVEL_SIZE;
   const rank=ranks[Math.min(ranks.length-1,Math.floor((level-1)/2))];
-  return {done,points,level,progress,rank};
+  return {done,points,reviewPoints,level,progress,rank};
  }
  function render(){
   syncAll();
@@ -4590,6 +5455,12 @@ addGraphTools();initTests(document);updateCounts();refreshEditing();renderMath(d
   const after=stats();
   celebrate(added*POINTS,added,after.level>before.level);
  }
+ function awardBonus(points,added=1){
+  const value=Math.max(0,Math.round(Number(points)||0));if(!value){render();return}
+  const after=stats(),beforePoints=Math.max(0,after.points-value);
+  const levelUp=Math.floor(after.points/LEVEL_SIZE)>Math.floor(beforePoints/LEVEL_SIZE);
+  celebrate(value,Math.max(1,Number(added)||1),levelUp);
+ }
  function reset(lesson=document.querySelector(".lesson.active")){
   if(!lesson)return;
   delete data[lesson.id];
@@ -4650,25 +5521,24 @@ addGraphTools();initTests(document);updateCounts();refreshEditing();renderMath(d
  document.addEventListener("lemma:lessonchange",queueSync);
  window.addEventListener("pageshow",queueSync);
  window.addEventListener("resize",()=>{if(!panel.hidden)render()},{passive:true});
- window.LemmaScore={add,render,reset,sync:syncAll,open:()=>openPanel(true),getScore:stats};
+ window.LemmaScore={add,awardBonus,render,reset,sync:syncAll,open:()=>openPanel(true),getScore:stats};
  render();
 })();
 </script>
-<script id="lemma-v4-course-notes">
+<script id="lemma-v3-quick-notes">
 (function(){"use strict";
-const NOTES_KEY="lemma-v4-course-notes",toggle=document.getElementById("quickNotesToggle"),panel=document.getElementById("quickNotesPanel"),area=document.getElementById("quickNotesText"),title=document.getElementById("quickNotesTitle"),status=document.getElementById("quickNotesStatus"),minimize=document.getElementById("quickNotesMinimize"),close=document.getElementById("quickNotesClose");
+const NOTES_KEY="lemma-v3-quick-notes",toggle=document.getElementById("quickNotesToggle"),panel=document.getElementById("quickNotesPanel"),area=document.getElementById("quickNotesText"),title=document.getElementById("quickNotesTitle"),status=document.getElementById("quickNotesStatus"),minimize=document.getElementById("quickNotesMinimize"),close=document.getElementById("quickNotesClose");
 let notes={},currentId="",timer=null;
 try{const stored=JSON.parse(localStorage.getItem(NOTES_KEY)||"{}");if(stored&&typeof stored==="object"&&!Array.isArray(stored))notes=stored}catch(e){notes={}}
-function activeInfo(detail){const article=document.querySelector("article.lesson.active"),courseId=String(detail?.courseId||article?.dataset.courseId||"vseobecne"),courseName=document.getElementById("sidebarCourseName")?.textContent.trim()||"Všeobecné poznámky";return{id:courseId,title:courseName}}
+function activeInfo(){const article=document.querySelector("article.lesson.active");return{id:article?.id||"vseobecne",title:article?.querySelector("h1")?.textContent.trim()||"Všeobecné poznámky"}}
 function save(silent=true){clearTimeout(timer);if(!currentId)return;notes[currentId]=area.value;status.textContent="Ukladám…";try{localStorage.setItem(NOTES_KEY,JSON.stringify(notes));status.textContent="Uložené";return true}catch(e){status.textContent="Uloženie zlyhalo";if(!silent&&window.console)console.warn("Poznámky sa nepodarilo uložiť",e);return false}}
-function load(detail){save();const info=activeInfo(detail);currentId=info.id;title.textContent="Poznámky · "+info.title;area.value=typeof notes[currentId]==="string"?notes[currentId]:"";status.textContent="Uložené"}
-function open(){load();panel.hidden=false;panel.classList.remove("minimized");toggle.setAttribute("aria-expanded","true");minimize.textContent="−";minimize.setAttribute("aria-label","Minimalizovať poznámky");setTimeout(()=>area.focus(),30)}
+function load(){save();const info=activeInfo();currentId=info.id;title.textContent="Poznámky · "+info.title;area.value=typeof notes[currentId]==="string"?notes[currentId]:"";status.textContent="Uložené"}
+function open(){panel.hidden=false;panel.classList.remove("minimized");toggle.setAttribute("aria-expanded","true");minimize.textContent="−";minimize.setAttribute("aria-label","Minimalizovať poznámky");setTimeout(()=>area.focus(),30)}
 toggle.addEventListener("click",()=>panel.hidden?open():(save(),panel.hidden=true,toggle.setAttribute("aria-expanded","false")));
 close.addEventListener("click",()=>{save(false);panel.hidden=true;toggle.setAttribute("aria-expanded","false");toggle.focus()});
 minimize.addEventListener("click",()=>{const minimized=panel.classList.toggle("minimized");minimize.textContent=minimized?"□":"−";minimize.setAttribute("aria-label",minimized?"Obnoviť poznámky":"Minimalizovať poznámky")});
 area.addEventListener("input",()=>{clearTimeout(timer);status.textContent="Ukladám…";timer=setTimeout(()=>save(),500)});
-document.addEventListener("lemma:coursechange",event=>setTimeout(()=>load(event.detail),0));
-document.addEventListener("lemma:course-rendered",event=>setTimeout(()=>load(event.detail),0));
+document.addEventListener("lemma:lessonchange",()=>setTimeout(load,0));
 window.addEventListener("beforeunload",()=>save());
 load();
 })();
