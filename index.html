@@ -1117,6 +1117,8 @@ body.course-block-dragging .lesson-text>*{transition:transform .08s ease}
  border:0;border-left:1px solid rgba(255,255,255,.14);border-radius:0 999px 999px 0;
  background:transparent;color:rgba(255,255,255,.82);cursor:pointer;list-style:none
 }
+.tts-top#ttsPlayer .tts-menu>summary{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.tts-top#ttsPlayer .tts-menu>summary output{pointer-events:none}
 .tts-top#ttsPlayer .tts-menu>summary::-webkit-details-marker{display:none}
 .tts-top#ttsPlayer .tts-menu>summary output{font:800 var(--text-2xs)/1 var(--font-sans);letter-spacing:-.02em}
 .tts-top#ttsPlayer .tts-menu[open]>summary,.tts-top#ttsPlayer .tts-menu>summary:hover{
@@ -1145,7 +1147,7 @@ body.course-block-dragging .lesson-text>*{transition:transform .08s ease}
  .tts-top#ttsPlayer .tts-menu-panel{position:fixed;right:.5rem;top:calc(var(--topbar-height) + .4rem)}
 }
 @media (max-width:430px){
- .tts-top#ttsPlayer.is-active .tts-menu{display:none}
+ .tts-top#ttsPlayer.is-active .tts-menu{display:block}
 }
 @media (prefers-reduced-motion:no-preference){
  .tts-top#ttsPlayer .tts-control,.tts-top#ttsPlayer .tts-menu>summary{transition:background-color .14s ease,color .14s ease}
@@ -1426,8 +1428,6 @@ body.course-editing .lesson-text>.course-math.course-math-block>mjx-container[ja
 #courseBackup,
 #courseLoadBackup,
 #courseExportLesson,
-#quickNotesToggle,
-#quickNotesPanel,
 .course-editor-only,
 .course-edit-only{
   display:none!important;
@@ -1782,10 +1782,10 @@ Koľko je 6 × 7?
 </form>
 </dialog>
 <div class="course-toast" id="courseToast" role="status"></div>
-<button aria-hidden="true" hidden="" id="quickNotesToggle" tabindex="-1" type="button">📝</button>
-<section aria-hidden="true" class="quick-notes-panel" hidden="" id="quickNotesPanel" inert="">
-<div class="quick-notes-head"><strong id="quickNotesTitle">Rýchle poznámky</strong><button aria-label="Minimalizovať poznámky" id="quickNotesMinimize" title="Minimalizovať" type="button">−</button><button aria-label="Zavrieť poznámky" id="quickNotesClose" title="Zavrieť" type="button">×</button></div>
-<textarea aria-label="Poznámky k aktuálnej lekcii" id="quickNotesText" placeholder="Zapíšte si krátku poznámku k tejto lekcii…"></textarea>
+<button aria-controls="quickNotesPanel" aria-expanded="false" aria-label="Otvoriť poznámky ku kurzu" class="quick-notes-toggle" id="quickNotesToggle" title="Poznámky ku kurzu" type="button">📝</button>
+<section aria-label="Poznámky ku kurzu" class="quick-notes-panel" hidden="" id="quickNotesPanel">
+<div class="quick-notes-head"><strong id="quickNotesTitle">Poznámky ku kurzu</strong><button aria-label="Minimalizovať poznámky" id="quickNotesMinimize" title="Minimalizovať" type="button">−</button><button aria-label="Zavrieť poznámky" id="quickNotesClose" title="Zavrieť" type="button">×</button></div>
+<textarea aria-label="Poznámky ku aktuálnemu kurzu" id="quickNotesText" placeholder="Zapíšte si poznámku ku celému kurzu…"></textarea>
 <div aria-live="polite" class="quick-notes-status" id="quickNotesStatus">Uložené</div>
 </section>
 <!-- Verejný obsah sa pri otvorení automaticky načíta z externého súboru lemma-obsah.js v rovnakom priečinku. Voliteľne možno použiť JSON import. -->
@@ -2096,20 +2096,94 @@ function updateRateLabel(){
 updateRateLabel();
 const menu=document.getElementById('ttsMenu');
 const ttsStatus=document.getElementById('ttsStatus');
+const menuTrigger=menu?.querySelector(':scope > summary');
+function syncTtsMenuState(){
+ if(!menu||!menuTrigger)return;
+ const expanded=menu.hasAttribute('open');
+ menuTrigger.setAttribute('aria-expanded',String(expanded));
+}
+if(menu&&menuTrigger){
+ menuTrigger.setAttribute('role','button');
+ menuTrigger.setAttribute('aria-haspopup','true');
+ syncTtsMenuState();
+ menuTrigger.addEventListener('click',event=>{
+  event.preventDefault();
+  event.stopPropagation();
+  const shouldOpen=!menu.hasAttribute('open');
+  document.querySelectorAll('.topbar details[open]').forEach(details=>{
+   if(details!==menu)details.removeAttribute('open');
+  });
+  menu.toggleAttribute('open',shouldOpen);
+  syncTtsMenuState();
+ });
+ menu.addEventListener('toggle',syncTtsMenuState);
+}
 let readingNodes=[],paragraphIndex=0,chunks=[],chunkIndex=0,on=false,paused=false,token=0,currentNode=null;
 let chunkOffset=0,boundaryOffset=0,currentUtterance=null,speechTimer=0;
 
 const lesson=()=>document.querySelector('article.lesson.active');
+function mathSpeechWords(){
+ const code=String(language?.value||"sk-SK").slice(0,2).toLowerCase();
+ const words={
+  sk:{divide:"delené",sqrt:"odmocnina z",root:"odmocnina stupňa",power:"na",sub:"dolný index",square:"na druhú",cube:"na tretiu",equals:"rovná sa",notEqual:"nerovná sa",less:"menšie ako",greater:"väčšie ako",lessEqual:"menšie alebo rovné",greaterEqual:"väčšie alebo rovné",times:"krát",plus:"plus",minus:"mínus",approx:"približne sa rovná",to:"smeruje k",infinity:"nekonečno",integral:"integrál",sum:"suma",limit:"limita",sin:"sínus",cos:"kosínus",tan:"tangens",log:"logaritmus",ln:"prirodzený logaritmus",exp:"exponenciála",absolute:"absolútna hodnota",percent:"percent",pi:"pí"},
+  cs:{divide:"děleno",sqrt:"odmocnina z",root:"odmocnina stupně",power:"na",sub:"dolní index",square:"na druhou",cube:"na třetí",equals:"rovná se",notEqual:"nerovná se",less:"menší než",greater:"větší než",lessEqual:"menší nebo rovno",greaterEqual:"větší nebo rovno",times:"krát",plus:"plus",minus:"mínus",approx:"přibližně se rovná",to:"směřuje k",infinity:"nekonečno",integral:"integrál",sum:"suma",limit:"limita",sin:"sinus",cos:"kosinus",tan:"tangens",log:"logaritmus",ln:"přirozený logaritmus",exp:"exponenciála",absolute:"absolutní hodnota",percent:"procent",pi:"pí"},
+  en:{divide:"divided by",sqrt:"square root of",root:"root of degree",power:"to the power of",sub:"subscript",square:"squared",cube:"cubed",equals:"equals",notEqual:"is not equal to",less:"is less than",greater:"is greater than",lessEqual:"is less than or equal to",greaterEqual:"is greater than or equal to",times:"times",plus:"plus",minus:"minus",approx:"is approximately equal to",to:"tends to",infinity:"infinity",integral:"integral",sum:"sum",limit:"limit",sin:"sine",cos:"cosine",tan:"tangent",log:"logarithm",ln:"natural logarithm",exp:"exponential",absolute:"absolute value of",percent:"percent",pi:"pi"},
+  de:{divide:"geteilt durch",sqrt:"Quadratwurzel aus",root:"Wurzel vom Grad",power:"hoch",sub:"Index",square:"zum Quadrat",cube:"hoch drei",equals:"ist gleich",notEqual:"ist nicht gleich",less:"ist kleiner als",greater:"ist größer als",lessEqual:"ist kleiner oder gleich",greaterEqual:"ist größer oder gleich",times:"mal",plus:"plus",minus:"minus",approx:"ist ungefähr gleich",to:"strebt gegen",infinity:"unendlich",integral:"Integral",sum:"Summe",limit:"Grenzwert",sin:"Sinus",cos:"Kosinus",tan:"Tangens",log:"Logarithmus",ln:"natürlicher Logarithmus",exp:"Exponentialfunktion",absolute:"Betrag von",percent:"Prozent",pi:"Pi"},
+  pl:{divide:"podzielone przez",sqrt:"pierwiastek z",root:"pierwiastek stopnia",power:"do potęgi",sub:"indeks dolny",square:"do kwadratu",cube:"do sześcianu",equals:"równa się",notEqual:"nie równa się",less:"mniejsze niż",greater:"większe niż",lessEqual:"mniejsze lub równe",greaterEqual:"większe lub równe",times:"razy",plus:"plus",minus:"minus",approx:"w przybliżeniu równa się",to:"dąży do",infinity:"nieskończoność",integral:"całka",sum:"suma",limit:"granica",sin:"sinus",cos:"cosinus",tan:"tangens",log:"logarytm",ln:"logarytm naturalny",exp:"funkcja wykładnicza",absolute:"wartość bezwzględna z",percent:"procent",pi:"pi"},
+  hu:{divide:"osztva",sqrt:"négyzetgyök",root:"gyök, amelynek foka",power:"hatványon",sub:"alsó index",square:"négyzeten",cube:"köbön",equals:"egyenlő",notEqual:"nem egyenlő",less:"kisebb mint",greater:"nagyobb mint",lessEqual:"kisebb vagy egyenlő",greaterEqual:"nagyobb vagy egyenlő",times:"szorozva",plus:"plusz",minus:"mínusz",approx:"megközelítőleg egyenlő",to:"tart",infinity:"végtelen",integral:"integrál",sum:"összeg",limit:"határérték",sin:"szinusz",cos:"koszinusz",tan:"tangens",log:"logaritmus",ln:"természetes logaritmus",exp:"exponenciális függvény",absolute:"abszolút értéke",percent:"százalék",pi:"pí"}
+ };
+ return words[code]||words.sk;
+}
+function mathFormulaSpeech(tex){
+ const w=mathSpeechWords();
+ let value=String(tex||"").replace(/\u200B/g," ").replace(/\\(?:left|right)\b/g," ");
+ let previous="";
+ while(previous!==value){
+  previous=value;
+  value=value.replace(/\\(?:dfrac|tfrac|frac)\s*\{([^{}]*)\}\s*\{([^{}]*)\}/g,(_,top,bottom)=>" "+top+" "+w.divide+" "+bottom+" ");
+ }
+ previous="";
+ while(previous!==value){
+  previous=value;
+  value=value.replace(/\\sqrt\s*(?:\[([^\]]+)\])?\s*\{([^{}]*)\}/g,(_,degree,body)=>degree?" "+w.root+" "+degree+", "+body+" ":" "+w.sqrt+" "+body+" ");
+ }
+ value=value
+  .replace(/\^\s*\{\s*2\s*\}/g," "+w.square+" ").replace(/\^\s*2\b/g," "+w.square+" ")
+  .replace(/\^\s*\{\s*3\s*\}/g," "+w.cube+" ").replace(/\^\s*3\b/g," "+w.cube+" ")
+  .replace(/\^\s*\{([^{}]+)\}/g,(_,part)=>" "+w.power+" "+part+" ").replace(/\^\s*([A-Za-z0-9]+)/g,(_,part)=>" "+w.power+" "+part+" ")
+  .replace(/_\s*\{([^{}]+)\}/g,(_,part)=>" "+w.sub+" "+part+" ").replace(/_\s*([A-Za-z0-9]+)/g,(_,part)=>" "+w.sub+" "+part+" ")
+  .replace(/\\(?:operatorname|mathrm|mathbf|mathit|text)\s*\{([^{}]*)\}/g," $1 ")
+  .replace(/\\begin\s*\{[^{}]*\}|\\end\s*\{[^{}]*\}/g," ")
+  .replace(/\\(?:cdot|times)\b/g," "+w.times+" ").replace(/\\div\b/g," "+w.divide+" ")
+  .replace(/\\(?:neq|ne)\b|≠/g," "+w.notEqual+" ").replace(/\\leq?\b|≤/g," "+w.lessEqual+" ").replace(/\\geq?\b|≥/g," "+w.greaterEqual+" ")
+  .replace(/\\approx\b|≈/g," "+w.approx+" ").replace(/\\to\b|→/g," "+w.to+" ")
+  .replace(/\\infty\b|∞/g," "+w.infinity+" ").replace(/\\int\b/g," "+w.integral+" ").replace(/\\sum\b/g," "+w.sum+" ").replace(/\\lim\b/g," "+w.limit+" ")
+  .replace(/\\sin\b/g," "+w.sin+" ").replace(/\\cos\b/g," "+w.cos+" ").replace(/\\tan\b/g," "+w.tan+" ")
+  .replace(/\\log\b/g," "+w.log+" ").replace(/\\ln\b/g," "+w.ln+" ").replace(/\\exp\b/g," "+w.exp+" ")
+  .replace(/\\pi\b/g," "+w.pi+" ").replace(/\\alpha\b/g," alfa ").replace(/\\beta\b/g," beta ").replace(/\\gamma\b/g," gama ").replace(/\\delta\b/g," delta ")
+  .replace(/\\epsilon\b/g," epsilon ").replace(/\\theta\b/g," théta ").replace(/\\lambda\b/g," lambda ").replace(/\\mu\b/g," mí ").replace(/\\sigma\b/g," sigma ").replace(/\\omega\b/g," omega ")
+  .replace(/\\%/g," "+w.percent+" ").replace(/\\,/g," ").replace(/\\;/g," ").replace(/\\!/g," ")
+  .replace(/\\([A-Za-z]+)/g," $1 ").replace(/[{}\[\]]/g," ")
+  .replace(/=/g," "+w.equals+" ").replace(/</g," "+w.less+" ").replace(/>/g," "+w.greater+" ")
+  .replace(/\+/g," "+w.plus+" ").replace(/[−–—-]/g," "+w.minus+" ").replace(/[×*]/g," "+w.times+" ").replace(/\//g," "+w.divide+" ")
+  .replace(/\|([^|]+)\|/g,(_,part)=>" "+w.absolute+" "+part+" ")
+  .replace(/\s+([,.;:!?])/g,"$1").replace(/\s+/g," ").trim();
+ return value;
+}
 function speechText(node){
  if(!node)return"";
- const clone=node.cloneNode(true);clone.querySelectorAll?.(".course-math,.course-editor-only").forEach(item=>item.remove());
+ const clone=node.cloneNode(true);
+ clone.querySelectorAll?.(".course-editor-only").forEach(item=>item.remove());
+ clone.querySelectorAll?.(".course-math").forEach(item=>{
+  const standalone=item.classList.contains("course-math-block")||item.dataset.display==="true";
+  const tex=item.dataset.tex||item.getAttribute("aria-label")?.replace(/^Matematický vzorec:\s*/,"")||item.textContent||"";
+  item.replaceWith(document.createTextNode(standalone?" ":" "+mathFormulaSpeech(tex)+" "));
+ });
  return String(clone.textContent||"")
-  .replace(/\$\$[\s\S]+?\$\$/g," ").replace(/\$[^$\n]+?\$/g," ").replace(/\\\[[\s\S]+?\\\]/g," ").replace(/\\\([\s\S]+?\\\)/g," ")
-  .replace(/\b(?:lim\s+)?[A-Za-z]\s*→\s*[A-Za-z0-9∞+\-]+(?:\s+[A-Za-z]\([^)]*\)\s*=\s*[^\s,.;:!?]+)?/g," ")
-  .replace(/\b[A-Za-z][A-Za-z0-9′]*\([^)]*\)(?:\s*[=<>≤≥≠]\s*[^\s,.;:!?]+)?/g," ")
-  .replace(/(?:\|[^|]+\||\b[A-Za-zεδΔ][A-Za-z0-9₀-₉′]*)\s*(?:=|<|>|≤|≥|≠)\s*[^\s,.;:!?]+/g," ")
-  .replace(/\b\d+\s*\/\s*\d+\b/g," ").replace(/\b[A-Za-z][²³⁴⁵⁶⁷⁸⁹₀-₉ˣⁿ]+\b/g," ")
-  .replace(/\s+([,.;:!?])/g,"$1").replace(/([,;:])\s*([.!?])/g,"$2").replace(/\s+/g," ").trim();
+  .replace(/\$\$[\s\S]+?\$\$/g," ").replace(/\\\[[\s\S]+?\\\]/g," ")
+  .replace(/\$([^$\n]+?)\$/g,(_,tex)=>" "+mathFormulaSpeech(tex)+" ")
+  .replace(/\\\(([\s\S]+?)\\\)/g,(_,tex)=>" "+mathFormulaSpeech(tex)+" ")
+  .replace(/\u200B/g," ").replace(/\s+([,.;:!?])/g,"$1").replace(/([,;:])\s*([.!?])/g,"$2").replace(/\s+/g," ").trim();
 }
 function availableNodes(){
  return [...document.querySelectorAll('article.lesson.course-visible h1,article.lesson.course-visible .lesson-text>h2:not([data-tts="false"]),article.lesson.course-visible .lesson-text>h3:not([data-tts="false"]),article.lesson.course-visible .lesson-text>p:not([data-tts="false"])')]
@@ -4580,20 +4654,21 @@ addGraphTools();initTests(document);updateCounts();refreshEditing();renderMath(d
  render();
 })();
 </script>
-<script id="lemma-v3-quick-notes">
+<script id="lemma-v4-course-notes">
 (function(){"use strict";
-const NOTES_KEY="lemma-v3-quick-notes",toggle=document.getElementById("quickNotesToggle"),panel=document.getElementById("quickNotesPanel"),area=document.getElementById("quickNotesText"),title=document.getElementById("quickNotesTitle"),status=document.getElementById("quickNotesStatus"),minimize=document.getElementById("quickNotesMinimize"),close=document.getElementById("quickNotesClose");
+const NOTES_KEY="lemma-v4-course-notes",toggle=document.getElementById("quickNotesToggle"),panel=document.getElementById("quickNotesPanel"),area=document.getElementById("quickNotesText"),title=document.getElementById("quickNotesTitle"),status=document.getElementById("quickNotesStatus"),minimize=document.getElementById("quickNotesMinimize"),close=document.getElementById("quickNotesClose");
 let notes={},currentId="",timer=null;
 try{const stored=JSON.parse(localStorage.getItem(NOTES_KEY)||"{}");if(stored&&typeof stored==="object"&&!Array.isArray(stored))notes=stored}catch(e){notes={}}
-function activeInfo(){const article=document.querySelector("article.lesson.active");return{id:article?.id||"vseobecne",title:article?.querySelector("h1")?.textContent.trim()||"Všeobecné poznámky"}}
+function activeInfo(detail){const article=document.querySelector("article.lesson.active"),courseId=String(detail?.courseId||article?.dataset.courseId||"vseobecne"),courseName=document.getElementById("sidebarCourseName")?.textContent.trim()||"Všeobecné poznámky";return{id:courseId,title:courseName}}
 function save(silent=true){clearTimeout(timer);if(!currentId)return;notes[currentId]=area.value;status.textContent="Ukladám…";try{localStorage.setItem(NOTES_KEY,JSON.stringify(notes));status.textContent="Uložené";return true}catch(e){status.textContent="Uloženie zlyhalo";if(!silent&&window.console)console.warn("Poznámky sa nepodarilo uložiť",e);return false}}
-function load(){save();const info=activeInfo();currentId=info.id;title.textContent="Poznámky · "+info.title;area.value=typeof notes[currentId]==="string"?notes[currentId]:"";status.textContent="Uložené"}
-function open(){panel.hidden=false;panel.classList.remove("minimized");toggle.setAttribute("aria-expanded","true");minimize.textContent="−";minimize.setAttribute("aria-label","Minimalizovať poznámky");setTimeout(()=>area.focus(),30)}
+function load(detail){save();const info=activeInfo(detail);currentId=info.id;title.textContent="Poznámky · "+info.title;area.value=typeof notes[currentId]==="string"?notes[currentId]:"";status.textContent="Uložené"}
+function open(){load();panel.hidden=false;panel.classList.remove("minimized");toggle.setAttribute("aria-expanded","true");minimize.textContent="−";minimize.setAttribute("aria-label","Minimalizovať poznámky");setTimeout(()=>area.focus(),30)}
 toggle.addEventListener("click",()=>panel.hidden?open():(save(),panel.hidden=true,toggle.setAttribute("aria-expanded","false")));
 close.addEventListener("click",()=>{save(false);panel.hidden=true;toggle.setAttribute("aria-expanded","false");toggle.focus()});
 minimize.addEventListener("click",()=>{const minimized=panel.classList.toggle("minimized");minimize.textContent=minimized?"□":"−";minimize.setAttribute("aria-label",minimized?"Obnoviť poznámky":"Minimalizovať poznámky")});
 area.addEventListener("input",()=>{clearTimeout(timer);status.textContent="Ukladám…";timer=setTimeout(()=>save(),500)});
-document.addEventListener("lemma:lessonchange",()=>setTimeout(load,0));
+document.addEventListener("lemma:coursechange",event=>setTimeout(()=>load(event.detail),0));
+document.addEventListener("lemma:course-rendered",event=>setTimeout(()=>load(event.detail),0));
 window.addEventListener("beforeunload",()=>save());
 load();
 })();
