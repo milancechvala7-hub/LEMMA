@@ -1930,13 +1930,66 @@ body.course-editing .course-review::before{display:none}
 /* Lišta editora nesmie pri prepnutí zmeniť aktuálne miesto čítania.
    Samotné obnovenie scrollu je v setEditing(). */
 
-/* Menu výberu odpovede sa otvára nad ovládačom. Test nesmie jeho obsah
-   orezať na svojom spodnom okraji. */
+/* Menu výberu odpovede sa na počítači otvára nad ovládačom. Kontajner
+   testu ho nesmie orezať. Na mobile je menu pevne vo výreze obrazovky,
+   preto nemôže presiahnuť spodný okraj ani ho orezať blok otázky. */
 .course-test{overflow:visible}
 .course-math-select-menu{
  top:auto;
  bottom:calc(100% + .3rem);
  z-index:400;
+}
+@media (max-width:560px){
+ .course-math-select-menu{
+  position:fixed;
+  top:auto;
+  right:.75rem;
+  bottom:calc(.75rem + env(safe-area-inset-bottom));
+  left:.75rem;
+  width:auto;
+  min-width:0;
+  max-width:none;
+  max-height:48vh;
+  padding:.45rem;
+  z-index:400;
+ }
+}
+
+
+
+/* Mobilne spolahlivy dropdown: menu sa pri otvoreni presunie priamo do body.
+   Tym ho nemoze orezat test, trening, transformovany rodic ani overflow kontajnera. */
+.course-test-select{touch-action:manipulation}
+.course-math-select-menu.course-math-select-portal{
+ position:fixed!important;
+ z-index:2147483000!important;
+ top:var(--course-dropdown-top)!important;
+ right:auto!important;
+ bottom:auto!important;
+ left:var(--course-dropdown-left)!important;
+ width:var(--course-dropdown-width)!important;
+ min-width:0!important;
+ max-width:calc(100vw - 24px)!important;
+ max-height:var(--course-dropdown-max-height)!important;
+ overflow:auto!important;
+ overscroll-behavior:contain;
+ -webkit-overflow-scrolling:touch;
+ pointer-events:auto!important;
+}
+.course-math-select-menu.course-math-select-portal.course-math-select-mobile-sheet{
+ top:auto!important;
+ right:max(.75rem,env(safe-area-inset-right))!important;
+ bottom:max(.75rem,env(safe-area-inset-bottom))!important;
+ left:max(.75rem,env(safe-area-inset-left))!important;
+ width:auto!important;
+ max-width:none!important;
+ max-height:min(58vh,calc(100dvh - 1.5rem - env(safe-area-inset-top) - env(safe-area-inset-bottom)))!important;
+ padding:.5rem!important;
+ border-radius:.85rem!important;
+ box-shadow:0 18px 55px rgba(15,23,42,.35)!important;
+}
+.course-math-select-menu.course-math-select-portal .course-math-select-option{
+ touch-action:manipulation;
 }
 
 
@@ -4384,12 +4437,61 @@ function createFormulaDropdown(question,questionNumber){
   optionButton.dataset.value=String(option.originalIndex);optionButton.setAttribute("role","option");optionButton.setAttribute("aria-selected","false");optionButton.tabIndex=-1;
   appendTestRichText(optionButton,option.text);menu.append(optionButton);optionButtons.push(optionButton);
  });
+
+ let opened=false,touchClickBlockedUntil=0;
+ const isMobile=()=>window.matchMedia("(max-width:700px), (pointer:coarse)").matches;
+ const placeMenu=()=>{
+  if(!opened)return;
+  const mobile=isMobile(),rect=button.getBoundingClientRect();
+  menu.classList.toggle("course-math-select-mobile-sheet",mobile);
+  menu.style.removeProperty("--course-dropdown-top");
+  menu.style.removeProperty("--course-dropdown-left");
+  menu.style.removeProperty("--course-dropdown-width");
+  menu.style.removeProperty("--course-dropdown-max-height");
+  if(mobile)return;
+  const margin=12,gap=6;
+  const viewportWidth=document.documentElement.clientWidth;
+  const viewportHeight=window.visualViewport?.height||document.documentElement.clientHeight;
+  const availableBelow=Math.max(0,viewportHeight-rect.bottom-gap-margin);
+  const availableAbove=Math.max(0,rect.top-gap-margin);
+  const maxHeight=Math.max(120,Math.min(288,Math.max(availableBelow,availableAbove)));
+  const width=Math.min(Math.max(rect.width,180),Math.max(180,viewportWidth-margin*2));
+  const left=Math.max(margin,Math.min(rect.left,viewportWidth-width-margin));
+  const openBelow=availableBelow>=Math.min(220,maxHeight)||availableBelow>=availableAbove;
+  const top=openBelow
+   ?Math.min(viewportHeight-margin-maxHeight,rect.bottom+gap)
+   :Math.max(margin,rect.top-gap-maxHeight);
+  menu.style.setProperty("--course-dropdown-top",Math.max(margin,top)+"px");
+  menu.style.setProperty("--course-dropdown-left",left+"px");
+  menu.style.setProperty("--course-dropdown-width",width+"px");
+  menu.style.setProperty("--course-dropdown-max-height",maxHeight+"px");
+ };
+ const closeOtherDropdowns=()=>{
+  document.querySelectorAll(".course-math-select-menu.course-math-select-portal").forEach(other=>{
+   if(other!==menu)other.dispatchEvent(new CustomEvent("course:dropdown-close"));
+  });
+ };
  const setOpen=(open,focusIndex=null)=>{
   if(button.disabled)open=false;
-  menu.hidden=!open;button.setAttribute("aria-expanded",String(open));
+  if(open===opened)return;
+  opened=open;
   if(open){
+   closeOtherDropdowns();
+   document.body.append(menu);
+   menu.classList.add("course-math-select-portal");
+   menu.hidden=false;
+   button.setAttribute("aria-expanded","true");
+   placeMenu();
    renderMath(menu);
-   if(focusIndex!==null&&optionButtons.length)optionButtons[Math.max(0,Math.min(optionButtons.length-1,focusIndex))].focus();
+   if(focusIndex!==null&&optionButtons.length){
+    setTimeout(()=>optionButtons[Math.max(0,Math.min(optionButtons.length-1,focusIndex))]?.focus(),0);
+   }
+  }else{
+   menu.hidden=true;
+   menu.classList.remove("course-math-select-portal","course-math-select-mobile-sheet");
+   menu.removeAttribute("style");
+   button.setAttribute("aria-expanded","false");
+   wrapper.append(menu);
   }
  };
  const choose=optionButton=>{
@@ -4397,9 +4499,18 @@ function createFormulaDropdown(question,questionNumber){
   optionButtons.forEach(item=>item.setAttribute("aria-selected",String(item===optionButton)));
   value.replaceChildren();appendTestRichText(value,question.options[Number(select.value)]?.text||"Vyberte…");
   select.dispatchEvent(new Event("change",{bubbles:true}));
-  setOpen(false);renderMath(value);button.focus();
+  setOpen(false);renderMath(value);button.focus({preventScroll:true});
  };
- button.addEventListener("click",()=>setOpen(menu.hidden));
+
+ button.addEventListener("touchend",event=>{
+  event.preventDefault();
+  touchClickBlockedUntil=Date.now()+700;
+  setOpen(!opened);
+ },{passive:false});
+ button.addEventListener("click",event=>{
+  if(Date.now()<touchClickBlockedUntil){event.preventDefault();return}
+  setOpen(!opened);
+ });
  button.addEventListener("keydown",event=>{
   if(event.key==="ArrowDown"||event.key==="ArrowUp"){
    event.preventDefault();setOpen(true,event.key==="ArrowUp"?optionButtons.length-1:0);
@@ -4408,7 +4519,16 @@ function createFormulaDropdown(question,questionNumber){
   }
  });
  optionButtons.forEach((optionButton,index)=>{
-  optionButton.addEventListener("click",()=>choose(optionButton));
+  let optionTouchBlockedUntil=0;
+  optionButton.addEventListener("touchend",event=>{
+   event.preventDefault();
+   optionTouchBlockedUntil=Date.now()+700;
+   choose(optionButton);
+  },{passive:false});
+  optionButton.addEventListener("click",event=>{
+   if(Date.now()<optionTouchBlockedUntil){event.preventDefault();return}
+   choose(optionButton);
+  });
   optionButton.addEventListener("keydown",event=>{
    if(event.key==="ArrowDown"||event.key==="ArrowUp"){
     event.preventDefault();
@@ -4423,7 +4543,20 @@ function createFormulaDropdown(question,questionNumber){
    }
   });
  });
- wrapper.addEventListener("focusout",()=>setTimeout(()=>{if(!wrapper.contains(document.activeElement))setOpen(false)},0));
+ menu.addEventListener("course:dropdown-close",()=>setOpen(false));
+ document.addEventListener("pointerdown",event=>{
+  if(opened&&!wrapper.contains(event.target)&&!menu.contains(event.target))setOpen(false);
+ },{passive:true});
+ document.addEventListener("keydown",event=>{
+  if(opened&&event.key==="Escape"){setOpen(false);button.focus()}
+ });
+ window.addEventListener("resize",placeMenu,{passive:true});
+ window.visualViewport?.addEventListener("resize",placeMenu,{passive:true});
+ window.visualViewport?.addEventListener("scroll",placeMenu,{passive:true});
+ document.addEventListener("scroll",placeMenu,{passive:true,capture:true});
+ wrapper.addEventListener("focusout",()=>setTimeout(()=>{
+  if(opened&&!wrapper.contains(document.activeElement)&&!menu.contains(document.activeElement))setOpen(false);
+ },0));
  wrapper.append(select,button,menu);
  return wrapper;
 }
