@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="sk"><head><!-- LEMMA V20 Public: blok Tréning, kompaktná dátová schéma v5 a vzorce v testoch. --><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/><meta content="LEMMA V20 – verejná verzia na prezeranie publikovaných interaktívnych matematických kurzov. Obsah sa automaticky načíta zo súboru lemma-obsah.js." name="description"/><meta content="LEMMA V20 Public" name="application-name"/><meta content="LEMMA V20 public viewer · training blocks · formulas in tests · compact block schema v5" name="generator"/><meta content="#14213d" name="theme-color"/><title>LEMMA V20 | Verejné interaktívne kurzy</title><style id="lemma-v20-public-styles">/* LEMMA V20 – zjednotený dizajnový systém */
+<html lang="sk"><head><!-- LEMMA V20: kompaktná dátová schéma v5 a spätná kompatibilita so schémami v1–v4. --><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/><meta content="LEMMA V20 – interaktívne matematické kurzy s vlastnými lekciami, GeoGebra grafmi, rýchlymi poznámkami a lokálnym ukladaním obsahu." name="description"/><meta content="LEMMA V20.0" name="application-name"/><meta content="LEMMA V20 compact block schema v5" name="generator"/><meta content="#14213d" name="theme-color"/><title>LEMMA V20.0 | Interaktívne matematické kurzy</title><style id="lemma-v20-styles">/* LEMMA V20 – zjednotený dizajnový systém */
 :root{
   color-scheme:light;
   --font-sans:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
@@ -1930,102 +1930,28 @@ body.course-editing .course-review::before{display:none}
 /* Lišta editora nesmie pri prepnutí zmeniť aktuálne miesto čítania.
    Samotné obnovenie scrollu je v setEditing(). */
 
-/* Menu výberu odpovede sa na počítači otvára nad ovládačom. Kontajner
-   testu ho nesmie orezať. Na mobile je menu pevne vo výreze obrazovky,
-   preto nemôže presiahnuť spodný okraj ani ho orezať blok otázky. */
+/* Menu výberu odpovede sa otvára nad ovládačom. Test nesmie jeho obsah
+   orezať na svojom spodnom okraji. */
 .course-test{overflow:visible}
 .course-math-select-menu{
  top:auto;
  bottom:calc(100% + .3rem);
  z-index:400;
 }
-@media (max-width:560px){
- .course-math-select-menu{
-  position:fixed;
-  top:auto;
-  right:.75rem;
-  bottom:calc(.75rem + env(safe-area-inset-bottom));
-  left:.75rem;
-  width:auto;
-  min-width:0;
-  max-width:none;
-  max-height:48vh;
-  padding:.45rem;
-  z-index:400;
- }
-}
-
-
-
-/* Mobilne spolahlivy dropdown: menu sa pri otvoreni presunie priamo do body.
-   Tym ho nemoze orezat test, trening, transformovany rodic ani overflow kontajnera. */
-.course-test-select{touch-action:manipulation}
-.course-math-select-menu.course-math-select-portal{
- position:fixed!important;
- z-index:2147483000!important;
- top:var(--course-dropdown-top)!important;
- right:auto!important;
- bottom:auto!important;
- left:var(--course-dropdown-left)!important;
- width:var(--course-dropdown-width)!important;
- min-width:0!important;
- max-width:calc(100vw - 24px)!important;
- max-height:var(--course-dropdown-max-height)!important;
- overflow:auto!important;
- overscroll-behavior:contain;
- -webkit-overflow-scrolling:touch;
- pointer-events:auto!important;
-}
-.course-math-select-menu.course-math-select-portal.course-math-select-mobile-sheet{
- top:auto!important;
- right:max(.75rem,env(safe-area-inset-right))!important;
- bottom:max(.75rem,env(safe-area-inset-bottom))!important;
- left:max(.75rem,env(safe-area-inset-left))!important;
- width:auto!important;
- max-width:none!important;
- max-height:min(58vh,calc(100dvh - 1.5rem - env(safe-area-inset-top) - env(safe-area-inset-bottom)))!important;
- padding:.5rem!important;
- border-radius:.85rem!important;
- box-shadow:0 18px 55px rgba(15,23,42,.35)!important;
-}
-.course-math-select-menu.course-math-select-portal .course-math-select-option{
- touch-action:manipulation;
-}
-
-
-/* ===== LEMMA V20 Public · verejná verzia bez editovacieho režimu ===== */
-.course-authorbar,
-#courseEditToggle,
-#courseBackup,
-#courseLoadBackup,
-#courseExportLesson,
-.course-editor-only,
-.course-edit-only{
-  display:none!important;
-}
-body.course-editing [contenteditable="true"],
-[contenteditable="true"]{
-  outline:none!important;
-  cursor:inherit!important;
-}
-.topbar-data .course-author-menu{min-width:170px}
-.topbar-data .course-author-menu button{font-weight:800}
-
 </style>
 <script defer="" src="https://www.geogebra.org/apps/deployggb.js"></script>
 <script>
 window.MathJax={tex:{packages:{"[+]":["ams"]}},startup:{typeset:false,ready:function(){MathJax.startup.defaultReady();MathJax.startup.promise.then(function(){window.dispatchEvent(new Event("course-math-ready"))})}}};
 </script>
 <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
-</head><body><header class="topbar"><button aria-label="Otvoriť zoznam kurzov a lekcií" class="sidebar-toggle" title="Kurzy a lekcie" type="button">☰</button><div class="brand"><span class="brand-mark">∫</span><div><strong>LEMMA V20</strong><small>Learn. Explore. Model. Master. Apply.</small></div></div><button aria-hidden="true" hidden="" id="courseEditToggle" tabindex="-1" type="button">Editovanie je vo verejnej verzii vypnuté</button><details class="topbar-data">
-<summary aria-label="Správa dát">Dáta</summary>
+</head><body><header class="topbar"><button aria-label="Otvoriť zoznam kurzov a lekcií" class="sidebar-toggle" title="Kurzy a lekcie" type="button">☰</button><div class="brand"><span class="brand-mark">∫</span><div><strong>LEMMA V20</strong><small>Learn. Explore. Model. Master. Apply.</small></div></div><button aria-label="Vytvoriť nový kurz" aria-pressed="false" class="topbar-edit" id="courseEditToggle" type="button">＋ Nový kurz</button><details class="topbar-data">
+<summary>Dáta</summary>
 <div class="course-author-menu">
-<button aria-hidden="true" hidden="" id="courseBackup" tabindex="-1" type="button">Zálohovať</button>
-<button aria-hidden="true" hidden="" id="courseLoadBackup" tabindex="-1" type="button">Načítať zálohu</button>
-<button id="courseExport" type="button">Export JSON</button>
-<button aria-hidden="true" hidden="" id="courseExportLesson" tabindex="-1" type="button">Exportovať aktuálny kurz</button>
-<button id="courseImport" type="button">Import JSON</button>
-<button id="courseUseOfficialData" type="button">Použiť oficiálne dáta</button>
+<button id="courseBackup" type="button">Publikovať</button>
+<button id="courseLoadBackup" type="button" title="Načíta zverejnený obsah zo súboru lemma-obsah.js a zapne jeho automatickú kontrolu pri ďalšom otvorení.">Použiť zverejnenú verziu</button>
+<button id="courseExport" type="button">Exportovať</button>
+<button id="courseExportLesson" type="button">Exportovať aktuálny kurz</button>
+<button id="courseImport" type="button">Importovať</button>
 </div>
 </details><div aria-label="Čítanie lekcie" class="tts-top" id="ttsPlayer" role="toolbar">
 <button aria-label="Predchádzajúci odsek" class="tts-control tts-session tts-nav" id="ttsPrev" title="Predchádzajúci odsek" type="button">‹</button>
@@ -2050,7 +1976,7 @@ window.MathJax={tex:{packages:{"[+]":["ams"]}},startup:{typeset:false,ready:func
 </details>
 <span class="sr-only" id="ttsStatus" role="status"></span>
 </div><div class="score-chip" title="Jednoduché skóre"><span>Skóre</span><strong>⭐ 0 bodov</strong></div></header>
-<div aria-hidden="true" class="course-authorbar" hidden="" inert="" role="presentation">
+<div aria-label="Nástroje na úpravu kurzov" class="course-authorbar" role="toolbar">
 <div class="course-author-view">
 <details class="course-author-more course-create-menu">
 <summary>＋ Nový</summary>
@@ -2117,8 +2043,8 @@ window.MathJax={tex:{packages:{"[+]":["ams"]}},startup:{typeset:false,ready:func
 <div class="sidebar-section-title" id="currentCourseTitle">Obsah kurzu</div>
 <nav aria-label="Obsah vybraného kurzu" class="lesson-nav"></nav>
 </section>
-<div class="sidebar-note"><strong id="sidebarCourseName">Žiadny kurz</strong><p id="sidebarCourseDescription">Načítajte súbor lemma-obsah.js alebo importujte JSON.</p></div>
-</aside><main class="content"><section aria-live="polite" class="course-empty-state"><div><h1>Zatiaľ tu nie sú žiadne kurzy</h1><p>Obsah sa automaticky načíta zo súboru „lemma-obsah.js“. Môžete tiež použiť ponuku „Dáta“ na import vlastného obsahu.</p></div></section></main></div>
+<div class="sidebar-note"><strong id="sidebarCourseName">Žiadny kurz</strong><p id="sidebarCourseDescription">Vytvorte nový kurz alebo použite zverejnenú verziu.</p></div>
+</aside><main class="content"><section aria-live="polite" class="course-empty-state"><div><h1>Zatiaľ tu nie sú žiadne kurzy</h1><p>Vytvorte nový kurz tlačidlom „Nový kurz“ alebo použite zverejnenú verziu cez ponuku „Dáta“.</p></div></section></main></div>
 <dialog class="course-dialog" id="ggCodeDialog">
 <form id="ggCodeForm" method="dialog">
 <header><h2>Vyskúšať úpravu GeoGebra kódu</h2><button aria-label="Zavrieť" data-dialog-close="" type="button">✕</button></header>
@@ -2356,14 +2282,20 @@ Koľko je 6 × 7?
 </form>
 </dialog>
 <div class="course-toast" id="courseToast" role="status"></div>
-<button aria-controls="quickNotesPanel" aria-expanded="false" aria-label="Otvoriť poznámky ku kurzu" class="quick-notes-toggle" id="quickNotesToggle" title="Poznámky ku kurzu" type="button">📝</button>
-<section aria-label="Poznámky ku kurzu" class="quick-notes-panel" hidden="" id="quickNotesPanel">
-<div class="quick-notes-head"><strong id="quickNotesTitle">Poznámky ku kurzu</strong><button aria-label="Minimalizovať poznámky" id="quickNotesMinimize" title="Minimalizovať" type="button">−</button><button aria-label="Zavrieť poznámky" id="quickNotesClose" title="Zavrieť" type="button">×</button></div>
-<textarea aria-label="Poznámky ku aktuálnemu kurzu" id="quickNotesText" placeholder="Zapíšte si poznámku ku celému kurzu…"></textarea>
+<button aria-controls="quickNotesPanel" aria-expanded="false" aria-label="Otvoriť rýchle poznámky" class="quick-notes-toggle" id="quickNotesToggle" title="Rýchle poznámky" type="button">📝</button>
+<section aria-label="Rýchle poznámky k lekcii" class="quick-notes-panel" hidden="" id="quickNotesPanel">
+<div class="quick-notes-head"><strong id="quickNotesTitle">Rýchle poznámky</strong><button aria-label="Minimalizovať poznámky" id="quickNotesMinimize" title="Minimalizovať" type="button">−</button><button aria-label="Zavrieť poznámky" id="quickNotesClose" title="Zavrieť" type="button">×</button></div>
+<textarea aria-label="Poznámky k aktuálnej lekcii" id="quickNotesText" placeholder="Zapíšte si krátku poznámku k tejto lekcii…"></textarea>
 <div aria-live="polite" class="quick-notes-status" id="quickNotesStatus">Uložené</div>
 </section>
-<!-- Verejný obsah sa pri otvorení automaticky načíta z externého súboru lemma-obsah.js v rovnakom priečinku. Voliteľne možno použiť JSON import. -->
-<script id="lemmaInitialBackupScript" src="./lemma-obsah.js"></script>
+<!-- Obsah kurzov nie je vložený do aplikácie. Načítava sa z externého lemma-obsah.js alebo cez JSON import. -->
+<script id="lemmaInitialBackupScript">
+(function(){
+ var source="./lemma-obsah.js";
+ if(location.protocol!=="file:")source+="?_="+Date.now();
+ document.write('<script src="'+source.replace(/"/g,"&quot;")+'"><\/script>');
+})();
+</script>
 <script id="course-navigation-script">
 (function(){
  let ticking=false;
@@ -2670,94 +2602,20 @@ function updateRateLabel(){
 updateRateLabel();
 const menu=document.getElementById('ttsMenu');
 const ttsStatus=document.getElementById('ttsStatus');
-const menuTrigger=menu?.querySelector(':scope > summary');
-function syncTtsMenuState(){
- if(!menu||!menuTrigger)return;
- const expanded=menu.hasAttribute('open');
- menuTrigger.setAttribute('aria-expanded',String(expanded));
-}
-if(menu&&menuTrigger){
- menuTrigger.setAttribute('role','button');
- menuTrigger.setAttribute('aria-haspopup','true');
- syncTtsMenuState();
- menuTrigger.addEventListener('click',event=>{
-  event.preventDefault();
-  event.stopPropagation();
-  const shouldOpen=!menu.hasAttribute('open');
-  document.querySelectorAll('.topbar details[open]').forEach(details=>{
-   if(details!==menu)details.removeAttribute('open');
-  });
-  menu.toggleAttribute('open',shouldOpen);
-  syncTtsMenuState();
- });
- menu.addEventListener('toggle',syncTtsMenuState);
-}
 let readingNodes=[],paragraphIndex=0,chunks=[],chunkIndex=0,on=false,paused=false,token=0,currentNode=null;
 let chunkOffset=0,boundaryOffset=0,currentUtterance=null,speechTimer=0;
 
 const lesson=()=>document.querySelector('article.lesson.active');
-function mathSpeechWords(){
- const code=String(language?.value||"sk-SK").slice(0,2).toLowerCase();
- const words={
-  sk:{divide:"delené",sqrt:"odmocnina z",root:"odmocnina stupňa",power:"na",sub:"dolný index",square:"na druhú",cube:"na tretiu",equals:"rovná sa",notEqual:"nerovná sa",less:"menšie ako",greater:"väčšie ako",lessEqual:"menšie alebo rovné",greaterEqual:"väčšie alebo rovné",times:"krát",plus:"plus",minus:"mínus",approx:"približne sa rovná",to:"smeruje k",infinity:"nekonečno",integral:"integrál",sum:"suma",limit:"limita",sin:"sínus",cos:"kosínus",tan:"tangens",log:"logaritmus",ln:"prirodzený logaritmus",exp:"exponenciála",absolute:"absolútna hodnota",percent:"percent",pi:"pí"},
-  cs:{divide:"děleno",sqrt:"odmocnina z",root:"odmocnina stupně",power:"na",sub:"dolní index",square:"na druhou",cube:"na třetí",equals:"rovná se",notEqual:"nerovná se",less:"menší než",greater:"větší než",lessEqual:"menší nebo rovno",greaterEqual:"větší nebo rovno",times:"krát",plus:"plus",minus:"mínus",approx:"přibližně se rovná",to:"směřuje k",infinity:"nekonečno",integral:"integrál",sum:"suma",limit:"limita",sin:"sinus",cos:"kosinus",tan:"tangens",log:"logaritmus",ln:"přirozený logaritmus",exp:"exponenciála",absolute:"absolutní hodnota",percent:"procent",pi:"pí"},
-  en:{divide:"divided by",sqrt:"square root of",root:"root of degree",power:"to the power of",sub:"subscript",square:"squared",cube:"cubed",equals:"equals",notEqual:"is not equal to",less:"is less than",greater:"is greater than",lessEqual:"is less than or equal to",greaterEqual:"is greater than or equal to",times:"times",plus:"plus",minus:"minus",approx:"is approximately equal to",to:"tends to",infinity:"infinity",integral:"integral",sum:"sum",limit:"limit",sin:"sine",cos:"cosine",tan:"tangent",log:"logarithm",ln:"natural logarithm",exp:"exponential",absolute:"absolute value of",percent:"percent",pi:"pi"},
-  de:{divide:"geteilt durch",sqrt:"Quadratwurzel aus",root:"Wurzel vom Grad",power:"hoch",sub:"Index",square:"zum Quadrat",cube:"hoch drei",equals:"ist gleich",notEqual:"ist nicht gleich",less:"ist kleiner als",greater:"ist größer als",lessEqual:"ist kleiner oder gleich",greaterEqual:"ist größer oder gleich",times:"mal",plus:"plus",minus:"minus",approx:"ist ungefähr gleich",to:"strebt gegen",infinity:"unendlich",integral:"Integral",sum:"Summe",limit:"Grenzwert",sin:"Sinus",cos:"Kosinus",tan:"Tangens",log:"Logarithmus",ln:"natürlicher Logarithmus",exp:"Exponentialfunktion",absolute:"Betrag von",percent:"Prozent",pi:"Pi"},
-  pl:{divide:"podzielone przez",sqrt:"pierwiastek z",root:"pierwiastek stopnia",power:"do potęgi",sub:"indeks dolny",square:"do kwadratu",cube:"do sześcianu",equals:"równa się",notEqual:"nie równa się",less:"mniejsze niż",greater:"większe niż",lessEqual:"mniejsze lub równe",greaterEqual:"większe lub równe",times:"razy",plus:"plus",minus:"minus",approx:"w przybliżeniu równa się",to:"dąży do",infinity:"nieskończoność",integral:"całka",sum:"suma",limit:"granica",sin:"sinus",cos:"cosinus",tan:"tangens",log:"logarytm",ln:"logarytm naturalny",exp:"funkcja wykładnicza",absolute:"wartość bezwzględna z",percent:"procent",pi:"pi"},
-  hu:{divide:"osztva",sqrt:"négyzetgyök",root:"gyök, amelynek foka",power:"hatványon",sub:"alsó index",square:"négyzeten",cube:"köbön",equals:"egyenlő",notEqual:"nem egyenlő",less:"kisebb mint",greater:"nagyobb mint",lessEqual:"kisebb vagy egyenlő",greaterEqual:"nagyobb vagy egyenlő",times:"szorozva",plus:"plusz",minus:"mínusz",approx:"megközelítőleg egyenlő",to:"tart",infinity:"végtelen",integral:"integrál",sum:"összeg",limit:"határérték",sin:"szinusz",cos:"koszinusz",tan:"tangens",log:"logaritmus",ln:"természetes logaritmus",exp:"exponenciális függvény",absolute:"abszolút értéke",percent:"százalék",pi:"pí"}
- };
- return words[code]||words.sk;
-}
-function mathFormulaSpeech(tex){
- const w=mathSpeechWords();
- let value=String(tex||"").replace(/\u200B/g," ").replace(/\\(?:left|right)\b/g," ");
- let previous="";
- while(previous!==value){
-  previous=value;
-  value=value.replace(/\\(?:dfrac|tfrac|frac)\s*\{([^{}]*)\}\s*\{([^{}]*)\}/g,(_,top,bottom)=>" "+top+" "+w.divide+" "+bottom+" ");
- }
- previous="";
- while(previous!==value){
-  previous=value;
-  value=value.replace(/\\sqrt\s*(?:\[([^\]]+)\])?\s*\{([^{}]*)\}/g,(_,degree,body)=>degree?" "+w.root+" "+degree+", "+body+" ":" "+w.sqrt+" "+body+" ");
- }
- value=value
-  .replace(/\^\s*\{\s*2\s*\}/g," "+w.square+" ").replace(/\^\s*2\b/g," "+w.square+" ")
-  .replace(/\^\s*\{\s*3\s*\}/g," "+w.cube+" ").replace(/\^\s*3\b/g," "+w.cube+" ")
-  .replace(/\^\s*\{([^{}]+)\}/g,(_,part)=>" "+w.power+" "+part+" ").replace(/\^\s*([A-Za-z0-9]+)/g,(_,part)=>" "+w.power+" "+part+" ")
-  .replace(/_\s*\{([^{}]+)\}/g,(_,part)=>" "+w.sub+" "+part+" ").replace(/_\s*([A-Za-z0-9]+)/g,(_,part)=>" "+w.sub+" "+part+" ")
-  .replace(/\\(?:operatorname|mathrm|mathbf|mathit|text)\s*\{([^{}]*)\}/g," $1 ")
-  .replace(/\\begin\s*\{[^{}]*\}|\\end\s*\{[^{}]*\}/g," ")
-  .replace(/\\(?:cdot|times)\b/g," "+w.times+" ").replace(/\\div\b/g," "+w.divide+" ")
-  .replace(/\\(?:neq|ne)\b|≠/g," "+w.notEqual+" ").replace(/\\leq?\b|≤/g," "+w.lessEqual+" ").replace(/\\geq?\b|≥/g," "+w.greaterEqual+" ")
-  .replace(/\\approx\b|≈/g," "+w.approx+" ").replace(/\\to\b|→/g," "+w.to+" ")
-  .replace(/\\infty\b|∞/g," "+w.infinity+" ").replace(/\\int\b/g," "+w.integral+" ").replace(/\\sum\b/g," "+w.sum+" ").replace(/\\lim\b/g," "+w.limit+" ")
-  .replace(/\\sin\b/g," "+w.sin+" ").replace(/\\cos\b/g," "+w.cos+" ").replace(/\\tan\b/g," "+w.tan+" ")
-  .replace(/\\log\b/g," "+w.log+" ").replace(/\\ln\b/g," "+w.ln+" ").replace(/\\exp\b/g," "+w.exp+" ")
-  .replace(/\\pi\b/g," "+w.pi+" ").replace(/\\alpha\b/g," alfa ").replace(/\\beta\b/g," beta ").replace(/\\gamma\b/g," gama ").replace(/\\delta\b/g," delta ")
-  .replace(/\\epsilon\b/g," epsilon ").replace(/\\theta\b/g," théta ").replace(/\\lambda\b/g," lambda ").replace(/\\mu\b/g," mí ").replace(/\\sigma\b/g," sigma ").replace(/\\omega\b/g," omega ")
-  .replace(/\\%/g," "+w.percent+" ").replace(/\\,/g," ").replace(/\\;/g," ").replace(/\\!/g," ")
-  .replace(/\\([A-Za-z]+)/g," $1 ").replace(/[{}\[\]]/g," ")
-  .replace(/=/g," "+w.equals+" ").replace(/</g," "+w.less+" ").replace(/>/g," "+w.greater+" ")
-  .replace(/\+/g," "+w.plus+" ").replace(/[−–—-]/g," "+w.minus+" ").replace(/[×*]/g," "+w.times+" ").replace(/\//g," "+w.divide+" ")
-  .replace(/\|([^|]+)\|/g,(_,part)=>" "+w.absolute+" "+part+" ")
-  .replace(/\s+([,.;:!?])/g,"$1").replace(/\s+/g," ").trim();
- return value;
-}
 function speechText(node){
  if(!node)return"";
- const clone=node.cloneNode(true);
- clone.querySelectorAll?.(".course-editor-only").forEach(item=>item.remove());
- clone.querySelectorAll?.(".course-math").forEach(item=>{
-  const standalone=item.classList.contains("course-math-block")||item.dataset.display==="true";
-  const tex=item.dataset.tex||item.getAttribute("aria-label")?.replace(/^Matematický vzorec:\s*/,"")||item.textContent||"";
-  item.replaceWith(document.createTextNode(standalone?" ":" "+mathFormulaSpeech(tex)+" "));
- });
+ const clone=node.cloneNode(true);clone.querySelectorAll?.(".course-math,.course-editor-only").forEach(item=>item.remove());
  return String(clone.textContent||"")
-  .replace(/\$\$[\s\S]+?\$\$/g," ").replace(/\\\[[\s\S]+?\\\]/g," ")
-  .replace(/\$([^$\n]+?)\$/g,(_,tex)=>" "+mathFormulaSpeech(tex)+" ")
-  .replace(/\\\(([\s\S]+?)\\\)/g,(_,tex)=>" "+mathFormulaSpeech(tex)+" ")
-  .replace(/\u200B/g," ").replace(/\s+([,.;:!?])/g,"$1").replace(/([,;:])\s*([.!?])/g,"$2").replace(/\s+/g," ").trim();
+  .replace(/\$\$[\s\S]+?\$\$/g," ").replace(/\$[^$\n]+?\$/g," ").replace(/\\\[[\s\S]+?\\\]/g," ").replace(/\\\([\s\S]+?\\\)/g," ")
+  .replace(/\b(?:lim\s+)?[A-Za-z]\s*→\s*[A-Za-z0-9∞+\-]+(?:\s+[A-Za-z]\([^)]*\)\s*=\s*[^\s,.;:!?]+)?/g," ")
+  .replace(/\b[A-Za-z][A-Za-z0-9′]*\([^)]*\)(?:\s*[=<>≤≥≠]\s*[^\s,.;:!?]+)?/g," ")
+  .replace(/(?:\|[^|]+\||\b[A-Za-zεδΔ][A-Za-z0-9₀-₉′]*)\s*(?:=|<|>|≤|≥|≠)\s*[^\s,.;:!?]+/g," ")
+  .replace(/\b\d+\s*\/\s*\d+\b/g," ").replace(/\b[A-Za-z][²³⁴⁵⁶⁷⁸⁹₀-₉ˣⁿ]+\b/g," ")
+  .replace(/\s+([,.;:!?])/g,"$1").replace(/([,;:])\s*([.!?])/g,"$2").replace(/\s+/g," ").trim();
 }
 function availableNodes(){
  return [...document.querySelectorAll('article.lesson.course-visible h1,article.lesson.course-visible .lesson-text>h2:not([data-tts="false"]),article.lesson.course-visible .lesson-text>h3:not([data-tts="false"]),article.lesson.course-visible .lesson-text>p:not([data-tts="false"])')]
@@ -2932,9 +2790,10 @@ window.addEventListener('pagehide',halt);
 const STORAGE_KEY="lemma-v5-courses-v1";
 const LEGACY_STORAGE_KEY="lemma-v4-courses-v1";
 const BACKUP_GLOBAL="LEMMA_CONTENT_BACKUP";
-const PUBLIC_READ_ONLY=true;
-const PUBLIC_IMPORT_SESSION_KEY="lemma-public-json-session";
-const PUBLIC_DATA_SOURCE_KEY="lemma-public-data-source";
+const PUBLISHED_AT_GLOBAL="LEMMA_CONTENT_PUBLISHED_AT";
+const USE_PUBLISHED_KEY="lemma-use-published-v1";
+const PUBLISHED_FINGERPRINT_KEY="lemma-published-fingerprint-v1";
+const PUBLISHED_AT_KEY="lemma-published-at-v1";
 const IMPORT_LIMITS={lessons:5000,courses:500,lessonHtml:5_000_000,fileBytes:100*1024*1024};
 let lastImportValidationError="";
 const COURSE_ICONS=[
@@ -3675,10 +3534,10 @@ function normalizeCourses(rawCourses,allIds){
 function renderEmptyState(){
  editing=false;editSession=null;document.body.classList.remove("course-editing");activeCourseId="";
  nav.innerHTML="";courseNav.innerHTML="";
- if(!main.querySelector(".course-empty-state"))main.innerHTML='<section class="course-empty-state" aria-live="polite"><div><h1>Zatiaľ tu nie sú žiadne kurzy</h1><p>Obsah sa automaticky načíta zo súboru „lemma-obsah.js“. Môžete tiež použiť ponuku „JSON“ na import obsahu.</p></div></section>';
+ if(!main.querySelector(".course-empty-state"))main.innerHTML='<section class="course-empty-state" aria-live="polite"><div><h1>Zatiaľ tu nie sú žiadne kurzy</h1><p>Vytvorte nový kurz tlačidlom „Nový kurz“ alebo použite zverejnenú verziu cez ponuku „Dáta“.</p></div></section>';
  document.getElementById("currentCourseTitle").textContent="Obsah kurzu";
  document.getElementById("sidebarCourseName").textContent="Žiadny kurz";
- document.getElementById("sidebarCourseDescription").textContent="Načítajte súbor lemma-obsah.js alebo importujte JSON.";
+ document.getElementById("sidebarCourseDescription").textContent="Vytvorte nový kurz alebo použite zverejnenú verziu.";
  const brandMark=document.querySelector(".brand-mark");if(brandMark)brandMark.textContent="∫";
 }
 function sidebarItemActions(kind,id,deleteDisabled=false){
@@ -3810,37 +3669,59 @@ function endSidebarDrag(event){
  updateCounts();if(wasEditing&&activeLesson())setEditing(true);
  toast(drag.kind==="course"?"Poradie kurzov bolo zmenené.":"Poradie lekcií bolo zmenené.");
 }
-function restore(){
- let payload=null,state=null,source="";
- let preferredSource="official";
+function usePublishedVersion(){
  try{
-  const savedSource=localStorage.getItem(PUBLIC_DATA_SOURCE_KEY);
-  const legacyImportedSession=sessionStorage.getItem(PUBLIC_IMPORT_SESSION_KEY)==="1";
-  if(savedSource==="imported"||legacyImportedSession){
-   preferredSource="imported";
-   if(legacyImportedSession&&savedSource!=="imported")localStorage.setItem(PUBLIC_DATA_SOURCE_KEY,"imported");
+  const saved=localStorage.getItem(USE_PUBLISHED_KEY);
+  return saved===null||saved!=="false";
+ }catch(error){return true}
+}
+function rememberUsePublishedVersion(){
+ try{localStorage.setItem(USE_PUBLISHED_KEY,"true")}catch(error){}
+}
+function stateFingerprint(payload){
+ let value="";
+ try{value=JSON.stringify(payload)||""}catch(error){return""}
+ let hash=2166136261;
+ for(let index=0;index<value.length;index++){hash^=value.charCodeAt(index);hash=Math.imul(hash,16777619)}
+ return value.length+"-"+(hash>>>0).toString(16);
+}
+function publishedTimestamp(){
+ const value=Number(window[PUBLISHED_AT_GLOBAL]);
+ return Number.isFinite(value)&&value>0?value:0;
+}
+function rememberPublishedVersion(payload,publishedAt=publishedTimestamp()){
+ try{
+  const fingerprint=stateFingerprint(payload);
+  if(fingerprint)localStorage.setItem(PUBLISHED_FINGERPRINT_KEY,fingerprint);
+  if(publishedAt)localStorage.setItem(PUBLISHED_AT_KEY,String(publishedAt));
+ }catch(error){}
+}
+function shouldApplyPublishedVersion(backup,browserPayload){
+ if(!validImportState(backup)||!usePublishedVersion())return false;
+ if(!browserPayload)return true;
+ try{
+  const fingerprint=stateFingerprint(backup);
+  const previousFingerprint=localStorage.getItem(PUBLISHED_FINGERPRINT_KEY)||"";
+  const currentPublishedAt=publishedTimestamp();
+  const previousPublishedAt=Number(localStorage.getItem(PUBLISHED_AT_KEY)||0);
+  return !previousFingerprint||fingerprint!==previousFingerprint||(currentPublishedAt>0&&currentPublishedAt>previousPublishedAt);
+ }catch(error){return true}
+}
+function restore(){
+ let payload=null,state=null,source="",browserPayload=null;
+ try{
+  const currentRaw=localStorage.getItem(STORAGE_KEY);
+  const legacyRaw=currentRaw===null?localStorage.getItem(LEGACY_STORAGE_KEY):null;
+  const raw=currentRaw??legacyRaw;
+  if(raw!==null){
+   const parsed=JSON.parse(raw);
+   if(validImportState(parsed)){browserPayload=parsed;payload=parsed;source=legacyRaw!==null?"legacy-browser":"browser"}
+   else localStorage.removeItem(currentRaw!==null?STORAGE_KEY:LEGACY_STORAGE_KEY);
   }
- }catch(e){}
- if(preferredSource==="imported"){
-  try{
-   const currentRaw=localStorage.getItem(STORAGE_KEY);
-   const legacyRaw=currentRaw===null?localStorage.getItem(LEGACY_STORAGE_KEY):null;
-   const raw=currentRaw??legacyRaw;
-   if(raw!==null){
-    const parsed=JSON.parse(raw);
-    if(validImportState(parsed)){payload=parsed;source=legacyRaw!==null?"legacy-browser":"browser"}
-    else localStorage.removeItem(currentRaw!==null?STORAGE_KEY:LEGACY_STORAGE_KEY);
-   }
-  }catch(e){console.warn("Obnova vlastných údajov z prehliadača zlyhala",e)}
- }
- if(preferredSource==="imported"&&!payload){
-  try{localStorage.removeItem(PUBLIC_DATA_SOURCE_KEY);sessionStorage.removeItem(PUBLIC_IMPORT_SESSION_KEY)}catch(e){}
-  preferredSource="official";
- }
- if(!payload){
-  const backup=window[BACKUP_GLOBAL];
-  if(validImportState(backup)){payload=backup;source="backup"}
- }
+ }catch(e){console.warn("Obnova údajov z prehliadača zlyhala",e)}
+ const publishedBackup=window[BACKUP_GLOBAL];
+ if(shouldApplyPublishedVersion(publishedBackup,browserPayload)){payload=publishedBackup;source="published"}
+ else if(!payload&&validImportState(publishedBackup)){payload=publishedBackup;source="published"}
  if(!payload){main.innerHTML="";courses=[];renderEmptyState();setStatus("Bez obsahu");return}
  try{
   state=decodeState(payload);
@@ -3853,17 +3734,19 @@ function restore(){
    const preferredCourse=courses.some(course=>course.id===readingRestore?.courseId)?readingRestore.courseId:state.activeCourseId;
    activeCourseId=courses.some(course=>course.id===preferredCourse)?preferredCourse:(courses.find(course=>course.lessonIds.includes(readingRestore?.lessonId||state.activeId))?.id||courses[0].id);
    const preferredLesson=activeCourse()?.lessonIds.includes(readingRestore?.lessonId)?readingRestore.lessonId:(state.activeId||"");
-   repairTangentCommands(main);renderLessonNav(preferredLesson);renderMath(main);window.CourseGeoGebra?.enhanceCodeButtons(main);
-   setStatus(source==="backup"?"Oficiálne dáta":"Vlastné dáta");
+   repairTangentCommands(main);renderLessonNav(preferredLesson);renderMath(main);window.CourseGeoGebra?.enhanceCodeButtons(main);setStatus(source==="published"?"Zverejnená verzia načítaná":"Uložené");
   }
-  if(source==="legacy-browser"||(payload.version!==5&&source!=="backup")){
-   try{localStorage.setItem(STORAGE_KEY,JSON.stringify(buildState()));if(source==="legacy-browser")localStorage.removeItem(LEGACY_STORAGE_KEY)}catch(e){}
+  if(source==="published"||source==="legacy-browser"||payload.version!==5){
+   try{
+    localStorage.setItem(STORAGE_KEY,JSON.stringify(buildState()));
+    if(source==="legacy-browser")localStorage.removeItem(LEGACY_STORAGE_KEY);
+    if(source==="published"){rememberUsePublishedVersion();rememberPublishedVersion(payload)}
+    setStatus(source==="published"?"Zverejnená verzia načítaná":"Uložené");
+   }catch(e){}
   }
  }catch(e){
   console.warn("Obnova obsahu zlyhala",e);
-  if(preferredSource==="imported"){
-   try{localStorage.removeItem(STORAGE_KEY);localStorage.removeItem(PUBLIC_DATA_SOURCE_KEY)}catch(ignore){}
-  }
+  try{localStorage.removeItem(STORAGE_KEY)}catch(ignore){}
   main.innerHTML="";courses=[];renderEmptyState();setStatus("Bez obsahu");toast("Obsah sa nepodarilo načítať.",true);
  }
 }
@@ -3986,16 +3869,23 @@ function refreshEditing(){
  updateHistoryButtons();
 }
 function setEditing(value){
- editing=false;
- selectedBlock=null;
- document.body.classList.remove("course-editing");
- document.querySelectorAll("[contenteditable]").forEach(node=>node.removeAttribute("contenteditable"));
- document.querySelectorAll(".course-block-controls,.course-empty-caret").forEach(node=>node.remove());
- renderMath(activeLesson()||document);
- refreshEditing();
- updateHistoryButtons();
+ // Prepnutie režimu mení ovládacie prvky a môže vyvolať automatické
+ // presunutie viewportu. Vždy preto obnovíme presnú pozíciu čítania.
+ const scrollX=window.scrollX,scrollY=window.scrollY;
+ const restoreScroll=()=>{
+  const root=document.documentElement,previous=root.style.scrollBehavior;
+  root.style.scrollBehavior="auto";
+  window.scrollTo(scrollX,scrollY);
+  root.style.scrollBehavior=previous;
+ };
+ const next=!!value&&!!activeLesson();
+ if(next&&!editing)beginEditSession();
+ editing=next;document.body.classList.toggle("course-editing",editing);renderMath(activeLesson()||document);refreshEditing();
+ restoreScroll();
+ requestAnimationFrame(()=>{restoreScroll();requestAnimationFrame(restoreScroll)});
+ if(!editing)updateHistoryButtons();
 }
-function ensureEditing(){return false}
+function ensureEditing(){if(!editing)setEditing(true)}
 
 function insertionPoint(){
  const lesson=activeLesson(),lessonText=lesson?.querySelector(".lesson-text");if(!lessonText)return null;
@@ -4437,61 +4327,12 @@ function createFormulaDropdown(question,questionNumber){
   optionButton.dataset.value=String(option.originalIndex);optionButton.setAttribute("role","option");optionButton.setAttribute("aria-selected","false");optionButton.tabIndex=-1;
   appendTestRichText(optionButton,option.text);menu.append(optionButton);optionButtons.push(optionButton);
  });
-
- let opened=false,touchClickBlockedUntil=0;
- const isMobile=()=>window.matchMedia("(max-width:700px), (pointer:coarse)").matches;
- const placeMenu=()=>{
-  if(!opened)return;
-  const mobile=isMobile(),rect=button.getBoundingClientRect();
-  menu.classList.toggle("course-math-select-mobile-sheet",mobile);
-  menu.style.removeProperty("--course-dropdown-top");
-  menu.style.removeProperty("--course-dropdown-left");
-  menu.style.removeProperty("--course-dropdown-width");
-  menu.style.removeProperty("--course-dropdown-max-height");
-  if(mobile)return;
-  const margin=12,gap=6;
-  const viewportWidth=document.documentElement.clientWidth;
-  const viewportHeight=window.visualViewport?.height||document.documentElement.clientHeight;
-  const availableBelow=Math.max(0,viewportHeight-rect.bottom-gap-margin);
-  const availableAbove=Math.max(0,rect.top-gap-margin);
-  const maxHeight=Math.max(120,Math.min(288,Math.max(availableBelow,availableAbove)));
-  const width=Math.min(Math.max(rect.width,180),Math.max(180,viewportWidth-margin*2));
-  const left=Math.max(margin,Math.min(rect.left,viewportWidth-width-margin));
-  const openBelow=availableBelow>=Math.min(220,maxHeight)||availableBelow>=availableAbove;
-  const top=openBelow
-   ?Math.min(viewportHeight-margin-maxHeight,rect.bottom+gap)
-   :Math.max(margin,rect.top-gap-maxHeight);
-  menu.style.setProperty("--course-dropdown-top",Math.max(margin,top)+"px");
-  menu.style.setProperty("--course-dropdown-left",left+"px");
-  menu.style.setProperty("--course-dropdown-width",width+"px");
-  menu.style.setProperty("--course-dropdown-max-height",maxHeight+"px");
- };
- const closeOtherDropdowns=()=>{
-  document.querySelectorAll(".course-math-select-menu.course-math-select-portal").forEach(other=>{
-   if(other!==menu)other.dispatchEvent(new CustomEvent("course:dropdown-close"));
-  });
- };
  const setOpen=(open,focusIndex=null)=>{
   if(button.disabled)open=false;
-  if(open===opened)return;
-  opened=open;
+  menu.hidden=!open;button.setAttribute("aria-expanded",String(open));
   if(open){
-   closeOtherDropdowns();
-   document.body.append(menu);
-   menu.classList.add("course-math-select-portal");
-   menu.hidden=false;
-   button.setAttribute("aria-expanded","true");
-   placeMenu();
    renderMath(menu);
-   if(focusIndex!==null&&optionButtons.length){
-    setTimeout(()=>optionButtons[Math.max(0,Math.min(optionButtons.length-1,focusIndex))]?.focus(),0);
-   }
-  }else{
-   menu.hidden=true;
-   menu.classList.remove("course-math-select-portal","course-math-select-mobile-sheet");
-   menu.removeAttribute("style");
-   button.setAttribute("aria-expanded","false");
-   wrapper.append(menu);
+   if(focusIndex!==null&&optionButtons.length)optionButtons[Math.max(0,Math.min(optionButtons.length-1,focusIndex))].focus();
   }
  };
  const choose=optionButton=>{
@@ -4499,18 +4340,9 @@ function createFormulaDropdown(question,questionNumber){
   optionButtons.forEach(item=>item.setAttribute("aria-selected",String(item===optionButton)));
   value.replaceChildren();appendTestRichText(value,question.options[Number(select.value)]?.text||"Vyberte…");
   select.dispatchEvent(new Event("change",{bubbles:true}));
-  setOpen(false);renderMath(value);button.focus({preventScroll:true});
+  setOpen(false);renderMath(value);button.focus();
  };
-
- button.addEventListener("touchend",event=>{
-  event.preventDefault();
-  touchClickBlockedUntil=Date.now()+700;
-  setOpen(!opened);
- },{passive:false});
- button.addEventListener("click",event=>{
-  if(Date.now()<touchClickBlockedUntil){event.preventDefault();return}
-  setOpen(!opened);
- });
+ button.addEventListener("click",()=>setOpen(menu.hidden));
  button.addEventListener("keydown",event=>{
   if(event.key==="ArrowDown"||event.key==="ArrowUp"){
    event.preventDefault();setOpen(true,event.key==="ArrowUp"?optionButtons.length-1:0);
@@ -4519,16 +4351,7 @@ function createFormulaDropdown(question,questionNumber){
   }
  });
  optionButtons.forEach((optionButton,index)=>{
-  let optionTouchBlockedUntil=0;
-  optionButton.addEventListener("touchend",event=>{
-   event.preventDefault();
-   optionTouchBlockedUntil=Date.now()+700;
-   choose(optionButton);
-  },{passive:false});
-  optionButton.addEventListener("click",event=>{
-   if(Date.now()<optionTouchBlockedUntil){event.preventDefault();return}
-   choose(optionButton);
-  });
+  optionButton.addEventListener("click",()=>choose(optionButton));
   optionButton.addEventListener("keydown",event=>{
    if(event.key==="ArrowDown"||event.key==="ArrowUp"){
     event.preventDefault();
@@ -4543,20 +4366,7 @@ function createFormulaDropdown(question,questionNumber){
    }
   });
  });
- menu.addEventListener("course:dropdown-close",()=>setOpen(false));
- document.addEventListener("pointerdown",event=>{
-  if(opened&&!wrapper.contains(event.target)&&!menu.contains(event.target))setOpen(false);
- },{passive:true});
- document.addEventListener("keydown",event=>{
-  if(opened&&event.key==="Escape"){setOpen(false);button.focus()}
- });
- window.addEventListener("resize",placeMenu,{passive:true});
- window.visualViewport?.addEventListener("resize",placeMenu,{passive:true});
- window.visualViewport?.addEventListener("scroll",placeMenu,{passive:true});
- document.addEventListener("scroll",placeMenu,{passive:true,capture:true});
- wrapper.addEventListener("focusout",()=>setTimeout(()=>{
-  if(opened&&!wrapper.contains(document.activeElement)&&!menu.contains(document.activeElement))setOpen(false);
- },0));
+ wrapper.addEventListener("focusout",()=>setTimeout(()=>{if(!wrapper.contains(document.activeElement))setOpen(false)},0));
  wrapper.append(select,button,menu);
  return wrapper;
 }
@@ -5249,52 +5059,119 @@ function downloadBlob(content,type,filename){
  link.href=url;link.download=filename;document.body.append(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
 }
 function downloadJSON(data,filename){downloadBlob(JSON.stringify(data),"application/json",filename)}
-async function backupJavaScript(){
+const PUBLISH_HANDLE_DB="lemma-publish-file-v1";
+const PUBLISH_HANDLE_STORE="handles";
+const PUBLISH_HANDLE_ID="lemma-obsah.js";
+function openPublishHandleDatabase(){
+ return new Promise((resolve,reject)=>{
+  if(!window.indexedDB)return reject(new Error("indexeddb-unavailable"));
+  const request=indexedDB.open(PUBLISH_HANDLE_DB,1);
+  request.onupgradeneeded=()=>{if(!request.result.objectStoreNames.contains(PUBLISH_HANDLE_STORE))request.result.createObjectStore(PUBLISH_HANDLE_STORE)};
+  request.onsuccess=()=>resolve(request.result);
+  request.onerror=()=>reject(request.error||new Error("indexeddb-error"));
+ });
+}
+async function getPublishFileHandle(){
+ try{
+  const database=await openPublishHandleDatabase();
+  return await new Promise((resolve,reject)=>{
+   const transaction=database.transaction(PUBLISH_HANDLE_STORE,"readonly");
+   const request=transaction.objectStore(PUBLISH_HANDLE_STORE).get(PUBLISH_HANDLE_ID);
+   request.onsuccess=()=>resolve(request.result||null);
+   request.onerror=()=>reject(request.error);
+   transaction.oncomplete=()=>database.close();
+  });
+ }catch(error){return null}
+}
+async function rememberPublishFileHandle(handle){
+ try{
+  const database=await openPublishHandleDatabase();
+  await new Promise((resolve,reject)=>{
+   const transaction=database.transaction(PUBLISH_HANDLE_STORE,"readwrite");
+   transaction.objectStore(PUBLISH_HANDLE_STORE).put(handle,PUBLISH_HANDLE_ID);
+   transaction.oncomplete=resolve;
+   transaction.onerror=()=>reject(transaction.error);
+  });
+  database.close();
+ }catch(error){}
+}
+async function publishHandleAllowed(handle){
+ if(!handle)return false;
+ try{
+  if(typeof handle.queryPermission!=="function")return true;
+  let permission=await handle.queryPermission({mode:"readwrite"});
+  if(permission==="granted")return true;
+  if(typeof handle.requestPermission==="function")permission=await handle.requestPermission({mode:"readwrite"});
+  return permission==="granted";
+ }catch(error){return false}
+}
+async function writePublishedFile(handle,source){
+ const writable=await handle.createWritable();
+ await writable.write(source);
+ await writable.close();
+}
+async function publishJavaScript(){
  flushHistorySnapshot();
  const state=buildState();
+ const publishedAt=Date.now();
  const json=JSON.stringify(state).replace(/\u2028/g,"\\u2028").replace(/\u2029/g,"\\u2029");
- const source="/* Záloha obsahu aplikácie LEMMA V20 Public vo formáte lemma-blocks v5. */\nwindow."+BACKUP_GLOBAL+" = "+json+";\n";
+ const source="/* Zverejnený obsah aplikácie LEMMA V20 vo formáte lemma-blocks v5. */\nwindow."+PUBLISHED_AT_GLOBAL+" = "+publishedAt+";\nwindow."+BACKUP_GLOBAL+" = "+json+";\n";
  const filename="lemma-obsah.js";
- if(typeof window.showSaveFilePicker==="function"){
-  try{
-   const handle=await window.showSaveFilePicker({id:"lemma-backup",suggestedName:filename,types:[{description:"JavaScript záloha LEMMA",accept:{"application/javascript":[".js"]}}]});
-   const writable=await handle.createWritable();await writable.write(source);await writable.close();
-   toast("Záloha bola uložená ako "+filename+".");return;
-  }catch(error){if(error?.name==="AbortError")return}
+ let handle=await getPublishFileHandle();
+ try{
+  if(!(await publishHandleAllowed(handle)))handle=null;
+  if(!handle&&typeof window.showSaveFilePicker==="function"){
+   handle=await window.showSaveFilePicker({id:"lemma-publish",suggestedName:filename,types:[{description:"Zverejnený obsah LEMMA",accept:{"application/javascript":[".js"]}}]});
+  }
+  if(handle){
+   if(handle.name!==filename){toast("Publikovanie bolo zrušené. Vyberte súbor s názvom "+filename+".",true);return}
+   await writePublishedFile(handle,source);
+   await rememberPublishFileHandle(handle);
+   try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state))}catch(error){}
+   rememberUsePublishedVersion();rememberPublishedVersion(state,publishedAt);
+   setStatus("Publikované");
+   toast("Zverejnená verzia bola uložená do "+handle.name+" a pôvodný súbor bol nahradený.");
+   return;
+  }
+ }catch(error){
+  if(error?.name==="AbortError")return;
+  console.warn("Publikovanie zlyhalo",error);
  }
  downloadBlob(source,"application/javascript",filename);
- toast("Záloha "+filename+" bola vygenerovaná. Presuňte ju vedľa HTML aplikácie.");
+ rememberUsePublishedVersion();
+ toast("Prehliadač nepodporuje priame nahradenie súboru. Súbor "+filename+" bol stiahnutý; presuňte ho do priečinka aplikácie a nahraďte pôvodný.",true);
 }
 function loadBackupScript(){
  return new Promise((resolve,reject)=>{
   document.getElementById("lemmaBackupScript")?.remove();
   try{delete window[BACKUP_GLOBAL]}catch(e){window[BACKUP_GLOBAL]=undefined}
+  try{delete window[PUBLISHED_AT_GLOBAL]}catch(e){window[PUBLISHED_AT_GLOBAL]=undefined}
   const script=document.createElement("script");
   script.id="lemmaBackupScript";script.async=true;
   const url=new URL("./lemma-obsah.js",window.location.href);
   if(location.protocol!=="file:")url.searchParams.set("_",Date.now());
   script.src=url.href;
-  script.onload=()=>resolve(window[BACKUP_GLOBAL]);
+  script.onload=()=>resolve({backup:window[BACKUP_GLOBAL],publishedAt:publishedTimestamp()});
   script.onerror=()=>{script.remove();reject(new Error("backup-not-found"))};
   document.head.append(script);
  });
 }
-async function loadJavaScriptBackup(){
- setStatus("Načítavam zálohu…");
+async function usePublishedBackup(){
+ rememberUsePublishedVersion();
+ setStatus("Načítavam zverejnenú verziu…");
  try{
-  const backup=await loadBackupScript();
+  const result=await loadBackupScript();
+  const backup=result.backup;
   if(!validImportState(backup))throw new Error("invalid-backup");
-  if(!confirm("Načítaná záloha prepíše aktuálny obsah uložený v tomto prehliadači. Pokračovať?")){
-   setStatus(courses.length?"Uložené":"Bez obsahu");return;
-  }
   localStorage.setItem(STORAGE_KEY,JSON.stringify(backup));
   localStorage.removeItem(LEGACY_STORAGE_KEY);
-  setStatus("Záloha načítaná");
+  rememberPublishedVersion(backup,result.publishedAt);
+  setStatus("Zverejnená verzia načítaná");
   location.reload();
  }catch(error){
-  console.warn("Načítanie zálohy zlyhalo",error);
+  console.warn("Načítanie zverejnenej verzie zlyhalo",error);
   setStatus(courses.length?"Uložené":"Bez obsahu");
-  toast(error?.message==="invalid-backup"?"Súbor lemma-obsah.js neobsahuje platnú zálohu.":"Súbor lemma-obsah.js sa v priečinku aplikácie nenašiel alebo ho prehliadač nemohol načítať.",true);
+  toast(error?.message==="invalid-backup"?"Súbor lemma-obsah.js neobsahuje platnú zverejnenú verziu.":"Súbor lemma-obsah.js sa v priečinku aplikácie nenašiel alebo ho prehliadač nemohol načítať.",true);
  }
 }
 function lessonExportPayload(){
@@ -5315,7 +5192,6 @@ function normalizedCoursePayload(payload){
 }
 function normalizedCourseTitle(value){return String(value||"").trim().replace(/\s+/g," ").toLocaleLowerCase("sk")}
 function importCoursePayload(payload){
- try{sessionStorage.setItem(PUBLIC_IMPORT_SESSION_KEY,"1")}catch(ignore){}
  if(editing)commitEditSession(false);
  const normalized=normalizedCoursePayload(payload),sourceCourse=normalized.course,title=sourceCourse.title||"Importovaný kurz",existing=courses.find(course=>normalizedCourseTitle(course.title)===normalizedCourseTitle(title));
  let targetIndex=existing?courses.indexOf(existing):courses.length,newCourseId;
@@ -5327,10 +5203,10 @@ function importCoursePayload(payload){
  const course={id:newCourseId,title,description:sourceCourse.description||"",icon:courseIconFor(sourceCourse,targetIndex),custom:true,lessonIds:(sourceCourse.lessonIds||normalized.lessons.map(lesson=>lesson.id)).map(id=>idMap.get(id)).filter(Boolean)};
  importedLessons.forEach(lesson=>main.append(articleFromLessonData(lesson)));courses.splice(targetIndex,0,course);activeCourseId=course.id;renderLessonNav(course.lessonIds[0]||"");updateCounts();persist(true);toast(existing?"Kurz s rovnakým názvom bol nahradený importovanou verziou.":"Kurz bol pridaný bez zmeny ostatných kurzov.");
 }
-document.getElementById("courseBackup").addEventListener("click",backupJavaScript);
-document.getElementById("courseLoadBackup").addEventListener("click",loadJavaScriptBackup);
+document.getElementById("courseBackup").addEventListener("click",publishJavaScript);
+document.getElementById("courseLoadBackup").addEventListener("click",usePublishedBackup);
 document.getElementById("courseExport").addEventListener("click",()=>{
- flushHistorySnapshot();const state=buildState();downloadJSON(state,"lemma_obsah_export.json");toast("Obsah bol exportovaný do JSON.");
+ flushHistorySnapshot();const state=buildState();downloadJSON(state,"kurzy_a_lekcie_zaloha.json");toast("Celý obsah bol exportovaný.");
 });
 document.getElementById("courseExportLesson").addEventListener("click",()=>{
  flushHistorySnapshot();const payload=lessonExportPayload();if(!payload)return toast("Nie je vybraný žiadny kurz.",true);
@@ -5393,7 +5269,6 @@ function validLessonImport(payload){
  return !!node?.matches("article.lesson");
 }
 function importSingleLesson(payload){
- try{sessionStorage.setItem(PUBLIC_IMPORT_SESSION_KEY,"1")}catch(ignore){}
  const course=activeCourse();if(!course)throw new Error("course");
  if(editing)commitEditSession(false);
  const article=new DOMParser().parseFromString(payload.lesson.html,"text/html").body.firstElementChild;
@@ -5405,20 +5280,6 @@ function importSingleLesson(payload){
  article.querySelectorAll(".gg-live").forEach(el=>{el.id=nextGraphId();el.innerHTML='<div class="gg-start-wrap"><button class="gg-start" type="button">Spustiť graf</button></div>'});
  course.lessonIds.push(article.id);initTests(article);renderMath(article);activeCourseId=course.id;renderLessonNav(article.id);updateCounts();persist(true);setEditing(true);toast("Lekcia bola importovaná do aktuálneho kurzu.");
 }
-document.getElementById("courseUseOfficialData").addEventListener("click",()=>{
- if(!confirm("Použiť oficiálne dáta zo súboru lemma-obsah.js? Importované vlastné dáta uložené v tomto prehliadači sa odstránia."))return;
- try{
-  localStorage.removeItem(STORAGE_KEY);
-  localStorage.removeItem(LEGACY_STORAGE_KEY);
-  localStorage.removeItem(PUBLIC_DATA_SOURCE_KEY);
-  sessionStorage.removeItem(PUBLIC_IMPORT_SESSION_KEY);
-  toast("Prepínam na oficiálne dáta…");
-  setTimeout(()=>location.reload(),250);
- }catch(err){
-  console.error("Prepnutie na oficiálne dáta zlyhalo",err);
-  toast("Na oficiálne dáta sa nepodarilo prepnúť.",true);
- }
-});
 document.getElementById("courseImportFile").addEventListener("change",async e=>{
  const input=e.currentTarget,file=input.files[0];if(!file)return;
  try{
@@ -5429,9 +5290,7 @@ document.getElementById("courseImportFile").addEventListener("change",async e=>{
   if(validImportState(data)){
    if(!confirm("Import celej zálohy nahradí aktuálny obsah. Pokračovať?"))return;
    localStorage.setItem(STORAGE_KEY,JSON.stringify(data));
-   localStorage.setItem(PUBLIC_DATA_SOURCE_KEY,"imported");
-   try{sessionStorage.removeItem(PUBLIC_IMPORT_SESSION_KEY)}catch(ignore){}
-   toast("Vlastné dáta boli prijaté. Obnovujem obsah…");
+   toast("Záloha bola prijatá. Obnovujem obsah…");
    setTimeout(()=>location.reload(),250);
    return;
   }
@@ -5785,21 +5644,20 @@ addGraphTools();initTests(document);updateCounts();refreshEditing();renderMath(d
  render();
 })();
 </script>
-<script id="lemma-v4-course-notes">
+<script id="lemma-v3-quick-notes">
 (function(){"use strict";
-const NOTES_KEY="lemma-v4-course-notes",toggle=document.getElementById("quickNotesToggle"),panel=document.getElementById("quickNotesPanel"),area=document.getElementById("quickNotesText"),title=document.getElementById("quickNotesTitle"),status=document.getElementById("quickNotesStatus"),minimize=document.getElementById("quickNotesMinimize"),close=document.getElementById("quickNotesClose");
+const NOTES_KEY="lemma-v3-quick-notes",toggle=document.getElementById("quickNotesToggle"),panel=document.getElementById("quickNotesPanel"),area=document.getElementById("quickNotesText"),title=document.getElementById("quickNotesTitle"),status=document.getElementById("quickNotesStatus"),minimize=document.getElementById("quickNotesMinimize"),close=document.getElementById("quickNotesClose");
 let notes={},currentId="",timer=null;
 try{const stored=JSON.parse(localStorage.getItem(NOTES_KEY)||"{}");if(stored&&typeof stored==="object"&&!Array.isArray(stored))notes=stored}catch(e){notes={}}
-function activeInfo(detail){const article=document.querySelector("article.lesson.active"),courseId=String(detail?.courseId||article?.dataset.courseId||"vseobecne"),courseName=document.getElementById("sidebarCourseName")?.textContent.trim()||"Všeobecné poznámky";return{id:courseId,title:courseName}}
+function activeInfo(){const article=document.querySelector("article.lesson.active");return{id:article?.id||"vseobecne",title:article?.querySelector("h1")?.textContent.trim()||"Všeobecné poznámky"}}
 function save(silent=true){clearTimeout(timer);if(!currentId)return;notes[currentId]=area.value;status.textContent="Ukladám…";try{localStorage.setItem(NOTES_KEY,JSON.stringify(notes));status.textContent="Uložené";return true}catch(e){status.textContent="Uloženie zlyhalo";if(!silent&&window.console)console.warn("Poznámky sa nepodarilo uložiť",e);return false}}
-function load(detail){save();const info=activeInfo(detail);currentId=info.id;title.textContent="Poznámky · "+info.title;area.value=typeof notes[currentId]==="string"?notes[currentId]:"";status.textContent="Uložené"}
-function open(){load();panel.hidden=false;panel.classList.remove("minimized");toggle.setAttribute("aria-expanded","true");minimize.textContent="−";minimize.setAttribute("aria-label","Minimalizovať poznámky");setTimeout(()=>area.focus(),30)}
+function load(){save();const info=activeInfo();currentId=info.id;title.textContent="Poznámky · "+info.title;area.value=typeof notes[currentId]==="string"?notes[currentId]:"";status.textContent="Uložené"}
+function open(){panel.hidden=false;panel.classList.remove("minimized");toggle.setAttribute("aria-expanded","true");minimize.textContent="−";minimize.setAttribute("aria-label","Minimalizovať poznámky");setTimeout(()=>area.focus(),30)}
 toggle.addEventListener("click",()=>panel.hidden?open():(save(),panel.hidden=true,toggle.setAttribute("aria-expanded","false")));
 close.addEventListener("click",()=>{save(false);panel.hidden=true;toggle.setAttribute("aria-expanded","false");toggle.focus()});
 minimize.addEventListener("click",()=>{const minimized=panel.classList.toggle("minimized");minimize.textContent=minimized?"□":"−";minimize.setAttribute("aria-label",minimized?"Obnoviť poznámky":"Minimalizovať poznámky")});
 area.addEventListener("input",()=>{clearTimeout(timer);status.textContent="Ukladám…";timer=setTimeout(()=>save(),500)});
-document.addEventListener("lemma:coursechange",event=>setTimeout(()=>load(event.detail),0));
-document.addEventListener("lemma:course-rendered",event=>setTimeout(()=>load(event.detail),0));
+document.addEventListener("lemma:lessonchange",()=>setTimeout(load,0));
 window.addEventListener("beforeunload",()=>save());
 load();
 })();
