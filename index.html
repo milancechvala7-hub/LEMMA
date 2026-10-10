@@ -3428,6 +3428,41 @@ function mathNodeNearViewport(node){
  const rect=node.getBoundingClientRect(),margin=160;
  return rect.bottom>=-margin&&rect.top<=window.innerHeight+margin;
 }
+function captureMathScrollAnchor(targets){
+ const scrollY=window.scrollY||window.pageYOffset||0;
+ const viewportHeight=window.innerHeight||document.documentElement.clientHeight||0;
+ const pageHeight=document.documentElement.scrollHeight||0;
+ const lesson=activeLesson();
+ let anchor=null;
+ if(lesson){
+  const blocks=[...lesson.querySelectorAll(":scope > .lesson-text > *")];
+  anchor=blocks.find(block=>{
+   const rect=block.getBoundingClientRect();
+   return rect.top>=4&&!targets.some(target=>block===target||block.contains(target));
+  })||null;
+ }
+ return {
+  scrollY,
+  bottomGap:Math.max(0,pageHeight-(scrollY+viewportHeight)),
+  anchor,
+  anchorTop:anchor?anchor.getBoundingClientRect().top:null,
+  capturedAt:performance.now()
+ };
+}
+function restoreMathScrollAnchor(snapshot){
+ if(!snapshot)return;
+ /* Nezasahujeme používateľovi do práve prebiehajúceho posúvania. */
+ if(Math.abs((window.scrollY||0)-snapshot.scrollY)>3)return;
+ const viewportHeight=window.innerHeight||document.documentElement.clientHeight||0;
+ let correction=0;
+ if(snapshot.anchor?.isConnected&&snapshot.anchorTop!==null){
+  correction=snapshot.anchor.getBoundingClientRect().top-snapshot.anchorTop;
+ }else if(snapshot.bottomGap<=72){
+  const desired=Math.max(0,(document.documentElement.scrollHeight||0)-viewportHeight-snapshot.bottomGap);
+  correction=desired-(window.scrollY||0);
+ }
+ if(Math.abs(correction)>.5)window.scrollTo({top:Math.max(0,(window.scrollY||0)+correction),left:0,behavior:"auto"});
+}
 async function typesetMathNodes(nodes){
  const unique=[...new Set(nodes)].filter(node=>node?.isConnected);
  const targets=unique.filter(node=>{
@@ -3445,12 +3480,18 @@ async function typesetMathNodes(nodes){
    const output=await mj.tex2chtmlPromise(tex,{display});
    return {node,output,key};
   }));
+  /* MathJax nahrádza obyčajný text vzorca obsahom s inou výškou. Pred
+     zmenou si preto zapamätáme pevný blok pod aktuálnym miestom čítania
+     a po zmene korigujeme scroll o presný rozdiel výšky. Pri konci kurzu
+     sa namiesto toho zachová vzdialenosť od spodného okraja. */
+  const scrollAnchor=captureMathScrollAnchor(targets);
   rendered.forEach(item=>{
    if(!item?.node.isConnected)return;
    item.node.replaceChildren(item.output);item.node.dataset.rendered=item.key;delete item.node.dataset.mathPending;
    mathObserver?.unobserve(item.node);
   });
   syncMathJaxDocument();
+  restoreMathScrollAnchor(scrollAnchor);
   if(editing)ensureBlockControls(activeLesson());
  }catch(error){
   targets.forEach(node=>{if(!node?.isConnected)return;delete node.dataset.mathPending;delete node.dataset.rendered;mathFallback(node)});
