@@ -1938,12 +1938,23 @@ body.course-editing .course-review::before{display:none}
  bottom:calc(100% + .3rem);
  z-index:400;
 }
+
+/* ===== mobilný výkon: mimo obrazovky sa lekcie nevykresľujú ===== */
+.lesson.course-visible{
+  content-visibility:auto;
+  contain-intrinsic-size:auto 850px;
+}
+.lesson.course-visible.active{
+  content-visibility:visible;
+  contain-intrinsic-size:none;
+}
+@media (max-width:850px){
+  .lesson.course-visible{contain-intrinsic-size:auto 720px}
+}
 </style>
-<script defer="" src="https://www.geogebra.org/apps/deployggb.js"></script>
 <script>
 window.MathJax={tex:{packages:{"[+]":["ams"]}},startup:{typeset:false,ready:function(){MathJax.startup.defaultReady();MathJax.startup.promise.then(function(){window.dispatchEvent(new Event("course-math-ready"))})}}};
 </script>
-<script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 </head><body><header class="topbar"><button aria-label="Otvoriť zoznam kurzov a lekcií" class="sidebar-toggle" title="Kurzy a lekcie" type="button">☰</button><div class="brand"><span class="brand-mark">∫</span><div><strong>LEMMA V20</strong><small>Learn. Explore. Model. Master. Apply.</small></div></div><button aria-label="Vytvoriť nový kurz" aria-pressed="false" class="topbar-edit" id="courseEditToggle" type="button">＋ Nový kurz</button><details class="topbar-data">
 <summary>Dáta</summary>
 <div class="course-author-menu">
@@ -2291,9 +2302,11 @@ Koľko je 6 × 7?
 <!-- Obsah kurzov nie je vložený do aplikácie. Načítava sa z externého lemma-obsah.js alebo cez JSON import. -->
 <script id="lemmaInitialBackupScript">
 (function(){
- var source="./lemma-obsah.js";
+ var source="./lemma-obsah.js",hasLocal=false;
+ try{hasLocal=localStorage.getItem("lemma-v5-courses-v1")!==null||localStorage.getItem("lemma-v4-courses-v1")!==null}catch(error){}
  if(location.protocol!=="file:")source+="?_="+Date.now();
- document.write('<script src="'+source.replace(/"/g,"&quot;")+'"><\/script>');
+ if(hasLocal)window.LEMMA_DEFERRED_BACKUP_SOURCE=source;
+ else document.write('<script src="'+source.replace(/"/g,"&quot;")+'"><\/script>');
 })();
 </script>
 <script id="course-navigation-script">
@@ -2326,6 +2339,20 @@ Koľko je 6 × 7?
 </script>
 <script id="live-geogebra-and-tts">
 (function(){"use strict";const initialized=new Set(),apis=new Map(),baselines=new Map(),suppressEvents=new Set();
+let geoGebraLibraryPromise=null;
+function ensureGeoGebraLibrary(){
+ if(typeof GGBApplet==="function")return Promise.resolve();
+ if(geoGebraLibraryPromise)return geoGebraLibraryPromise;
+ geoGebraLibraryPromise=new Promise((resolve,reject)=>{
+  let script=document.getElementById("lemmaGeoGebraScript");
+  if(!script){
+   script=document.createElement("script");script.id="lemmaGeoGebraScript";script.async=true;script.src="https://www.geogebra.org/apps/deployggb.js";document.head.append(script);
+  }
+  script.addEventListener("load",()=>typeof GGBApplet==="function"?resolve():reject(new Error("geogebra-api")),{once:true});
+  script.addEventListener("error",()=>{script.remove();geoGebraLibraryPromise=null;reject(new Error("geogebra-load"))},{once:true});
+ });
+ return geoGebraLibraryPromise;
+}
 const graphIdOwners=new Map();let graphIdCounter=0;
 function graphIdNumber(id){const match=String(id||"").match(/^gg-live-(\d+)$/);return match?Number(match[1]):0}
 function nextRuntimeGraphId(){
@@ -2398,7 +2425,7 @@ function applyCompactPerspective(api,is3d,compactMobile){
  if(!compactMobile||!api||!is3d)return;
  try{api.setPerspective('D')}catch(e){}
 }
-function init(el){if(!el)return;ensureUniqueGraphIds(document);claimGraphId(el);if(initialized.has(el.id))return;if(typeof GGBApplet!=='function'){const attempts=Number(el.dataset.ggbWait||0);if(attempts<40){el.dataset.ggbWait=String(attempts+1);el.innerHTML='<div class="gg-loading">Načítavam GeoGebru…</div>';setTimeout(()=>init(el),250)}else unavailable(el);return}delete el.dataset.ggbWait;let cmds=[],is3d=el.dataset.app==='3d',editable=el.dataset.toolbar==='true',savedXML=el.dataset.ggbXml||'',material=el.dataset.materialId||'',bounds;try{cmds=JSON.parse(el.dataset.commands||'[]');bounds=JSON.parse(el.dataset.bounds||'[-5,5,-5,5]')}catch(e){unavailable(el);return};const runtimeXML=el.dataset.runtimeXml||'',restoreXML=runtimeXML||savedXML;initialized.add(el.id);const measuredWidth=Math.floor(el.getBoundingClientRect().width||el.clientWidth||900),availableWidth=Math.max(320,measuredWidth),width=Math.min(920,availableWidth),compactMobile=measuredWidth<=700||window.matchMedia('(max-width:700px)').matches,height=is3d?Math.max(400,Math.min(520,Math.round(width*.78))):440;const params={id:'app_'+el.id,width,height,appName:is3d?'3d':'classic',showToolBar:editable,showAlgebraInput:editable,showMenuBar:editable,showResetIcon:editable,showZoomButtons:editable,showFullscreenButton:editable,enableShiftDragZoom:true,enableRightClick:editable,errorDialogsActive:false,language:'sk',useBrowserForJS:true,appletOnLoad(api){apis.set(el.id,api);const bad=[];try{if(restoreXML){api.setXML(restoreXML);delete el.dataset.runtimeXml}else cmds.forEach(c=>{try{if(api.evalCommand(c)===false)bad.push(c)}catch(e){bad.push(c)}});configureAppControls(api,el,{setInitial:!restoreXML})}catch(e){bad.push('Obnovenie konštrukcie')}try{if(typeof api.enableRightClick==='function')api.enableRightClick(editable);if(typeof api.enableShiftDragZoom==='function')api.enableShiftDragZoom(true);if(typeof api.setPerspective==='function'&&!is3d)api.setPerspective(editable?'AG':'G')}catch(e){}applyCompactPerspective(api,is3d,compactMobile);setTimeout(()=>{applyCompactPerspective(api,is3d,compactMobile);style(api,el);configureAppControls(api,el,{setInitial:false});try{baselines.set(el.id,api.getXML())}catch(e){}const expected=JSON.parse(el.dataset.expected||'[]'),missing=expected.filter(n=>{try{return !api.exists(n)}catch(e){return true}});if(bad.length||missing.length){const d=document.createElement('div');d.className='gg-diagnostic';d.textContent=(bad.length?'Neúspešné príkazy: '+bad.join(' | '):'')+(bad.length&&missing.length?' · ':'')+(missing.length?'Chýbajúce objekty: '+missing.join(', '):'');el.after(d);console.warn(el.id,{bad,missing})}if(el.dataset.userGraph==='true'){try{api.registerClientListener(function(evt){if(evt&&['add','update','remove','rename','clear'].includes(evt.type)&&el.dataset.sandboxActive!=='true'&&!suppressEvents.has(el.id))window.dispatchEvent(new CustomEvent('course-ggb-change'))})}catch(e){}}},120);if(compactMobile)setTimeout(()=>applyCompactPerspective(api,is3d,compactMobile),500)}};if(material)params.material_id=material;el.innerHTML='<div class="gg-loading">Načítavam interaktívny graf…</div>';try{new GGBApplet(params,true).inject(el.id);setTimeout(()=>{if(initialized.has(el.id)&&!apis.has(el.id)&&!el.querySelector('.applet_scaler,.ggbApplet'))unavailable(el)},15000)}catch(e){console.warn('GeoGebra sa nepodarila spustiť',e);unavailable(el)}}
+function init(el){if(!el)return;ensureUniqueGraphIds(document);claimGraphId(el);if(initialized.has(el.id))return;if(typeof GGBApplet!=='function'){if(el.dataset.ggbWait==='loading')return;el.dataset.ggbWait='loading';el.innerHTML='<div class="gg-loading">Načítavam GeoGebru…</div>';ensureGeoGebraLibrary().then(()=>{delete el.dataset.ggbWait;init(el)}).catch(error=>{console.warn('GeoGebra knižnicu sa nepodarilo načítať',error);unavailable(el)});return}delete el.dataset.ggbWait;let cmds=[],is3d=el.dataset.app==='3d',editable=el.dataset.toolbar==='true',savedXML=el.dataset.ggbXml||'',material=el.dataset.materialId||'',bounds;try{cmds=JSON.parse(el.dataset.commands||'[]');bounds=JSON.parse(el.dataset.bounds||'[-5,5,-5,5]')}catch(e){unavailable(el);return};const runtimeXML=el.dataset.runtimeXml||'',restoreXML=runtimeXML||savedXML;initialized.add(el.id);const measuredWidth=Math.floor(el.getBoundingClientRect().width||el.clientWidth||900),availableWidth=Math.max(320,measuredWidth),width=Math.min(920,availableWidth),compactMobile=measuredWidth<=700||window.matchMedia('(max-width:700px)').matches,height=is3d?Math.max(400,Math.min(520,Math.round(width*.78))):440;const params={id:'app_'+el.id,width,height,appName:is3d?'3d':'classic',showToolBar:editable,showAlgebraInput:editable,showMenuBar:editable,showResetIcon:editable,showZoomButtons:editable,showFullscreenButton:editable,enableShiftDragZoom:true,enableRightClick:editable,errorDialogsActive:false,language:'sk',useBrowserForJS:true,appletOnLoad(api){apis.set(el.id,api);const bad=[];try{if(restoreXML){api.setXML(restoreXML);delete el.dataset.runtimeXml}else cmds.forEach(c=>{try{if(api.evalCommand(c)===false)bad.push(c)}catch(e){bad.push(c)}});configureAppControls(api,el,{setInitial:!restoreXML})}catch(e){bad.push('Obnovenie konštrukcie')}try{if(typeof api.enableRightClick==='function')api.enableRightClick(editable);if(typeof api.enableShiftDragZoom==='function')api.enableShiftDragZoom(true);if(typeof api.setPerspective==='function'&&!is3d)api.setPerspective(editable?'AG':'G')}catch(e){}applyCompactPerspective(api,is3d,compactMobile);setTimeout(()=>{applyCompactPerspective(api,is3d,compactMobile);style(api,el);configureAppControls(api,el,{setInitial:false});try{baselines.set(el.id,api.getXML())}catch(e){}const expected=JSON.parse(el.dataset.expected||'[]'),missing=expected.filter(n=>{try{return !api.exists(n)}catch(e){return true}});if(bad.length||missing.length){const d=document.createElement('div');d.className='gg-diagnostic';d.textContent=(bad.length?'Neúspešné príkazy: '+bad.join(' | '):'')+(bad.length&&missing.length?' · ':'')+(missing.length?'Chýbajúce objekty: '+missing.join(', '):'');el.after(d);console.warn(el.id,{bad,missing})}if(el.dataset.userGraph==='true'){try{api.registerClientListener(function(evt){if(evt&&['add','update','remove','rename','clear'].includes(evt.type)&&el.dataset.sandboxActive!=='true'&&!suppressEvents.has(el.id))window.dispatchEvent(new CustomEvent('course-ggb-change'))})}catch(e){}}},120);if(compactMobile)setTimeout(()=>applyCompactPerspective(api,is3d,compactMobile),500)}};if(material)params.material_id=material;el.innerHTML='<div class="gg-loading">Načítavam interaktívny graf…</div>';try{new GGBApplet(params,true).inject(el.id);setTimeout(()=>{if(initialized.has(el.id)&&!apis.has(el.id)&&!el.querySelector('.applet_scaler,.ggbApplet'))unavailable(el)},15000)}catch(e){console.warn('GeoGebra sa nepodarila spustiť',e);unavailable(el)}}
 function active(){ensureUniqueGraphIds(document);enhanceCodeButtons();renderAllTasks();document.querySelectorAll('article.lesson.active .gg-live').forEach(prepare)}
 function reinit(el,options={}){if(!el)return;const api=apis.get(el.id);if(options.preserve&&api)try{el.dataset.runtimeXml=api.getXML()}catch(e){}resetTasks(el.closest('.gg-card'));initialized.delete(el.id);apis.delete(el.id);baselines.delete(el.id);delete el.dataset.sandboxActive;delete el.dataset.sandboxCode;el.parentElement?.querySelectorAll(':scope > .gg-diagnostic').forEach(x=>x.remove());el.innerHTML='<div class="gg-loading">Načítavam interaktívny graf…</div>';prepare(el);if(options.start)setTimeout(()=>init(el),20)}
 function capture(el){
@@ -2509,8 +2536,16 @@ function toggleGraphTools(card){
  if(initialized.has(el.id))reinit(el,{preserve:true,start:true});
  window.dispatchEvent(new CustomEvent('course-ggb-tools-change',{detail:{element:el,shown:show}}));
 }
+function release(root=document){
+ const elements=[...(root?.matches?.('.gg-live')?[root]:[]),...(root?.querySelectorAll?.('.gg-live')||[])];
+ elements.forEach(el=>{
+  const id=el.id;initialized.delete(id);apis.delete(id);baselines.delete(id);suppressEvents.delete(id);
+  if(graphIdOwners.get(id)===el)graphIdOwners.delete(id);
+  try{delete window['app_'+id]}catch(error){}
+ });
+}
 window.LemmaGraphIds={next:nextRuntimeGraphId,claim:claimGraphId,ensure:ensureUniqueGraphIds};
-window.CourseGeoGebra={init,prepare,active,reinit,capture,restoreOriginal,runCommands,toggleGraphTools,updateToolsButton,apis,initialized,baselines,style,enhanceCodeButtons,renderTasks,renderAllTasks,resetTasks,configureAppControls,hideNativeControlSliders,ensureUniqueGraphIds};
+window.CourseGeoGebra={init,prepare,active,reinit,capture,release,restoreOriginal,runCommands,toggleGraphTools,updateToolsButton,apis,initialized,baselines,style,enhanceCodeButtons,renderTasks,renderAllTasks,resetTasks,configureAppControls,hideNativeControlSliders,ensureUniqueGraphIds};
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',active,{once:true});else active();
 window.addEventListener('load',active);
 function closeOpenDialogs(){
@@ -2807,6 +2842,8 @@ const COURSE_ICON_VALUES=new Set(COURSE_ICONS.map(item=>item[0]));
 const nav=document.querySelector(".lesson-nav"),courseNav=document.querySelector(".course-list-nav"),main=document.querySelector("main.content"),status=document.getElementById("courseAuthorStatus"),toastEl=document.getElementById("courseToast");
 let editing=false,selectedBlock=null,graphBeingEdited=null,testBeingEdited=null,mathBeingEdited=null,mathTextareaTarget=null,mathTextareaSelection=null,textBlockBeingEdited=null,savedRange=null,saveTimer=null,toastTimer=null;
 let courses=[],activeCourseId="",storageWarningShown=false;
+const lessonStore=new Map();
+let mountedCourseId="";
 const REVIEW_SCORE_KEY="lemma-review-score-v1",REVIEW_POINTS=10,REVIEW_MAX=400,REVIEW_FLOOR=200,REVIEW_FRIDAY_LOSS=50,REVIEW_QUESTION_COUNT=6,REVIEW_WRONG_LIMIT=10;
 let reviewScoreData={};
 try{
@@ -3261,12 +3298,43 @@ function articleFromLessonData(sourceLesson){
  const h1=document.createElement("h1");h1.textContent=lesson.title||"Lekcia";header.append(h1);
  const text=document.createElement("section");text.className="lesson-text";
  lesson.blocks.forEach(block=>{const node=elementFromBlock(block);if(node)text.append(node)});
- article.append(header,text);renderMath(article);return article;
+ article.append(header,text);return article;
 }
-function stateToArticles(state){
- main.replaceChildren();
- if(state.version>=3)state.lessons.forEach(lesson=>main.append(articleFromLessonData(lesson)));
- else{main.innerHTML=state.lessons.map(item=>item.html).join("");normalizeImportedLessonBlocks(main)}
+function stateToLessonStore(state){
+ lessonStore.clear();mountedCourseId="";main.replaceChildren();
+ if(state.version>=3){
+  state.lessons.forEach(lesson=>{const data=canonicalLessonData(lesson);if(data.id)lessonStore.set(data.id,data)});
+  return;
+ }
+ (Array.isArray(state.lessons)?state.lessons:[]).forEach(item=>{
+  const article=new DOMParser().parseFromString(item.html||"","text/html").body.firstElementChild;
+  if(!article?.matches("article.lesson"))return;
+  normalizeImportedLessonBlocks(article);
+  const data=lessonDataFromArticle(article);if(data.id)lessonStore.set(data.id,data);
+ });
+}
+function lessonExists(id){return lessonStore.has(id)||!!document.getElementById(id)}
+function syncMountedLessons(){
+ captureUserGraphs();
+ document.querySelectorAll("main.content > article.lesson").forEach(article=>{
+  const data=lessonDataFromArticle(article);if(data.id)lessonStore.set(data.id,data);
+ });
+}
+function mountCourse(course){
+ if(!course)return;
+ const currentIds=[...main.querySelectorAll(":scope > article.lesson")].map(article=>article.id);
+ const desiredIds=course.lessonIds.filter(lessonExists);
+ const alreadyMounted=mountedCourseId===course.id&&currentIds.length===desiredIds.length&&currentIds.every((id,index)=>id===desiredIds[index]);
+ if(alreadyMounted)return;
+ syncMountedLessons();window.CourseGeoGebra?.release(main);releaseMathRoot(main);
+ const fragment=document.createDocumentFragment();
+ desiredIds.forEach(id=>{
+  const stored=lessonStore.get(id);if(!stored)return;
+  const article=articleFromLessonData({...stored,courseId:course.id,custom:true});
+  fragment.append(article);
+ });
+ main.replaceChildren(fragment);mountedCourseId=course.id;
+ repairTangentCommands(main);initTests(main);window.CourseGeoGebra?.enhanceCodeButtons(main);renderMath(main);
 }
 function inlineBlockValid(item,strict=false){
  if(!item||typeof item!=="object"||!INLINE_BLOCK_TYPES.has(item.type))return false;
@@ -3303,7 +3371,7 @@ function finishReadingRestore(){
  requestAnimationFrame(()=>requestAnimationFrame(()=>{window.scrollTo({top:y,left:0,behavior:"auto"});setTimeout(()=>{restoringReadingPosition=false;saveReadingPosition(y)},80)}));
 }
 function slugify(value){return (value||"polozka").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"")||"polozka"}
-function uniqueId(base){let id=base,n=2;while(document.getElementById(id)){id=base+"-"+n++}return id}
+function uniqueId(base){let id=base,n=2;while(lessonExists(id)){id=base+"-"+n++}return id}
 function uniqueCourseId(base){let id=base,n=2;while(courses.some(c=>c.id===id)){id=base+"-"+n++}return id}
 function activeLesson(){return document.querySelector("article.lesson.active")}
 function activeCourse(){return courses.find(c=>c.id===activeCourseId)||courses[0]||null}
@@ -3336,7 +3404,97 @@ function syncMathJaxDocument(){
  }catch(error){console.warn("MathJax CSS synchronization failed",error)}
 }
 function mathFallback(node){const tex=node.dataset.tex||"";node.textContent=node.dataset.display==="true"?"$$ "+tex+" $$":"$ "+tex+" $"}
-function renderMath(root=document){root.querySelectorAll?.(".course-math").forEach(node=>{const tex=node.dataset.tex||"",display=node.dataset.display==="true",key=(display?"block:":"inline:")+tex;node.setAttribute("contenteditable","false");node.setAttribute("aria-label","Matematický vzorec: "+tex);node.title=editing?"Dvojklikom upravíte vzorec":tex;if(node.dataset.rendered===key)return;if(window.MathJax?.tex2chtmlPromise){window.MathJax.tex2chtmlPromise(tex,{display}).then(output=>{node.replaceChildren(output);syncMathJaxDocument();node.dataset.rendered=key;if(editing)ensureBlockControls(activeLesson())}).catch(()=>{mathFallback(node);delete node.dataset.rendered;if(editing)ensureBlockControls(activeLesson())})}else{mathFallback(node);delete node.dataset.rendered;if(editing)ensureBlockControls(activeLesson())}})}
+let mathJaxPromise=null,mathObserver=null,mathSettleTimer=null,lastMathScrollAt=0;
+const pendingMath=new Set();
+function ensureMathJax(){
+ if(window.MathJax?.tex2chtmlPromise)return Promise.resolve(window.MathJax);
+ if(mathJaxPromise)return mathJaxPromise;
+ mathJaxPromise=new Promise((resolve,reject)=>{
+  const ready=()=>{if(window.MathJax?.tex2chtmlPromise){window.removeEventListener("course-math-ready",ready);resolve(window.MathJax)}};
+  window.addEventListener("course-math-ready",ready);
+  let script=document.getElementById("lemmaMathJaxScript");
+  if(!script){
+   script=document.createElement("script");script.id="lemmaMathJaxScript";script.async=true;
+   script.src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js";
+   script.onerror=()=>{window.removeEventListener("course-math-ready",ready);script.remove();mathJaxPromise=null;reject(new Error("mathjax-load"))};
+   document.head.append(script);
+  }
+  ready();
+ });
+ return mathJaxPromise;
+}
+function mathNodeNearViewport(node){
+ if(!node?.isConnected||!node.closest("article.lesson.course-visible"))return false;
+ const rect=node.getBoundingClientRect(),margin=160;
+ return rect.bottom>=-margin&&rect.top<=window.innerHeight+margin;
+}
+async function typesetMathNodes(nodes){
+ const unique=[...new Set(nodes)].filter(node=>node?.isConnected);
+ const targets=unique.filter(node=>{
+  const tex=node.dataset.tex||"",display=node.dataset.display==="true",key=(display?"block:":"inline:")+tex;
+  if(node.dataset.rendered===key){mathObserver?.unobserve(node);return false}
+  if(node.dataset.mathPending===key)return false;
+  node.dataset.mathPending=key;return true;
+ });
+ if(!targets.length)return;
+ try{
+  const mj=await ensureMathJax();
+  const rendered=await Promise.all(targets.map(async node=>{
+   if(!node.isConnected)return null;
+   const tex=node.dataset.tex||"",display=node.dataset.display==="true",key=(display?"block:":"inline:")+tex;
+   const output=await mj.tex2chtmlPromise(tex,{display});
+   return {node,output,key};
+  }));
+  rendered.forEach(item=>{
+   if(!item?.node.isConnected)return;
+   item.node.replaceChildren(item.output);item.node.dataset.rendered=item.key;delete item.node.dataset.mathPending;
+   mathObserver?.unobserve(item.node);
+  });
+  syncMathJaxDocument();
+  if(editing)ensureBlockControls(activeLesson());
+ }catch(error){
+  targets.forEach(node=>{if(!node?.isConnected)return;delete node.dataset.mathPending;delete node.dataset.rendered;mathFallback(node)});
+  console.warn("LaTeX sa nepodarilo vykresliť",error);
+ }
+}
+function flushVisibleMath(){
+ clearTimeout(mathSettleTimer);mathSettleTimer=null;
+ if(performance.now()-lastMathScrollAt<170){scheduleMathWork(180);return}
+ pendingMath.forEach(node=>{if(!node?.isConnected)pendingMath.delete(node)});
+ const visible=[...pendingMath].filter(mathNodeNearViewport);
+ visible.forEach(node=>pendingMath.delete(node));
+ if(visible.length)typesetMathNodes(visible);
+}
+function scheduleMathWork(delay=190){
+ clearTimeout(mathSettleTimer);mathSettleTimer=setTimeout(flushVisibleMath,delay);
+}
+function ensureMathObserver(){
+ if(mathObserver||!("IntersectionObserver" in window))return mathObserver;
+ mathObserver=new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{if(entry.isIntersecting)pendingMath.add(entry.target);else pendingMath.delete(entry.target)});
+  scheduleMathWork();
+ },{root:null,rootMargin:"180px 0px",threshold:0});
+ return mathObserver;
+}
+function prepareMathNode(node){
+ const tex=node.dataset.tex||"",display=node.dataset.display==="true",key=(display?"block:":"inline:")+tex;
+ node.setAttribute("contenteditable","false");node.setAttribute("aria-label","Matematický vzorec: "+tex);node.title=editing?"Dvojklikom upravíte vzorec":tex;
+ if(node.dataset.rendered===key)return false;
+ if(node.dataset.mathPending!==key)mathFallback(node);
+ return true;
+}
+function releaseMathRoot(root=document){
+ const nodes=[...(root.matches?.(".course-math")?[root]:[]),...(root.querySelectorAll?.(".course-math")||[])];
+ nodes.forEach(node=>{pendingMath.delete(node);mathObserver?.unobserve(node)});
+}
+function renderMath(root=document){
+ const nodes=[...(root.matches?.(".course-math")?[root]:[]),...(root.querySelectorAll?.(".course-math")||[])];
+ const pending=nodes.filter(prepareMathNode);if(!pending.length)return;
+ if(editing&&activeLesson()&&(root===activeLesson()||activeLesson().contains(root)||root.contains?.(activeLesson()))){typesetMathNodes(pending);return}
+ const observer=ensureMathObserver();
+ if(observer)pending.forEach(node=>observer.observe(node));
+ else{pending.forEach(node=>pendingMath.add(node));scheduleMathWork()}
+}
 function createMathElement(tex,display){const node=document.createElement("span");node.className="course-math"+(display?" course-math-block":"");node.dataset.tex=tex;node.dataset.display=String(display);node.setAttribute("contenteditable","false");mathFallback(node);return node}
 const INLINE_MATH_CARET="\u200B";
 function isInlineMath(node){return !!node?.matches?.(".course-math:not(.course-math-block)")&&node.dataset.display!=="true"}
@@ -3364,8 +3522,8 @@ function placeCaretNextToInlineMath(node,after=true){
  range.setStart(text,after?(text.nodeValue.startsWith(INLINE_MATH_CARET)?1:0):text.nodeValue.length);
  range.collapse(true);editor.focus({preventScroll:true});selection.removeAllRanges();selection.addRange(range);savedRange=range.cloneRange();return true;
 }
-window.addEventListener("course-math-ready",()=>renderMath(document));
-
+window.addEventListener("scroll",()=>{lastMathScrollAt=performance.now();if(pendingMath.size)scheduleMathWork(190)},{passive:true});
+window.addEventListener("course-math-ready",()=>scheduleMathWork(0));
 
 function normalizeImportedLessonBlocks(root=document){
  const articles=[...(root.matches?.("article.lesson")?[root]:[]),...(root.querySelectorAll?.("article.lesson")||[])];articles.forEach(article=>{
@@ -3441,9 +3599,12 @@ function cleanArticle(article){
 }
 function captureUserGraphs(){document.querySelectorAll(".gg-live[data-user-graph='true']").forEach(el=>window.CourseGeoGebra?.capture(el))}
 function buildInternalState(){
- captureUserGraphs();
- normalizeFormulaTextNodes(main);
- return {format:"lemma-blocks",version:4,activeCourseId,activeId:activeLesson()?.id||"",courses:courses.map((course,index)=>({id:course.id,title:course.title,description:course.description||"",icon:courseIconFor(course,index),custom:true,lessonIds:course.lessonIds.filter(id=>!!document.getElementById(id))})),lessons:[...document.querySelectorAll("article.lesson")].map(lessonDataFromArticle)};
+ syncMountedLessons();
+ const normalizedCourses=courses.map((course,index)=>({id:course.id,title:course.title,description:course.description||"",icon:courseIconFor(course,index),custom:true,lessonIds:course.lessonIds.filter(lessonExists)}));
+ const ordered=[],used=new Set();
+ normalizedCourses.forEach(course=>course.lessonIds.forEach(id=>{const lesson=lessonStore.get(id);if(lesson&&!used.has(id)){ordered.push(canonicalLessonData({...lesson,courseId:course.id}));used.add(id)}}));
+ lessonStore.forEach((lesson,id)=>{if(!used.has(id))ordered.push(canonicalLessonData(lesson))});
+ return {format:"lemma-blocks",version:4,activeCourseId,activeId:activeLesson()?.id||"",courses:normalizedCourses,lessons:ordered};
 }
 function buildState(){return encodeStateV5(buildInternalState())}
 function persist(silent=false){
@@ -3532,7 +3693,7 @@ function normalizeCourses(rawCourses,allIds){
  return result;
 }
 function renderEmptyState(){
- editing=false;editSession=null;document.body.classList.remove("course-editing");activeCourseId="";
+ editing=false;editSession=null;document.body.classList.remove("course-editing");activeCourseId="";mountedCourseId="";
  nav.innerHTML="";courseNav.innerHTML="";
  if(!main.querySelector(".course-empty-state"))main.innerHTML='<section class="course-empty-state" aria-live="polite"><div><h1>Zatiaľ tu nie sú žiadne kurzy</h1><p>Vytvorte nový kurz tlačidlom „Nový kurz“ alebo použite zverejnenú verziu cez ponuku „Dáta“.</p></div></section>';
  document.getElementById("currentCourseTitle").textContent="Obsah kurzu";
@@ -3570,7 +3731,7 @@ function activateLesson(id,scroll=false){
 function renderLessonNav(preferredId=""){
  const course=activeCourse();nav.innerHTML="";
  if(!course){renderEmptyState();return}
- course.lessonIds=course.lessonIds.filter(id=>!!document.getElementById(id));
+ course.lessonIds=course.lessonIds.filter(lessonExists);mountCourse(course);
  const visibleIds=new Set(course.lessonIds);
  document.querySelectorAll("article.lesson").forEach(article=>article.classList.toggle("course-visible",visibleIds.has(article.id)));
  course.lessonIds.forEach((id,index)=>{
@@ -3599,14 +3760,14 @@ function switchCourse(id,preferredId="",closeMenu=false){
  if(closeMenu){document.body.classList.remove("sidebar-open");document.getElementById(preferredId||activeCourse()?.lessonIds[0])?.scrollIntoView({block:"start",behavior:"smooth"})}
 }
 function deleteLessonById(id){
- const course=courses.find(item=>item.lessonIds.includes(id)),article=document.getElementById(id);if(!course||!article)return false;
+ const course=courses.find(item=>item.lessonIds.includes(id)),article=document.getElementById(id),stored=lessonStore.get(id);if(!course||(!article&&!stored))return false;
  if(course.lessonIds.length<=1){toast("Poslednú lekciu odstránite odstránením celého kurzu.",true);return false}
- const title=article.querySelector("h1")?.textContent.trim()||"Bez názvu";
+ const title=article?.querySelector("h1")?.textContent.trim()||stored?.title||"Bez názvu";
  if(!confirm('Naozaj odstrániť lekciu „'+title+'“?'))return false;
  const wasEditing=editing,preferredLesson=activeLesson()?.id||"",index=course.lessonIds.indexOf(id);
  if(wasEditing)commitEditSession(false);
  const fallback=course.lessonIds[index-1]||course.lessonIds[index+1]||"";
- course.lessonIds=course.lessonIds.filter(lessonId=>lessonId!==id);article.remove();
+ course.lessonIds=course.lessonIds.filter(lessonId=>lessonId!==id);if(article){window.CourseGeoGebra?.release(article);releaseMathRoot(article);article.remove()}lessonStore.delete(id);
  if(activeCourseId===course.id)renderLessonNav(preferredLesson===id?fallback:preferredLesson);else renderCourseNav();
  updateCounts();persist(true);if(wasEditing&&activeLesson())setEditing(true);
  toast("Lekcia bola odstránená.");return true;
@@ -3616,7 +3777,7 @@ function deleteCourseById(id){
  if(!confirm('Naozaj odstrániť kurz „'+course.title+'“ aj so všetkými jeho lekciami?'))return false;
  const wasEditing=editing,preferredLesson=activeLesson()?.id||"",deletingActive=activeCourseId===id;
  if(wasEditing)commitEditSession(false);
- course.lessonIds.forEach(lessonId=>document.getElementById(lessonId)?.remove());
+ course.lessonIds.forEach(lessonId=>{const article=document.getElementById(lessonId);if(article){window.CourseGeoGebra?.release(article);releaseMathRoot(article);article.remove()}lessonStore.delete(lessonId)});
  courses.splice(index,1);delete reviewScoreData[id];saveReviewScores();
  if(deletingActive)activeCourseId=courses[index]?.id||courses[index-1]?.id||courses[0]?.id||"";
  if(courses.length)renderLessonNav(deletingActive?"":preferredLesson);else renderEmptyState();
@@ -3662,7 +3823,7 @@ function endSidebarDrag(event){
  if(drag.kind==="course"){
   const byId=new Map(courses.map(course=>[course.id,course]));courses=order.map(id=>byId.get(id)).filter(Boolean);
  }else{
-  const course=activeCourse();if(!course)return;course.lessonIds=order.filter(id=>document.getElementById(id));
+  const course=activeCourse();if(!course)return;course.lessonIds=order.filter(lessonExists);
  }
  if(wasEditing)commitEditSession(false);else persist(true);
  if(drag.kind==="course")renderCourseNav();else renderLessonNav(preferredLesson);
@@ -3707,6 +3868,29 @@ function shouldApplyPublishedVersion(backup,browserPayload){
   return !previousFingerprint||fingerprint!==previousFingerprint||(currentPublishedAt>0&&currentPublishedAt>previousPublishedAt);
  }catch(error){return true}
 }
+function scheduleDeferredPublishedCheck(){
+ const source=window.LEMMA_DEFERRED_BACKUP_SOURCE;if(!source)return;
+ delete window.LEMMA_DEFERRED_BACKUP_SOURCE;
+ const run=()=>{
+  let browserPayload=null;
+  try{
+   const raw=localStorage.getItem(STORAGE_KEY)??localStorage.getItem(LEGACY_STORAGE_KEY);
+   if(raw!==null){const parsed=JSON.parse(raw);if(validImportState(parsed))browserPayload=parsed}
+  }catch(error){}
+  const script=document.createElement("script");script.async=true;script.src=source;script.id="lemmaDeferredBackupScript";
+  script.onload=()=>{
+   const backup=window[BACKUP_GLOBAL];
+   if(!shouldApplyPublishedVersion(backup,browserPayload))return;
+   try{
+    localStorage.setItem(STORAGE_KEY,JSON.stringify(backup));localStorage.removeItem(LEGACY_STORAGE_KEY);
+    rememberUsePublishedVersion();rememberPublishedVersion(backup);location.reload();
+   }catch(error){console.warn("Odložená aktualizácia zverejneného obsahu zlyhala",error)}
+  };
+  script.onerror=()=>script.remove();
+  document.head.append(script);
+ };
+ if("requestIdleCallback" in window)requestIdleCallback(run,{timeout:2500});else setTimeout(run,1200);
+}
 function restore(){
  let payload=null,state=null,source="",browserPayload=null;
  try{
@@ -3722,19 +3906,19 @@ function restore(){
  const publishedBackup=window[BACKUP_GLOBAL];
  if(shouldApplyPublishedVersion(publishedBackup,browserPayload)){payload=publishedBackup;source="published"}
  else if(!payload&&validImportState(publishedBackup)){payload=publishedBackup;source="published"}
- if(!payload){main.innerHTML="";courses=[];renderEmptyState();setStatus("Bez obsahu");return}
+ if(!payload){main.innerHTML="";courses=[];lessonStore.clear();mountedCourseId="";renderEmptyState();setStatus("Bez obsahu");return}
  try{
   state=decodeState(payload);
-  stateToArticles(state);
-  const allIds=[...document.querySelectorAll("article.lesson")].map(article=>article.id);
+  stateToLessonStore(state);
+  const allIds=[...lessonStore.keys()];
   courses=normalizeCourses(state.version>=2?state.courses:[],allIds);
-  courses.forEach(course=>course.lessonIds.forEach(id=>{const article=document.getElementById(id);if(article){article.dataset.courseId=course.id;article.dataset.custom="true"}}));
+  courses.forEach(course=>course.lessonIds.forEach(id=>{const lesson=lessonStore.get(id);if(lesson)lessonStore.set(id,canonicalLessonData({...lesson,courseId:course.id,custom:true}))}));
   if(!courses.length){renderEmptyState();setStatus("Bez obsahu")}
   else{
    const preferredCourse=courses.some(course=>course.id===readingRestore?.courseId)?readingRestore.courseId:state.activeCourseId;
    activeCourseId=courses.some(course=>course.id===preferredCourse)?preferredCourse:(courses.find(course=>course.lessonIds.includes(readingRestore?.lessonId||state.activeId))?.id||courses[0].id);
    const preferredLesson=activeCourse()?.lessonIds.includes(readingRestore?.lessonId)?readingRestore.lessonId:(state.activeId||"");
-   repairTangentCommands(main);renderLessonNav(preferredLesson);renderMath(main);window.CourseGeoGebra?.enhanceCodeButtons(main);setStatus(source==="published"?"Zverejnená verzia načítaná":"Uložené");
+   renderLessonNav(preferredLesson);setStatus(source==="published"?"Zverejnená verzia načítaná":"Uložené");
   }
   if(source==="published"||source==="legacy-browser"||payload.version!==5){
    try{
@@ -3747,13 +3931,13 @@ function restore(){
  }catch(e){
   console.warn("Obnova obsahu zlyhala",e);
   try{localStorage.removeItem(STORAGE_KEY)}catch(ignore){}
-  main.innerHTML="";courses=[];renderEmptyState();setStatus("Bez obsahu");toast("Obsah sa nepodarilo načítať.",true);
+  main.innerHTML="";courses=[];lessonStore.clear();mountedCourseId="";renderEmptyState();setStatus("Bez obsahu");toast("Obsah sa nepodarilo načítať.",true);
  }
 }
-restore();
+restore();scheduleDeferredPublishedCheck();
 
 function updateCounts(){
- courses.forEach(course=>{const ids=course.lessonIds.filter(id=>!!document.getElementById(id)),total=ids.length;course.lessonIds=ids;ids.forEach((id,i)=>{const article=document.getElementById(id);let eye=article?.querySelector(".eyebrow");if(article&&!eye){eye=document.createElement("p");eye.className="eyebrow";article.querySelector(".lesson-header")?.prepend(eye)}if(eye)eye.textContent="Lekcia "+(i+1)+" z "+total;article?.querySelectorAll(".gg-lesson-count,.course-custom-badge").forEach(badge=>badge.remove())})});
+ courses.forEach(course=>{const ids=course.lessonIds.filter(lessonExists),total=ids.length;course.lessonIds=ids;ids.forEach((id,i)=>{const article=document.getElementById(id);let eye=article?.querySelector(".eyebrow");if(article&&!eye){eye=document.createElement("p");eye.className="eyebrow";article.querySelector(".lesson-header")?.prepend(eye)}if(eye)eye.textContent="Lekcia "+(i+1)+" z "+total;article?.querySelectorAll(".gg-lesson-count,.course-custom-badge").forEach(badge=>badge.remove())})});
  const totalLessons=courses.reduce((sum,c)=>sum+c.lessonIds.length,0),totalCourses=courses.length;
  window.LemmaScore?.render();
  [...nav.querySelectorAll("button[data-lesson]")].forEach((b,i)=>{let n=b.querySelector(".lesson-number");if(!n){n=document.createElement("span");n.className="lesson-number";b.prepend(n)}n.textContent=i+1});
@@ -5195,13 +5379,13 @@ function importCoursePayload(payload){
  if(editing)commitEditSession(false);
  const normalized=normalizedCoursePayload(payload),sourceCourse=normalized.course,title=sourceCourse.title||"Importovaný kurz",existing=courses.find(course=>normalizedCourseTitle(course.title)===normalizedCourseTitle(title));
  let targetIndex=existing?courses.indexOf(existing):courses.length,newCourseId;
- if(existing){existing.lessonIds.forEach(id=>document.getElementById(id)?.remove());courses.splice(targetIndex,1);newCourseId=existing.id}
+ if(existing){existing.lessonIds.forEach(id=>{const article=document.getElementById(id);if(article){window.CourseGeoGebra?.release(article);releaseMathRoot(article);article.remove()}lessonStore.delete(id)});courses.splice(targetIndex,1);newCourseId=existing.id}
  else newCourseId=uniqueCourseId(sourceCourse.id||title||"importovany-kurz");
  const idMap=new Map();
  normalized.lessons.forEach(lesson=>idMap.set(lesson.id,uniqueId(lesson.id||slugify(lesson.title||"lekcia"))));
  const importedLessons=normalized.lessons.map(lesson=>canonicalLessonData({...lesson,id:idMap.get(lesson.id),courseId:newCourseId,custom:true,blocks:JSON.parse(JSON.stringify(lesson.blocks||[]))}));
  const course={id:newCourseId,title,description:sourceCourse.description||"",icon:courseIconFor(sourceCourse,targetIndex),custom:true,lessonIds:(sourceCourse.lessonIds||normalized.lessons.map(lesson=>lesson.id)).map(id=>idMap.get(id)).filter(Boolean)};
- importedLessons.forEach(lesson=>main.append(articleFromLessonData(lesson)));courses.splice(targetIndex,0,course);activeCourseId=course.id;renderLessonNav(course.lessonIds[0]||"");updateCounts();persist(true);toast(existing?"Kurz s rovnakým názvom bol nahradený importovanou verziou.":"Kurz bol pridaný bez zmeny ostatných kurzov.");
+ importedLessons.forEach(lesson=>lessonStore.set(lesson.id,lesson));courses.splice(targetIndex,0,course);activeCourseId=course.id;mountedCourseId="";renderLessonNav(course.lessonIds[0]||"");updateCounts();persist(true);toast(existing?"Kurz s rovnakým názvom bol nahradený importovanou verziou.":"Kurz bol pridaný bez zmeny ostatných kurzov.");
 }
 document.getElementById("courseBackup").addEventListener("click",publishJavaScript);
 document.getElementById("courseLoadBackup").addEventListener("click",usePublishedBackup);
@@ -5278,7 +5462,7 @@ function importSingleLesson(payload){
  article.querySelectorAll(".course-custom-badge,.gg-lesson-count").forEach(node=>node.remove());
  main.append(article);
  article.querySelectorAll(".gg-live").forEach(el=>{el.id=nextGraphId();el.innerHTML='<div class="gg-start-wrap"><button class="gg-start" type="button">Spustiť graf</button></div>'});
- course.lessonIds.push(article.id);initTests(article);renderMath(article);activeCourseId=course.id;renderLessonNav(article.id);updateCounts();persist(true);setEditing(true);toast("Lekcia bola importovaná do aktuálneho kurzu.");
+ course.lessonIds.push(article.id);lessonStore.set(article.id,lessonDataFromArticle(article));initTests(article);renderMath(article);activeCourseId=course.id;renderLessonNav(article.id);updateCounts();persist(true);setEditing(true);toast("Lekcia bola importovaná do aktuálneho kurzu.");
 }
 document.getElementById("courseImportFile").addEventListener("change",async e=>{
  const input=e.currentTarget,file=input.files[0];if(!file)return;
