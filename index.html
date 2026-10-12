@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="sk"><head><!-- LEMMA V21: kompaktná dátová schéma v5 a spätná kompatibilita so schémami v1–v4. --><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/><meta content="LEMMA V21 – interaktívne matematické kurzy s vlastnými lekciami, GeoGebra grafmi, rýchlymi poznámkami a lokálnym ukladaním obsahu." name="description"/><meta content="LEMMA V21.0" name="application-name"/><meta content="LEMMA V21 compact block schema v5" name="generator"/><meta content="#14213d" name="theme-color"/><title>LEMMA V21.0 | Interaktívne matematické kurzy</title><style id="lemma-v21-styles">/* LEMMA V21 – zjednotený dizajnový systém */
+<html lang="sk"><head><!-- LEMMA V22: kompaktná dátová schéma v5 a spätná kompatibilita so schémami v1–v4. --><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/><meta content="LEMMA V22 – interaktívne matematické kurzy s vlastnými lekciami, GeoGebra grafmi, rýchlymi poznámkami a lokálnym ukladaním obsahu." name="description"/><meta content="LEMMA V22.0" name="application-name"/><meta content="LEMMA V22 compact block schema v5" name="generator"/><meta content="#14213d" name="theme-color"/><title>LEMMA V22.0 | Interaktívne matematické kurzy</title><style id="lemma-v22-styles">/* LEMMA V22 – zjednotený dizajnový systém */
 :root{
   color-scheme:light;
   --font-sans:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
@@ -1428,7 +1428,7 @@ body.course-editing .lesson-text>.course-math.course-math-block>mjx-container[ja
 }
 
 
-/* ===== LEMMA V21 – Tréning so 6 otázkami, pamäťou chýb a historickými oceneniami ===== */
+/* ===== LEMMA V22 – Tréning so 6 otázkami, pamäťou chýb a historickými oceneniami ===== */
 .course-review{
  position:relative;
  margin:.7rem 0;
@@ -1940,7 +1940,7 @@ body.course-editing .course-review::before{display:none}
 }
 
 
-/* ===== LEMMA V21 – riadené vykresľovanie LaTeXu bez blokovania a poskakovania ===== */
+/* ===== LEMMA V22 – riadené vykresľovanie LaTeXu bez blokovania a poskakovania ===== */
 .course-math.math-pending{
  font-family:var(--font-math);
  overflow-wrap:anywhere;
@@ -1953,7 +1953,7 @@ body.course-editing .course-review::before{display:none}
 }
 
 
-/* ===== LEMMA V21 – opravy mobilného dropdownu a stabilného výberu textu ===== */
+/* ===== LEMMA V22 – opravy mobilného dropdownu a stabilného výberu textu ===== */
 body.course-editing [contenteditable="true"]{
  caret-color:var(--color-text-strong);
 }
@@ -1982,11 +1982,33 @@ body.course-editing [contenteditable="true"] *::selection{
 }
 
 
-/* Zachovanie ručne vložených riadkov v textových blokoch aj po uložení, exporte a importe. */
-.lesson-text>p,
-.lesson-text>h2,
-.lesson-text>h3{
- white-space:pre-wrap;
+/* ===== LEMMA V22 – prepínač zverejnenej verzie ===== */
+.published-version-switch{
+ display:flex;align-items:center;justify-content:space-between;gap:.8rem;width:100%;
+ min-height:44px;padding:.55rem .65rem;border:1px solid var(--color-border);
+ border-radius:var(--radius-md);background:var(--color-surface);color:var(--color-text);
+ cursor:pointer;user-select:none;-webkit-user-select:none
+}
+.published-version-switch:hover{background:var(--color-primary-soft)}
+.published-version-switch:focus-within{outline:2px solid var(--color-focus);outline-offset:1px}
+.published-version-copy{display:grid;gap:.12rem;min-width:0}
+.published-version-copy strong{font:700 var(--text-sm) var(--font-sans);line-height:1.25}
+.published-version-copy small{color:var(--color-muted);font:700 var(--text-2xs) var(--font-sans)}
+.published-version-switch input{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+.published-version-track{
+ position:relative;flex:0 0 auto;width:46px;height:26px;border:1px solid var(--color-border);
+ border-radius:999px;background:var(--color-muted-soft,#cbd5e1);transition:background .18s ease,border-color .18s ease
+}
+.published-version-track span{
+ position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;
+ background:#fff;box-shadow:0 1px 4px rgba(15,23,42,.3);transition:transform .18s ease
+}
+.published-version-switch input:checked + .published-version-track{
+ border-color:var(--color-success);background:var(--color-success)
+}
+.published-version-switch input:checked + .published-version-track span{transform:translateX(20px)}
+@media (prefers-reduced-motion:reduce){
+ .published-version-track,.published-version-track span{transition:none}
 }
 </style>
 <script defer="" src="https://www.geogebra.org/apps/deployggb.js"></script>
@@ -1994,11 +2016,15 @@ body.course-editing [contenteditable="true"] *::selection{
 window.MathJax={tex:{packages:{"[+]":["ams"]}},chtml:{adaptiveCSS:false},startup:{typeset:false,ready:function(){MathJax.startup.defaultReady();MathJax.startup.promise.then(function(){window.dispatchEvent(new Event("course-math-ready"))})}}};
 </script>
 <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
-</head><body><header class="topbar"><button aria-label="Otvoriť zoznam kurzov a lekcií" class="sidebar-toggle" title="Kurzy a lekcie" type="button">☰</button><div class="brand"><span class="brand-mark">∫</span><div><strong>LEMMA V21</strong><small>Learn. Explore. Model. Master. Apply.</small></div></div><button aria-label="Vytvoriť nový kurz" aria-pressed="false" class="topbar-edit" id="courseEditToggle" type="button">＋ Nový kurz</button><details class="topbar-data">
+</head><body><header class="topbar"><button aria-label="Otvoriť zoznam kurzov a lekcií" class="sidebar-toggle" title="Kurzy a lekcie" type="button">☰</button><div class="brand"><span class="brand-mark">∫</span><div><strong>LEMMA V22</strong><small>Learn. Explore. Model. Master. Apply.</small></div></div><button aria-label="Vytvoriť nový kurz" aria-pressed="false" class="topbar-edit" id="courseEditToggle" type="button">＋ Nový kurz</button><details class="topbar-data">
 <summary>Dáta</summary>
 <div class="course-author-menu">
 <button id="courseBackup" type="button">Publikovať</button>
-<button id="courseLoadBackup" type="button" title="Načíta zverejnený obsah zo súboru lemma-obsah.js a zapne jeho automatickú kontrolu pri ďalšom otvorení.">Použiť zverejnenú verziu</button>
+<label class="published-version-switch" for="courseLoadBackup" title="Keď je prepínač zapnutý, po načítaní stránky sa použije obsah zo súboru lemma-obsah.js. Keď je vypnutý, použije sa lokálne upravený obsah.">
+  <span class="published-version-copy"><strong>Použiť zverejnenú verziu</strong><small id="publishedVersionState">Zapnuté</small></span>
+  <input id="courseLoadBackup" type="checkbox" role="switch" aria-describedby="publishedVersionState"/>
+  <span class="published-version-track" aria-hidden="true"><span></span></span>
+</label>
 <button id="courseExport" type="button">Exportovať</button>
 <button id="courseExportLesson" type="button">Exportovať aktuálny kurz</button>
 <button id="courseImport" type="button">Importovať</button>
@@ -3215,26 +3241,19 @@ function appendTextWithFormulas(items,text,marks=[]){
  if(last<value.length)appendInlineItem(items,{type:"text",text:value.slice(last),marks});
 }
 function inlineItemsFromElement(root){
- const items=[],lineContainers=new Set(["DIV","P","LI"]);
- const endsWithLineBreak=()=>{
-  const last=items.at(-1);
-  return last?.type==="text"&&/\n$/.test(last.text||"");
- };
- const addLineBreak=marks=>{if(!endsWithLineBreak())appendInlineItem(items,{type:"text",text:"\n",marks})};
+ const items=[];
  const walk=(node,marks=[])=>{
-  if(node.nodeType===Node.TEXT_NODE){appendTextWithFormulas(items,(node.nodeValue||"").replace(/\r\n?/g,"\n"),marks);return}
+  if(node.nodeType===Node.TEXT_NODE){appendTextWithFormulas(items,node.nodeValue||"",marks);return}
   if(node.nodeType!==Node.ELEMENT_NODE)return;
   if(node.classList.contains("course-editor-only"))return;
   if(node.classList.contains("course-math")){
    appendInlineItem(items,{type:"formula",tex:node.dataset.tex||node.textContent||"",display:node.dataset.display==="true"?"block":"inline",tts:false});return;
   }
   if(node.tagName==="BR"){appendInlineItem(items,{type:"text",text:"\n",marks});return}
-  const next=[...marks],lineContainer=lineContainers.has(node.tagName);
+  const next=[...marks];
   if((node.tagName==="STRONG"||node.tagName==="B")&&!next.includes("bold"))next.push("bold");
   if((node.tagName==="EM"||node.tagName==="I")&&!next.includes("italic"))next.push("italic");
-  if(lineContainer&&items.length)addLineBreak(next);
   node.childNodes.forEach(child=>walk(child,next));
-  if(lineContainer)addLineBreak(next);
  };
  root.childNodes.forEach(child=>walk(child,[]));
  if(items[0]?.type==="text"){items[0].text=items[0].text.replace(/^\s+/,"");if(!items[0].text)items.shift()}
@@ -3242,22 +3261,16 @@ function inlineItemsFromElement(root){
  return items;
 }
 function renderInlineItems(target,content){
- const appendStyledText=(value,marks)=>{
-  let node=document.createTextNode(value);
-  if(marks.includes("italic")){const em=document.createElement("em");em.append(node);node=em}
-  if(marks.includes("bold")){const strong=document.createElement("strong");strong.append(node);node=strong}
-  target.append(node);
- };
  (Array.isArray(content)?content:[]).forEach(item=>{
   if(item?.type==="formula"){
    target.append(createMathElement(String(item.tex||""),false));return;
   }
   if(item?.type!=="text")return;
-  const marks=Array.isArray(item.marks)?item.marks:[],parts=String(item.text||"").replace(/\r\n?/g,"\n").split("\n");
-  parts.forEach((part,index)=>{
-   if(part)appendStyledText(part,marks);
-   if(index<parts.length-1)target.append(document.createElement("br"));
-  });
+  let node=document.createTextNode(String(item.text||""));
+  const marks=Array.isArray(item.marks)?item.marks:[];
+  if(marks.includes("italic")){const em=document.createElement("em");em.append(node);node=em}
+  if(marks.includes("bold")){const strong=document.createElement("strong");strong.append(node);node=strong}
+  target.append(node);
  });
 }
 function insertTextAndFormulaBlocks(value){
@@ -3671,33 +3684,18 @@ function placeCaretNextToInlineMath(node,after=true){
 window.addEventListener("course-math-ready",()=>renderMath(document));
 
 
-function textWithPreservedLineBreaks(node){
- if(!node)return"";
- const blockTags=new Set(["DIV","P","LI","SECTION","ARTICLE","HEADER","FOOTER","BLOCKQUOTE","PRE"]);
- let result="";
- const walk=current=>{
-  if(current.nodeType===Node.TEXT_NODE){result+=current.nodeValue||"";return}
-  if(current.nodeType!==Node.ELEMENT_NODE)return;
-  if(current.tagName==="BR"){result+="\n";return}
-  const isBlock=blockTags.has(current.tagName),start=result.length;
-  current.childNodes.forEach(walk);
-  if(isBlock&&result.length>start&&!result.endsWith("\n"))result+="\n";
- };
- walk(node);
- return result.replace(/\r\n?/g,"\n").replace(/[ \t\f\v]+/g," ").replace(/ *\n */g,"\n").replace(/\n{3,}/g,"\n\n").trim();
-}
 function normalizeImportedLessonBlocks(root=document){
  const articles=[...(root.matches?.("article.lesson")?[root]:[]),...(root.querySelectorAll?.("article.lesson")||[])];articles.forEach(article=>{
   const header=article.querySelector(":scope > .lesson-header");
   let lessonText=article.querySelector(":scope > .lesson-text");
   if(!lessonText){lessonText=document.createElement("section");lessonText.className="lesson-text";header?.after(lessonText)}
-  const appendText=(value,prefix="")=>{const text=String(value||"").replace(/\r\n?/g,"\n").replace(/[ \t\f\v]+/g," ").replace(/ *\n */g,"\n").replace(/\n{3,}/g,"\n\n").trim();if(!text)return;const p=document.createElement("p");p.textContent=prefix+text;lessonText.append(p)};
+  const appendText=(value,prefix="")=>{const text=String(value||"").replace(/\s+/g," ").trim();if(!text)return;const p=document.createElement("p");p.textContent=prefix+text;lessonText.append(p)};
   const flatten=node=>{
    [...node.children].forEach(child=>{
     if(child.matches("p,h2,h3,.course-math,aside.gg-card,section.course-test")){lessonText.append(child);return}
-    if(child.matches("ul,ol")){[...child.children].filter(item=>item.tagName==="LI").forEach((item,index)=>appendText(textWithPreservedLineBreaks(item),child.tagName==="UL"?"• ":(index+1)+". "));child.remove();return}
-    if(child.matches("table")){child.querySelectorAll("tr").forEach(row=>appendText([...row.children].map(cell=>textWithPreservedLineBreaks(cell)).filter(Boolean).join(" — ")));child.remove();return}
-    if(child.children.length){flatten(child);child.remove()}else{appendText(textWithPreservedLineBreaks(child));child.remove()}
+    if(child.matches("ul,ol")){[...child.children].filter(item=>item.tagName==="LI").forEach((item,index)=>appendText(item.textContent,child.tagName==="UL"?"• ":(index+1)+". "));child.remove();return}
+    if(child.matches("table")){child.querySelectorAll("tr").forEach(row=>appendText([...row.children].map(cell=>cell.textContent.trim()).filter(Boolean).join(" — ")));child.remove();return}
+    if(child.children.length){flatten(child);child.remove()}else{appendText(child.textContent);child.remove()}
    });
   };
   const subtitle=header?.querySelector(".lesson-subtitle");if(subtitle){const p=document.createElement("p");p.innerHTML=subtitle.innerHTML;lessonText.prepend(p);subtitle.remove()}
@@ -3706,9 +3704,9 @@ function normalizeImportedLessonBlocks(root=document){
   });
   [...lessonText.children].forEach(child=>{
    if(child.matches("p,h2,h3,.course-math,aside.gg-card,section.course-test"))return;
-   if(child.matches("ul,ol")){[...child.children].filter(item=>item.tagName==="LI").forEach((item,index)=>appendText(textWithPreservedLineBreaks(item),child.tagName==="UL"?"• ":(index+1)+". "));child.remove();return}
-   if(child.matches("table")){child.querySelectorAll("tr").forEach(row=>appendText([...row.children].map(cell=>textWithPreservedLineBreaks(cell)).filter(Boolean).join(" — ")));child.remove();return}
-   const p=document.createElement("p");p.textContent=textWithPreservedLineBreaks(child);child.replaceWith(p);
+   if(child.matches("ul,ol")){[...child.children].filter(item=>item.tagName==="LI").forEach((item,index)=>appendText(item.textContent,child.tagName==="UL"?"• ":(index+1)+". "));child.remove();return}
+   if(child.matches("table")){child.querySelectorAll("tr").forEach(row=>appendText([...row.children].map(cell=>cell.textContent.trim()).filter(Boolean).join(" — ")));child.remove();return}
+   const p=document.createElement("p");p.textContent=child.textContent||"";child.replaceWith(p);
   });
   article.querySelectorAll("section.course-test:not(.course-review)").forEach(node=>{node.dataset.testSource=normalizeTestSource(node.dataset.testSource||"");renderTestBlock(node)});article.querySelectorAll("section.course-review").forEach(node=>renderReviewBlock(node));
   article.querySelectorAll(".lesson-prediction:not([data-tts]),.lesson-return:not([data-tts])").forEach(node=>node.dataset.tts="false");
@@ -4005,8 +4003,16 @@ function usePublishedVersion(){
   return saved===null||saved!=="false";
  }catch(error){return true}
 }
-function rememberUsePublishedVersion(){
- try{localStorage.setItem(USE_PUBLISHED_KEY,"true")}catch(error){}
+function setUsePublishedVersion(enabled){
+ try{localStorage.setItem(USE_PUBLISHED_KEY,enabled?"true":"false")}catch(error){}
+}
+function rememberUsePublishedVersion(){setUsePublishedVersion(true)}
+function syncPublishedVersionSwitch(){
+ const control=document.getElementById("courseLoadBackup");
+ const stateLabel=document.getElementById("publishedVersionState");
+ const enabled=usePublishedVersion();
+ if(control)control.checked=enabled;
+ if(stateLabel)stateLabel.textContent=enabled?"Zapnuté":"Vypnuté";
 }
 function stateFingerprint(payload){
  let value="";
@@ -4050,8 +4056,7 @@ function restore(){
   }
  }catch(e){console.warn("Obnova údajov z prehliadača zlyhala",e)}
  const publishedBackup=window[BACKUP_GLOBAL];
- if(shouldApplyPublishedVersion(publishedBackup,browserPayload)){payload=publishedBackup;source="published"}
- else if(!payload&&validImportState(publishedBackup)){payload=publishedBackup;source="published"}
+ if(usePublishedVersion()&&validImportState(publishedBackup)){payload=publishedBackup;source="published"}
  if(!payload){main.innerHTML="";courses=[];renderEmptyState();setStatus("Bez obsahu");return}
  try{
   state=decodeState(payload);
@@ -4066,12 +4071,13 @@ function restore(){
    const preferredLesson=activeCourse()?.lessonIds.includes(readingRestore?.lessonId)?readingRestore.lessonId:(state.activeId||"");
    repairTangentCommands(main);renderLessonNav(preferredLesson);window.CourseGeoGebra?.enhanceCodeButtons(main);setStatus(source==="published"?"Zverejnená verzia načítaná":"Uložené");
   }
-  if(source==="published"||source==="legacy-browser"||payload.version!==5){
+  if(source==="published"){
+   rememberPublishedVersion(payload);
+  }else if(source==="legacy-browser"||payload.version!==5){
    try{
     localStorage.setItem(STORAGE_KEY,JSON.stringify(buildState()));
     if(source==="legacy-browser")localStorage.removeItem(LEGACY_STORAGE_KEY);
-    if(source==="published"){rememberUsePublishedVersion();rememberPublishedVersion(payload)}
-    setStatus(source==="published"?"Zverejnená verzia načítaná":"Uložené");
+    setStatus("Uložené");
    }catch(e){}
   }
  }catch(e){
@@ -5490,7 +5496,7 @@ async function publishJavaScript(){
  const state=buildState();
  const publishedAt=Date.now();
  const json=JSON.stringify(state).replace(/\u2028/g,"\\u2028").replace(/\u2029/g,"\\u2029");
- const source="/* Zverejnený obsah aplikácie LEMMA V21 vo formáte lemma-blocks v5. */\nwindow."+PUBLISHED_AT_GLOBAL+" = "+publishedAt+";\nwindow."+BACKUP_GLOBAL+" = "+json+";\n";
+ const source="/* Zverejnený obsah aplikácie LEMMA V22 vo formáte lemma-blocks v5. */\nwindow."+PUBLISHED_AT_GLOBAL+" = "+publishedAt+";\nwindow."+BACKUP_GLOBAL+" = "+json+";\n";
  const filename="lemma-obsah.js";
  let handle=await getPublishFileHandle();
  try{
@@ -5503,7 +5509,7 @@ async function publishJavaScript(){
    await writePublishedFile(handle,source);
    await rememberPublishFileHandle(handle);
    try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state))}catch(error){}
-   rememberUsePublishedVersion();rememberPublishedVersion(state,publishedAt);
+   rememberUsePublishedVersion();rememberPublishedVersion(state,publishedAt);syncPublishedVersionSwitch();
    setStatus("Publikované");
    toast("Zverejnená verzia bola uložená do "+handle.name+" a pôvodný súbor bol nahradený.");
    return;
@@ -5513,7 +5519,7 @@ async function publishJavaScript(){
   console.warn("Publikovanie zlyhalo",error);
  }
  downloadBlob(source,"application/javascript",filename);
- rememberUsePublishedVersion();
+ rememberUsePublishedVersion();syncPublishedVersionSwitch();
  toast("Prehliadač nepodporuje priame nahradenie súboru. Súbor "+filename+" bol stiahnutý; presuňte ho do priečinka aplikácie a nahraďte pôvodný.",true);
 }
 function loadBackupScript(){
@@ -5532,22 +5538,34 @@ function loadBackupScript(){
  });
 }
 async function usePublishedBackup(){
- rememberUsePublishedVersion();
  setStatus("Načítavam zverejnenú verziu…");
  try{
   const result=await loadBackupScript();
   const backup=result.backup;
   if(!validImportState(backup))throw new Error("invalid-backup");
-  localStorage.setItem(STORAGE_KEY,JSON.stringify(backup));
-  localStorage.removeItem(LEGACY_STORAGE_KEY);
+  setUsePublishedVersion(true);
   rememberPublishedVersion(backup,result.publishedAt);
+  syncPublishedVersionSwitch();
   setStatus("Zverejnená verzia načítaná");
   location.reload();
  }catch(error){
+  setUsePublishedVersion(false);
+  syncPublishedVersionSwitch();
   console.warn("Načítanie zverejnenej verzie zlyhalo",error);
   setStatus(courses.length?"Uložené":"Bez obsahu");
   toast(error?.message==="invalid-backup"?"Súbor lemma-obsah.js neobsahuje platnú zverejnenú verziu.":"Súbor lemma-obsah.js sa v priečinku aplikácie nenašiel alebo ho prehliadač nemohol načítať.",true);
  }
+}
+function handlePublishedVersionToggle(event){
+ const enabled=!!event.currentTarget.checked;
+ if(enabled){
+  usePublishedBackup();
+  return;
+ }
+ setUsePublishedVersion(false);
+ syncPublishedVersionSwitch();
+ setStatus("Načítavam upravený obsah…");
+ location.reload();
 }
 function lessonExportPayload(){
  const course=activeCourse();if(!course)return null;
@@ -5579,7 +5597,8 @@ function importCoursePayload(payload){
  importedLessons.forEach(lesson=>main.append(articleFromLessonData(lesson)));courses.splice(targetIndex,0,course);activeCourseId=course.id;renderLessonNav(course.lessonIds[0]||"");updateCounts();persist(true);toast(existing?"Kurz s rovnakým názvom bol nahradený importovanou verziou.":"Kurz bol pridaný bez zmeny ostatných kurzov.");
 }
 document.getElementById("courseBackup").addEventListener("click",publishJavaScript);
-document.getElementById("courseLoadBackup").addEventListener("click",usePublishedBackup);
+syncPublishedVersionSwitch();
+document.getElementById("courseLoadBackup").addEventListener("change",handlePublishedVersionToggle);
 document.getElementById("courseExport").addEventListener("click",()=>{
  flushHistorySnapshot();const state=buildState();downloadJSON(state,"kurzy_a_lekcie_zaloha.json");toast("Celý obsah bol exportovaný.");
 });
