@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="sk"><head><!-- LEMMA V22: kompaktná dátová schéma v5 a spätná kompatibilita so schémami v1–v4. --><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/><meta content="LEMMA V22 – interaktívne matematické kurzy s vlastnými lekciami, GeoGebra grafmi, rýchlymi poznámkami a lokálnym ukladaním obsahu." name="description"/><meta content="LEMMA V22.0" name="application-name"/><meta content="LEMMA V22 compact block schema v5" name="generator"/><meta content="#14213d" name="theme-color"/><title>LEMMA V22.0 | Interaktívne matematické kurzy</title><style id="lemma-v22-styles">/* LEMMA V22 – zjednotený dizajnový systém */
+<html lang="sk"><head><!-- LEMMA V22.1: zachovanie riadkovania odsekov pri JSON importe a upravené poradie polí editora vzorcov. --><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/><meta content="LEMMA V22 – interaktívne matematické kurzy s vlastnými lekciami, GeoGebra grafmi, rýchlymi poznámkami a lokálnym ukladaním obsahu." name="description"/><meta content="LEMMA V22.1" name="application-name"/><meta content="LEMMA V22 compact block schema v5" name="generator"/><meta content="#14213d" name="theme-color"/><title>LEMMA V22.1 | Interaktívne matematické kurzy</title><style id="lemma-v22-styles">/* LEMMA V22 – zjednotený dizajnový systém */
 :root{
   color-scheme:light;
   --font-sans:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
@@ -2016,7 +2016,7 @@ body.course-editing [contenteditable="true"] *::selection{
 window.MathJax={tex:{packages:{"[+]":["ams"]}},chtml:{adaptiveCSS:false},startup:{typeset:false,ready:function(){MathJax.startup.defaultReady();MathJax.startup.promise.then(function(){window.dispatchEvent(new Event("course-math-ready"))})}}};
 </script>
 <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
-</head><body><header class="topbar"><button aria-label="Otvoriť zoznam kurzov a lekcií" class="sidebar-toggle" title="Kurzy a lekcie" type="button">☰</button><div class="brand"><span class="brand-mark">∫</span><div><strong>LEMMA V22</strong><small>Learn. Explore. Model. Master. Apply.</small></div></div><button aria-label="Vytvoriť nový kurz" aria-pressed="false" class="topbar-edit" id="courseEditToggle" type="button">＋ Nový kurz</button><details class="topbar-data">
+</head><body><header class="topbar"><button aria-label="Otvoriť zoznam kurzov a lekcií" class="sidebar-toggle" title="Kurzy a lekcie" type="button">☰</button><div class="brand"><span class="brand-mark">∫</span><div><strong>LEMMA V22.1</strong><small>Learn. Explore. Model. Master. Apply.</small></div></div><button aria-label="Vytvoriť nový kurz" aria-pressed="false" class="topbar-edit" id="courseEditToggle" type="button">＋ Nový kurz</button><details class="topbar-data">
 <summary>Dáta</summary>
 <div class="course-author-menu">
 <button id="courseBackup" type="button">Publikovať</button>
@@ -2199,11 +2199,11 @@ A=(1,f(1))" spellcheck="false"></textarea></label>
 <p class="math-tool-empty" hidden="" id="courseMathToolEmpty">Nenašli sa žiadne matematické prvky.</p>
 <p aria-live="polite" class="sr-only" id="courseMathToolStatus"></p>
 </section>
+<label for="courseMathDisplay">Spôsob zobrazenia<select id="courseMathDisplay"><option value="inline">V riadku</option><option value="block">Samostatný riadok</option></select></label>
 <label for="courseMathTex">LaTeX zápis vzorca<textarea aria-describedby="courseMathHelp courseMathError" aria-invalid="false" id="courseMathTex" placeholder="\frac{x^2-1}{x-1}" required="" spellcheck="false"></textarea></label>
 <p class="dialog-note" id="courseMathHelp">Vyhľadávateľný zoznam vkladá šablóny na pozíciu kurzora. Celý LaTeX môžete naďalej písať a upravovať ručne. Oddeľovače $ alebo $$ písať nemusíte.</p>
 <section aria-labelledby="courseMathPreviewTitle" class="math-preview-section"><h3 id="courseMathPreviewTitle">Náhľad</h3><div aria-live="polite" class="math-preview" id="courseMathPreview"><span class="math-preview-placeholder">Začnite písať vzorec.</span></div></section>
 <p aria-live="polite" class="math-editor-error" id="courseMathError" role="status"></p>
-<label for="courseMathDisplay">Spôsob zobrazenia<select id="courseMathDisplay"><option value="inline">V riadku</option><option value="block">Samostatný riadok</option></select></label>
 </div>
 <footer><button data-dialog-close="" type="button">Zrušiť</button><button class="save" disabled="" id="courseMathSubmit" type="submit" value="default">Vložiť vzorec</button></footer>
 </form>
@@ -3266,7 +3266,12 @@ function renderInlineItems(target,content){
    target.append(createMathElement(String(item.tex||""),false));return;
   }
   if(item?.type!=="text")return;
-  let node=document.createTextNode(String(item.text||""));
+  const value=String(item.text||"").replace(/\r\n?/g,"\n"),fragment=document.createDocumentFragment();
+  value.split("\n").forEach((part,index)=>{
+   if(index)fragment.append(document.createElement("br"));
+   if(part)fragment.append(document.createTextNode(part));
+  });
+  let node=fragment;
   const marks=Array.isArray(item.marks)?item.marks:[];
   if(marks.includes("italic")){const em=document.createElement("em");em.append(node);node=em}
   if(marks.includes("bold")){const strong=document.createElement("strong");strong.append(node);node=strong}
