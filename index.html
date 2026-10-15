@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="sk"><head><!-- LEMMA V22.1: zachovanie riadkovania odsekov pri JSON importe a upravené poradie polí editora vzorcov. --><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/><meta content="LEMMA V22 – interaktívne matematické kurzy s vlastnými lekciami, GeoGebra grafmi, rýchlymi poznámkami a lokálnym ukladaním obsahu." name="description"/><meta content="LEMMA V22.1" name="application-name"/><meta content="LEMMA V22 compact block schema v5" name="generator"/><meta content="#14213d" name="theme-color"/><title>LEMMA V22.1 | Interaktívne matematické kurzy</title><style id="lemma-v22-styles">/* LEMMA V22 – zjednotený dizajnový systém */
+<html lang="sk"><head><!-- LEMMA V23: jednoduché zbaľovanie blokov a častí pod nadpismi bez zmeny štruktúry obsahu. --><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/><meta content="LEMMA V23 – interaktívne matematické kurzy s vlastnými lekciami, GeoGebra grafmi, rýchlymi poznámkami a lokálnym ukladaním obsahu." name="description"/><meta content="LEMMA V23" name="application-name"/><meta content="LEMMA V23 compact block schema v5" name="generator"/><meta content="#14213d" name="theme-color"/><title>LEMMA V23 | Interaktívne matematické kurzy</title><style id="lemma-v23-styles">/* LEMMA V23 – zjednotený dizajnový systém */
 :root{
   color-scheme:light;
   --font-sans:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
@@ -1428,7 +1428,7 @@ body.course-editing .lesson-text>.course-math.course-math-block>mjx-container[ja
 }
 
 
-/* ===== LEMMA V22 – Tréning so 6 otázkami, pamäťou chýb a historickými oceneniami ===== */
+/* ===== LEMMA V23 – Tréning so 6 otázkami, pamäťou chýb a historickými oceneniami ===== */
 .course-review{
  position:relative;
  margin:.7rem 0;
@@ -1940,7 +1940,7 @@ body.course-editing .course-review::before{display:none}
 }
 
 
-/* ===== LEMMA V22 – riadené vykresľovanie LaTeXu bez blokovania a poskakovania ===== */
+/* ===== LEMMA V23 – riadené vykresľovanie LaTeXu bez blokovania a poskakovania ===== */
 .course-math.math-pending{
  font-family:var(--font-math);
  overflow-wrap:anywhere;
@@ -1953,7 +1953,7 @@ body.course-editing .course-review::before{display:none}
 }
 
 
-/* ===== LEMMA V22 – opravy mobilného dropdownu a stabilného výberu textu ===== */
+/* ===== LEMMA V23 – opravy mobilného dropdownu a stabilného výberu textu ===== */
 body.course-editing [contenteditable="true"]{
  caret-color:var(--color-text-strong);
 }
@@ -1982,7 +1982,7 @@ body.course-editing [contenteditable="true"] *::selection{
 }
 
 
-/* ===== LEMMA V22 – prepínač zverejnenej verzie ===== */
+/* ===== LEMMA V23 – prepínač zverejnenej verzie ===== */
 .published-version-switch{
  display:flex;align-items:center;justify-content:space-between;gap:.8rem;width:100%;
  min-height:44px;padding:.55rem .65rem;border:1px solid var(--color-border);
@@ -2010,13 +2010,30 @@ body.course-editing [contenteditable="true"] *::selection{
 @media (prefers-reduced-motion:reduce){
  .published-version-track,.published-version-track span{transition:none}
 }
+
+/* LEMMA V23: collapse is presentation only; all content remains in the original blocks. */
+.lemma-fold-hidden{display:none!important}
+.lemma-fold-toggle{border:1px solid var(--color-border);border-radius:var(--radius-md);background:var(--color-surface-soft);color:var(--color-primary);cursor:pointer;padding:.35rem .65rem;font:700 var(--text-sm) var(--font-sans)}
+.lemma-fold-toggle:hover{background:var(--color-primary-soft)}
+.lemma-fold-toggle:focus-visible{outline:2px solid var(--color-primary);outline-offset:3px}
+.lesson-text>h2>.lemma-fold-toggle,.lesson-text>h3>.lemma-fold-toggle{float:right;margin-left:.6rem;min-width:34px;min-height:32px;padding:.15rem .4rem;font-size:1rem}
+.lemma-fold-bar{margin:.8rem 0 .35rem}
+.lemma-collapse-tools{display:inline-flex;gap:.35rem;flex-wrap:wrap}
+.lemma-collapse-tools[hidden]{display:none!important}
+body.course-editing .lemma-fold-toggle,body.course-editing .lemma-fold-bar{display:none!important}
+.course-block-collapse[aria-pressed="true"]{opacity:1;color:var(--color-primary);background:var(--color-primary-soft)}
+@media print{
+ .lemma-fold-hidden{display:revert!important}
+ .lemma-fold-toggle,.lemma-fold-bar,.lemma-collapse-tools{display:none!important}
+}
+
 </style>
 <script defer="" src="https://www.geogebra.org/apps/deployggb.js"></script>
 <script>
 window.MathJax={tex:{packages:{"[+]":["ams"]}},chtml:{adaptiveCSS:false},startup:{typeset:false,ready:function(){MathJax.startup.defaultReady();MathJax.startup.promise.then(function(){window.dispatchEvent(new Event("course-math-ready"))})}}};
 </script>
 <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
-</head><body><header class="topbar"><button aria-label="Otvoriť zoznam kurzov a lekcií" class="sidebar-toggle" title="Kurzy a lekcie" type="button">☰</button><div class="brand"><span class="brand-mark">∫</span><div><strong>LEMMA V22.1</strong><small>Learn. Explore. Model. Master. Apply.</small></div></div><button aria-label="Vytvoriť nový kurz" aria-pressed="false" class="topbar-edit" id="courseEditToggle" type="button">＋ Nový kurz</button><details class="topbar-data">
+</head><body><header class="topbar"><button aria-label="Otvoriť zoznam kurzov a lekcií" class="sidebar-toggle" title="Kurzy a lekcie" type="button">☰</button><div class="brand"><span class="brand-mark">∫</span><div><strong>LEMMA V23</strong><small>Learn. Explore. Model. Master. Apply.</small></div></div><button aria-label="Vytvoriť nový kurz" aria-pressed="false" class="topbar-edit" id="courseEditToggle" type="button">＋ Nový kurz</button><details class="topbar-data">
 <summary>Dáta</summary>
 <div class="course-author-menu">
 <button id="courseBackup" type="button">Publikovať</button>
@@ -2099,6 +2116,7 @@ window.MathJax={tex:{packages:{"[+]":["ams"]}},chtml:{adaptiveCSS:false},startup
 <details class="course-author-more editor-block-menu">
 <summary>Blok</summary>
 <div class="course-author-menu">
+<button id="courseCollapseBlock" type="button" title="Zapnúť alebo vypnúť predvolené zbalenie vybraného bloku">Zbaľovanie bloku</button>
 <button id="courseMoveUp" type="button">Posunúť vyššie</button>
 <button id="courseMoveDown" type="button">Posunúť nižšie</button>
 <button class="danger" id="courseDeleteBlock" type="button">Odstrániť blok</button>
@@ -2106,6 +2124,10 @@ window.MathJax={tex:{packages:{"[+]":["ams"]}},chtml:{adaptiveCSS:false},startup
 </details>
 <button class="editor-cancel" id="courseCancelEdit" type="button">Zahodiť zmeny</button>
 </div>
+<span id="lemmaCollapseTools" class="lemma-collapse-tools" hidden>
+<button id="lemmaCollapseAll" type="button" title="Zbaliť časti pod nadpismi a zbaľovateľné bloky">Zbaliť časti</button>
+<button id="lemmaExpandAll" type="button">Rozbaliť všetko</button>
+</span>
 <span aria-live="polite" class="course-author-status" id="courseAuthorStatus">Uložené</span>
 <button hidden="" id="courseSave" type="button">Uložiť</button>
 <input accept="application/json,.json" hidden="" id="courseImportFile" type="file"/>
@@ -2935,6 +2957,7 @@ const COURSE_ICON_VALUES=new Set(COURSE_ICONS.map(item=>item[0]));
 const nav=document.querySelector(".lesson-nav"),courseNav=document.querySelector(".course-list-nav"),main=document.querySelector("main.content"),status=document.getElementById("courseAuthorStatus"),toastEl=document.getElementById("courseToast");
 let editing=false,selectedBlock=null,graphBeingEdited=null,testBeingEdited=null,mathBeingEdited=null,mathTextareaTarget=null,mathTextareaSelection=null,textBlockBeingEdited=null,savedRange=null,saveTimer=null,toastTimer=null;
 let courses=[],activeCourseId="",storageWarningShown=false;
+const collapseView=new WeakMap(),collapseBars=new WeakMap();
 const REVIEW_SCORE_KEY="lemma-review-score-v1",REVIEW_POINTS=10,REVIEW_MAX=400,REVIEW_FLOOR=200,REVIEW_FRIDAY_LOSS=50,REVIEW_QUESTION_COUNT=6,REVIEW_WRONG_LIMIT=10;
 let reviewScoreData={};
 try{
@@ -2957,6 +2980,35 @@ const BLOCK_KEYS={
  test:new Set(["type","source"]),
  review:new Set(["type"])
 };
+Object.values(BLOCK_KEYS).forEach(keys=>keys.add("collapse"));
+
+// LEMMA V23: optional collapse metadata; existing block layout and v5 format are preserved.
+function canonicalBlock(block){
+ const result=canonicalBlockCore(block);
+ if(result&&typeof block?.collapse==="boolean")result.collapse=block.collapse;
+ return result;
+}
+function encodeBlockV5(block){
+ const result=encodeBlockV5Core(block);
+ if(result&&typeof block?.collapse==="boolean")result.collapse=block.collapse;
+ return result;
+}
+function decodeBlockV5(block){
+ const result=decodeBlockV5Core(block);
+ if(result&&typeof block?.collapse==="boolean")result.collapse=block.collapse;
+ return result;
+}
+function blockFromElement(element){
+ const result=blockFromElementCore(element);
+ if(result&&element.hasAttribute("data-collapse"))result.collapse=element.dataset.collapse==="true";
+ return result;
+}
+function elementFromBlock(block){
+ const node=elementFromBlockCore(block);
+ if(node&&typeof block?.collapse==="boolean")node.dataset.collapse=String(block.collapse);
+ return node;
+}
+
 const INLINE_KEYS={text:new Set(["type","text","marks"]),formula:new Set(["type","tex"])};
 function hasOnlyKeys(value,allowed){return Object.keys(value||{}).every(key=>allowed.has(key))}
 function hasRequiredKeys(value,required){return required.every(key=>Object.prototype.hasOwnProperty.call(value,key))}
@@ -2986,7 +3038,7 @@ function canonicalInlineItem(item){
  }
  return null;
 }
-function canonicalBlock(block){
+function canonicalBlockCore(block){
  if(!block||typeof block!=="object")return null;
  if(block.type==="paragraph"){
   const role=["narrative","hook","instruction"].includes(block.role)?block.role:"narrative";
@@ -3056,7 +3108,7 @@ function decodeInlineContentV5(value){
   return null;
  }).map(canonicalInlineItem).filter(Boolean);
 }
-function encodeBlockV5(sourceBlock){
+function encodeBlockV5Core(sourceBlock){
  const block=canonicalBlock(sourceBlock);if(!block)return null;
  if(block.type==="paragraph"){
   const result={p:encodeInlineContentV5(block.content)},defaultTts=block.role!=="instruction";
@@ -3092,7 +3144,7 @@ function encodeBlockV5(sourceBlock){
  }
  return null;
 }
-function decodeBlockV5(block){
+function decodeBlockV5Core(block){
  if(!plainObject(block))return null;
  if(Object.prototype.hasOwnProperty.call(block,"p")){
   const role=["narrative","hook","instruction"].includes(block.role)?block.role:"narrative";
@@ -3174,7 +3226,8 @@ function validBlockV5(block){
  if(!plainObject(block))return false;
  const typeKeys=["p","h2","h3","math","graph","test","review"].filter(key=>Object.prototype.hasOwnProperty.call(block,key));
  if(typeKeys.length!==1)return false;
- const type=typeKeys[0],allowed=new Set([type]);
+ if(block.collapse!=null&&typeof block.collapse!=="boolean")return false;
+ const type=typeKeys[0],allowed=new Set([type,"collapse"]);
  if(type==="p"){allowed.add("role");allowed.add("tts")}
  if(type==="h2"||type==="h3")allowed.add("tts");
  if(!hasOnlyKeys(block,allowed))return false;
@@ -3341,7 +3394,7 @@ function graphCardFromBlock(sourceBlock){
  renderGraphControlBar(card,block.controls);
  window.CourseGeoGebra?.renderTasks(card);return card;
 }
-function blockFromElement(element){
+function blockFromElementCore(element){
  if(element.matches("p")){
   const role=element.classList.contains("lesson-prediction")||element.classList.contains("lesson-return")?"instruction":element.classList.contains("lesson-hook")?"hook":"narrative";
   return {type:"paragraph",role,tts:element.dataset.tts!=="false",content:inlineItemsFromElement(element)};
@@ -3372,7 +3425,7 @@ function lessonDataFromArticle(article){
  const title=article.querySelector(".lesson-header h1")?.textContent.trim()||article.dataset.title||"Lekcia";
  return canonicalLessonData({id:article.id,courseId:article.dataset.courseId||"",title,custom:article.dataset.custom==="true",blocks:[...article.querySelectorAll(":scope > .lesson-text > *")].flatMap(expandedBlocksFromElement).filter(block=>block&&BLOCK_TYPES.has(block.type))});
 }
-function elementFromBlock(sourceBlock){
+function elementFromBlockCore(sourceBlock){
  const block=canonicalBlock(sourceBlock);if(!block)return null;
  if(block.type==="paragraph"){
   const node=document.createElement("p"),role=block.role;if(role==="hook")node.className="lesson-hook";if(role==="instruction")node.className="lesson-prediction";
@@ -3409,6 +3462,7 @@ function inlineBlockValid(item,strict=false){
 }
 function contentBlockValid(block,strict=false){
  if(!block||typeof block!=="object"||!BLOCK_TYPES.has(block.type))return false;
+ if(block.collapse!=null&&typeof block.collapse!=="boolean")return false;
  if(strict&&!hasOnlyKeys(block,BLOCK_KEYS[block.type]))return false;
  if(block.type==="paragraph")return (!strict||hasRequiredKeys(block,["type","role","tts","content"]))&&Array.isArray(block.content)&&block.content.every(item=>inlineBlockValid(item,strict))&&["narrative","hook","instruction"].includes(block.role||"narrative")&&typeof (block.tts??true)==="boolean";
  if(block.type==="heading")return (!strict||hasRequiredKeys(block,["type","level","tts","content"]))&&[2,3].includes(Number(block.level))&&Array.isArray(block.content)&&block.content.every(item=>inlineBlockValid(item,strict))&&typeof (block.tts??true)==="boolean";
@@ -3691,6 +3745,8 @@ window.addEventListener("course-math-ready",()=>renderMath(document));
 
 function normalizeImportedLessonBlocks(root=document){
  const articles=[...(root.matches?.("article.lesson")?[root]:[]),...(root.querySelectorAll?.("article.lesson")||[])];articles.forEach(article=>{
+  article.querySelectorAll(".lemma-fold-bar,.lemma-fold-toggle").forEach(node=>node.remove());
+  article.querySelectorAll(".lemma-fold-hidden").forEach(node=>node.classList.remove("lemma-fold-hidden"));
   const header=article.querySelector(":scope > .lesson-header");
   let lessonText=article.querySelector(":scope > .lesson-text");
   if(!lessonText){lessonText=document.createElement("section");lessonText.className="lesson-text";header?.after(lessonText)}
@@ -3750,6 +3806,7 @@ function cleanTestsForStorage(root){
 }
 function cleanArticle(article){
  const clone=article.cloneNode(true);
+ clone.querySelectorAll(".lemma-fold-hidden").forEach(node=>node.classList.remove("lemma-fold-hidden"));
  clone.classList.remove("course-selected-block");
  clone.querySelectorAll(".course-editor-only,.course-empty-caret,.gg-diagnostic,.gg-tasks,.gg-task-error").forEach(x=>x.remove());
  clone.querySelectorAll(".tts-current,.tts-start").forEach(x=>x.classList.remove("tts-current","tts-start"));
@@ -3891,6 +3948,7 @@ function activateLesson(id,scroll=false){
  document.querySelectorAll("article.lesson").forEach(node=>node.classList.toggle("active",node===article));
  nav.querySelectorAll("button[data-lesson]").forEach(button=>button.classList.toggle("active",button.dataset.lesson===article?.id));
  if(article){
+  refreshCollapsing(article);
   if(scroll)requestAnimationFrame(()=>window.LemmaNavigation?.jumpToLesson?.(article));
   document.dispatchEvent(new CustomEvent("lemma:lessonchange",{detail:{id:article.id,courseId:activeCourseId}}));
   setTimeout(()=>window.CourseGeoGebra?.active(),40);
@@ -4116,27 +4174,123 @@ function ensureBlockControls(article){
   block.classList.add("course-content-block");
   block.dataset.blockKind=blockName(block);
   let controls=block.querySelector(":scope > .course-block-controls");
-  const wrongVersion=!controls||controls.dataset.version!=="3"||controls.children.length!==3;
+  const wrongVersion=!controls||controls.dataset.version!=="23"||controls.children.length!==4;
   if(!controls){controls=document.createElement("span");controls.className="course-block-controls course-editor-only";block.append(controls)}
   controls.setAttribute("contenteditable","false");
   controls.setAttribute("role","toolbar");
   controls.setAttribute("aria-label","Nástroje bloku");
   if(wrongVersion){
-   controls.replaceChildren();controls.dataset.version="3";
+   controls.replaceChildren();controls.dataset.version="23";
    const edit=document.createElement("button");edit.type="button";edit.className="course-block-control course-block-edit";edit.textContent="✎";edit.setAttribute("aria-label","Upraviť nastavenia bloku");edit.title="Upraviť nastavenia bloku";
    const drag=document.createElement("button");drag.type="button";drag.className="course-block-control course-block-drag";drag.textContent="⠿";drag.setAttribute("aria-label","Presunúť blok potiahnutím");drag.title="Potiahnutím presunúť blok";
    const remove=document.createElement("button");remove.type="button";remove.className="course-block-control course-block-delete";remove.textContent="×";remove.setAttribute("aria-label","Odstrániť blok");remove.title="Odstrániť blok";
-   controls.append(edit,drag,remove);
+   const collapse=document.createElement("button");collapse.type="button";collapse.className="course-block-control course-block-collapse";collapse.textContent="▾";
+   controls.append(edit,collapse,drag,remove);
   }
+  const collapse=controls.querySelector(".course-block-collapse"),enabled=block.dataset.collapse==="true";
+  collapse.title=block.matches("h2,h3")?(enabled?"Predvolene rozbaliť časť":"Predvolene zbaliť časť"):(block.hasAttribute("data-collapse")?"Vypnúť zbaľovanie bloku":"Zapnúť zbaľovanie bloku (predvolene skrytý)");
+  collapse.setAttribute("aria-label",collapse.title);collapse.setAttribute("aria-pressed",String(enabled));
  });
 }
+
+// No wrappers around lesson blocks: editing, ordering, tests, graphs and export keep their original DOM.
+function collapseBlocks(article){
+ return [...(article?.querySelector(":scope > .lesson-text")?.children||[])].filter(node=>node.matches("p,h2,h3,.course-math,.gg-card,.course-test")&&!node.classList.contains("course-editor-only"));
+}
+function collapseEnabled(block){return block.matches("h2,h3")||block.hasAttribute("data-collapse")}
+function collapseClosed(block){return collapseView.has(block)?collapseView.get(block):block.dataset.collapse==="true"}
+function refreshCollapsing(article=activeLesson()){
+ if(!article)return;
+ const text=article.querySelector(":scope > .lesson-text");if(!text)return;
+ const blocks=collapseBlocks(article),hidden=new Set(),sectionHidden=new Set();
+ text.querySelectorAll(":scope > .lemma-fold-bar").forEach(bar=>{
+  if(editing||!blocks.some(block=>collapseBars.get(block)===bar&&collapseEnabled(block)))bar.remove();
+ });
+ blocks.forEach((block,index)=>{
+  const heading=block.matches("h2,h3"),enabled=collapseEnabled(block);
+  const old=block.querySelector(":scope > .lemma-fold-toggle");
+  if(old&&!heading)old.remove();
+  if(!enabled){old?.remove();return}
+  if(editing&&!heading){collapseBars.get(block)?.remove();return}
+  let button,bar;
+  if(heading){
+   button=block.querySelector(":scope > .lemma-fold-toggle");
+   if(!button){button=document.createElement("button");button.className="lemma-fold-toggle course-editor-only";block.append(button)}
+  }else{
+   bar=collapseBars.get(block);
+   if(!bar){bar=document.createElement("div");bar.className="lemma-fold-bar course-editor-only";button=document.createElement("button");button.className="lemma-fold-toggle";bar.append(button);collapseBars.set(block,bar)}
+   else button=bar.firstElementChild;
+   if(block.previousElementSibling!==bar)block.before(bar);
+  }
+  button.type="button";button.setAttribute("contenteditable","false");button._collapseBlock=block;
+  const closed=collapseClosed(block);
+  button.textContent=heading?(closed?"▸":"▾"):(closed?"▸ Zobraziť "+blockName(block):"▾ Skryť "+blockName(block));
+  button.title=heading?(closed?"Rozbaliť časť pod nadpisom":"Zbaliť časť po ďalší nadpis rovnakej alebo vyššej úrovne"):(closed?"Zobraziť obsah bloku":"Skryť obsah bloku");
+  button.setAttribute("aria-label",button.title);button.setAttribute("aria-expanded",String(editing||!closed));
+  if(!editing&&closed){
+   if(!heading)hidden.add(block);
+   else{
+    const level=Number(block.tagName.slice(1));
+    for(let i=index+1;i<blocks.length;i++){
+     if(blocks[i].matches("h2,h3")&&Number(blocks[i].tagName.slice(1))<=level)break;
+     hidden.add(blocks[i]);sectionHidden.add(blocks[i]);
+    }
+   }
+  }
+ });
+ blocks.forEach(block=>{
+  block.classList.toggle("lemma-fold-hidden",hidden.has(block));
+  const bar=collapseBars.get(block);if(bar)bar.classList.toggle("lemma-fold-hidden",editing||hidden.has(block)&&!collapseClosed(block));
+ });
+ // A hidden block inside a parent section must not leave its disclosure bar visible.
+ blocks.forEach(block=>{
+  const bar=collapseBars.get(block);if(bar)bar.classList.toggle("lemma-fold-hidden",editing||sectionHidden.has(block));
+ });
+ const tools=document.getElementById("lemmaCollapseTools");if(tools)tools.hidden=editing||!blocks.some(collapseEnabled);
+}
+function collapseAuthorSetting(block){
+ if(!editing||!block)return toast("Najprv zapnite úpravu a vyberte blok.");
+ flushHistorySnapshot();
+ if(block.matches("h2,h3")){
+  if(block.dataset.collapse==="true")delete block.dataset.collapse;else block.dataset.collapse="true";
+ }else{
+  if(block.hasAttribute("data-collapse"))delete block.dataset.collapse;else block.dataset.collapse="true";
+ }
+ collapseView.delete(block);ensureBlockControls(activeLesson());refreshCollapsing();selectBlock(block);scheduleSave();
+ toast(block.hasAttribute("data-collapse")?"Po uložení bude obsah predvolene zbalený. Pri úprave zostáva viditeľný.":"Predvolené zbalenie bolo vypnuté.");
+}
+function collapseRefreshVisible(){
+ refreshCollapsing();
+ const current=activeLesson()?.querySelector(".tts-current,.tts-start");
+ if(current&&!current.getClientRects().length)document.getElementById("ttsStop")?.click();
+ renderMath(activeLesson()||document);
+ requestAnimationFrame(()=>{
+  window.CourseGeoGebra?.active();
+  activeLesson()?.querySelectorAll(".gg-live").forEach(el=>{
+   if(!el.getClientRects().length)return;
+   try{window.CourseGeoGebra?.apis?.get(el.id)?.refreshViews()}catch(error){}
+  });
+ });
+}
+document.addEventListener("click",event=>{
+ const button=event.target.closest(".lemma-fold-toggle,.course-block-collapse,#courseCollapseBlock,#lemmaExpandAll,#lemmaCollapseAll");
+ if(!button)return;
+ event.preventDefault();event.stopImmediatePropagation();
+ if(button.matches(".course-block-collapse")){collapseAuthorSetting(button.closest(".lesson-text > *"));return}
+ if(button.id==="courseCollapseBlock"){collapseAuthorSetting(selectedBlock);return}
+ if(editing)return;
+ if(button._collapseBlock)collapseView.set(button._collapseBlock,!collapseClosed(button._collapseBlock));
+ else collapseBlocks(activeLesson()).filter(collapseEnabled).forEach(block=>collapseView.set(block,button.id==="lemmaCollapseAll"));
+ collapseRefreshVisible();
+},true);
+
 function blockName(block){
  if(block?.matches(".gg-card"))return"graf";if(block?.matches(".course-review"))return"tréning";if(block?.matches(".course-test"))return"test";if(block?.matches(".course-math"))return"vzorec";if(block?.matches("h2,h3"))return"nadpis";return"odsek";
 }
 function removeBlock(block,confirmFirst=true){
  if(!block)return false;
  if(confirmFirst&&!confirm('Naozaj chcete odstrániť tento '+blockName(block)+'?'))return false;
- block.remove();if(selectedBlock===block)clearSelection();updateCounts();scheduleSave();toast("Blok bol odstránený. Späť ho vrátite tlačidlom ↶.");return true;
+ block.remove();refreshCollapsing();if(selectedBlock===block)clearSelection();updateCounts();scheduleSave();toast("Blok bol odstránený. Späť ho vrátite tlačidlom ↶.");return true;
 }
 let pointerBlockDrag=null;
 function beginBlockDrag(event,handle){
@@ -4159,7 +4313,7 @@ function endBlockDrag(event){
  const drag=pointerBlockDrag;if(!drag||drag.pointerId!==event.pointerId)return;
  try{drag.handle.releasePointerCapture(event.pointerId)}catch(error){}
  pointerBlockDrag=null;document.body.classList.remove("course-block-dragging");
- if(drag.active){event.preventDefault();selectBlock(drag.block);scheduleSave()}
+ if(drag.active){event.preventDefault();refreshCollapsing();selectBlock(drag.block);scheduleSave()}
 }
 function updateBlockButtons(){
  const has=!!selectedBlock;
@@ -4207,7 +4361,7 @@ function refreshEditing(){
  toggle.textContent=!article?"＋ Nový kurz":editing?"✓ Uložiť":"✎ Upraviť";
  toggle.setAttribute("aria-pressed",String(editing&&!!article));
  toggle.setAttribute("aria-label",!article?"Vytvoriť nový kurz":editing?"Uložiť zmeny a skončiť úpravu":"Upraviť obsah lekcie");
- updateHistoryButtons();
+ updateHistoryButtons();refreshCollapsing();
 }
 function setEditing(value){
  // Prepnutie režimu mení ovládacie prvky a môže vyvolať automatické
@@ -4309,6 +4463,7 @@ function replaceTextBlock(block,type,role,tts){
  let node=block;
  if(block.tagName.toLowerCase()!==tag){
   node=document.createElement(tag);
+  if(block.hasAttribute("data-collapse"))node.dataset.collapse=block.dataset.collapse;
   [...block.childNodes].forEach(child=>node.append(child));
   block.replaceWith(node);
  }
@@ -5501,7 +5656,7 @@ async function publishJavaScript(){
  const state=buildState();
  const publishedAt=Date.now();
  const json=JSON.stringify(state).replace(/\u2028/g,"\\u2028").replace(/\u2029/g,"\\u2029");
- const source="/* Zverejnený obsah aplikácie LEMMA V22 vo formáte lemma-blocks v5. */\nwindow."+PUBLISHED_AT_GLOBAL+" = "+publishedAt+";\nwindow."+BACKUP_GLOBAL+" = "+json+";\n";
+ const source="/* Zverejnený obsah aplikácie LEMMA V23 vo formáte lemma-blocks v5. */\nwindow."+PUBLISHED_AT_GLOBAL+" = "+publishedAt+";\nwindow."+BACKUP_GLOBAL+" = "+json+";\n";
  const filename="lemma-obsah.js";
  let handle=await getPublishFileHandle();
  try{
